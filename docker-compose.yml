@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # S.P.O.T. Python FastAPI AI Vision & SQLite Backend Engine
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: spot-fastapi-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - spot_sqlite_data:/app
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    restart: always
+
+  # S.P.O.T. Multilingual React PWA Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spot-react-pwa
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  spot_sqlite_data:

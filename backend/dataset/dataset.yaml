@@ -1,0 +1,11 @@
+# S.P.O.T. Agricultural Onion Dataset Configuration
+path: /home/sanjeeva/ONION HACKATHON/backend/dataset
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: grade_a
+  1: grade_urs
+  2: rotten_damaged
+  3: sprouted

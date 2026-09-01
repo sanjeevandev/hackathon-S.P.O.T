@@ -1,0 +1,25 @@
+{
+  "short_name": "S.P.O.T.",
+  "name": "S.P.O.T. - Smart Produce Optimization & Tracking",
+  "icons": [
+    {
+      "src": "/pwa-192x192.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-512x512.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#1E3A2B",
+  "theme_color": "#1E3A2B",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "description": "S.P.O.T. Agricultural Onion Quality Scanner PWA for low-connectivity rural environments"
+}
