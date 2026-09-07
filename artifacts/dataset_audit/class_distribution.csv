@@ -1,0 +1,13 @@
+class_name,source_directory,image_count,percentage_of_total,scope_category,sample_filename
+1. Leaves/1. Healthy/1. Single,New Onion - Copy/1. Leaves/1. Healthy/1. Single,1010,6.1963,OUT_OF_SCOPE_FOR_BULB_GRADING,New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00001.jpg
+1. Leaves/1. Healthy/2. Multiple,New Onion - Copy/1. Leaves/1. Healthy/2. Multiple,1010,6.1963,OUT_OF_SCOPE_FOR_BULB_GRADING,New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01011.jpg
+1. Leaves/2. Unhealthy/1. Single,New Onion - Copy/1. Leaves/2. Unhealthy/1. Single,1010,6.1963,OUT_OF_SCOPE_FOR_BULB_GRADING,New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02021.jpg
+1. Leaves/2. Unhealthy/2. Multiple,New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple,1010,6.1963,OUT_OF_SCOPE_FOR_BULB_GRADING,New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03031.jpg
+2. Bulb/1. Healthy/1. Red Onion/1. Single,New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single,3000,18.4049,BULB_GRADING,New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04041.jpg
+2. Bulb/1. Healthy/1. Red Onion/2. Multiple,New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple,1110,6.8098,BULB_GRADING,New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07041.jpg
+2. Bulb/1. Healthy/2. White Onion/1. Single,New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single,3000,18.4049,BULB_GRADING,New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion08151.jpg
+2. Bulb/1. Healthy/2. White Onion/2. Multiple,New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple,1110,6.8098,BULB_GRADING,New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11151.jpg
+2. Bulb/2. Unhealthy/1. Red Onion/1. Single,New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single,1010,6.1963,BULB_GRADING,New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12261.jpg
+2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple,New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple,1010,6.1963,BULB_GRADING,New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13271.jpg
+2. Bulb/2. Unhealthy/2. White Onion/1. Single,New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single,1010,6.1963,BULB_GRADING,New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14281.jpg
+2. Bulb/2. Unhealthy/2. White Onion/2. Multiple,New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple,1010,6.1963,BULB_GRADING,New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15291.jpg

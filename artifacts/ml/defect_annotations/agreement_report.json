@@ -1,0 +1,48 @@
+{
+  "double_annotated_count": 100,
+  "overall_percent_agreement": 98.75,
+  "cohens_kappa_by_defect": {
+    "healthy": 1.0,
+    "damage": 1.0,
+    "rot": 0.9,
+    "sprout": 1.0
+  },
+  "disagreement_count": 5,
+  "disagreements_sample": [
+    {
+      "image_id": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15920.jpg",
+      "defect_dimension": "rot",
+      "annotator_a_value": false,
+      "annotator_b_value": true,
+      "adjudication_status": "PENDING_ADJUDICATION"
+    },
+    {
+      "image_id": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16030.jpg",
+      "defect_dimension": "rot",
+      "annotator_a_value": false,
+      "annotator_b_value": true,
+      "adjudication_status": "PENDING_ADJUDICATION"
+    },
+    {
+      "image_id": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16064.jpg",
+      "defect_dimension": "rot",
+      "annotator_a_value": false,
+      "annotator_b_value": true,
+      "adjudication_status": "PENDING_ADJUDICATION"
+    },
+    {
+      "image_id": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16171.jpg",
+      "defect_dimension": "rot",
+      "annotator_a_value": false,
+      "annotator_b_value": true,
+      "adjudication_status": "PENDING_ADJUDICATION"
+    },
+    {
+      "image_id": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16193.jpg",
+      "defect_dimension": "rot",
+      "annotator_a_value": false,
+      "annotator_b_value": true,
+      "adjudication_status": "PENDING_ADJUDICATION"
+    }
+  ]
+}

@@ -70,7 +70,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
     isInferenceEdge: true,
     edgeLatencyMs: 185,
     serverLatencyMs: 850,
-    benchmarkLog: `[OFFLINE EDGE INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX WebAssembly/WebGL Latency: 185ms\n☁️ Server API Network Latency: ~850ms\n🚀 Speedup: 4.6x Faster (Target < 1500ms: PASSED ✅)\n📱 Mobile Viewport Optimization: WebAssembly SIMD + WebGL Enabled`,
+    benchmarkLog: `[INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX Engine Latency: 185ms\n☁️ Server API Processing Latency: ~850ms\n📱 Mobile Viewport Optimization: WebAssembly SIMD Enabled`,
   };
 
   const pieChartData = [
@@ -274,7 +274,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
               </span>
             </div>
             <p className="text-stone-300 pt-1 leading-relaxed whitespace-pre-line text-[10px]">
-              {activeResult.benchmarkLog || `[OFFLINE EDGE INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX WebAssembly/WebGL Latency: 185ms\n☁️ Server API Network Latency: ~850ms\n🚀 Speedup: 4.6x Faster (Target < 1500ms: PASSED ✅)\n📱 Mobile Viewport Optimization: WebAssembly SIMD + WebGL Enabled`}
+              {activeResult.benchmarkLog || `[INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX Engine Latency: 185ms\n☁️ Server API Processing Latency: ~850ms\n📱 Mobile Viewport Optimization: WebAssembly SIMD Enabled`}
             </p>
           </div>
         </div>

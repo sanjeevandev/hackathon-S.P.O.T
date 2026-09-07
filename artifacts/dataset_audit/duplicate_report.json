@@ -1,0 +1,1504 @@
+{
+  "audit_timestamp": "2026-09-04T16:33:35.371551+00:00",
+  "exact_duplicate_group_count": 28,
+  "exact_duplicate_total_files": 57,
+  "exact_duplicate_redundant_files": 29,
+  "exact_duplicate_groups": {
+    "9cddc53c62ba649aa7e2584b4086eb03cd0155190ac91c35c60636416f6f8b63": [
+      "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02966.jpg",
+      "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion03004.jpg"
+    ],
+    "fac0adcbc58e0fe44134bbec1a75d97e05a4359642b7d87e977b17f853d47fc0": [
+      "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03242.jpg",
+      "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03757.jpg"
+    ],
+    "27e724644babc5f476d759d9712b70d551f565bac754f32135dfd3b1a68461fa": [
+      "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion08243.jpg",
+      "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion11150.jpg"
+    ],
+    "e583b17ab02fbd1fe86a1bf08aec7326b5ce1aab0f9b7ae686a77fe68cad4921": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14281.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14977.jpg"
+    ],
+    "fa48d001ace6ab5df817884bfa32f6da2cc6643900e627f83b59f3dac783cbec": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14543.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14682.jpg"
+    ],
+    "9ae294354a4fc0ac7707b821e88fe63da9f9d8126eba717e8c664eaa8520214a": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14608.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14931.jpg"
+    ],
+    "366c390c8c9eb39967517b609a1e31c9c69ca51bf5615f40d71be757a5aaaffe": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14619.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14713.jpg"
+    ],
+    "7c6df903741553240effc5a261138f526a7685e8f78f0de9c231dbd016703d06": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14644.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14809.jpg"
+    ],
+    "e9039bc0e672d7dc5ae8a4af3d7ee33cfc37f2db84b59bf3ae7d56b1b04c02ba": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14691.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14955.jpg"
+    ],
+    "c9d5eff0d672be9da2e4e581e1ddbb026a9704460485ed72f5647d6efebfdf75": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14701.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14962.jpg"
+    ],
+    "5e6070c5d971cd78656ab147999aab9c98b3693f99ec94d384c0c5c6b4d6062b": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14702.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14939.jpg"
+    ],
+    "b5ae879b2aa9f00bbfbaf165bb0645a4bf0cfd2e42fb793e7a7ff7bfb83de3a4": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14733.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14891.jpg"
+    ],
+    "c8d358ae33d16a69469e365d692afa943157a7d2828c529634590351ea0417f9": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14742.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14793.jpg"
+    ],
+    "8ab98a39e14ab2a643ab1c46db4a6e276b3cb89d9fd1d305595bca43645898fb": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14785.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15142.jpg"
+    ],
+    "eaa224da56ca6bdfe8a3684740f187c732e0405e1ff1d96f03b930104ea02c68": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14786.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15105.jpg"
+    ],
+    "97b85fd9eeffc5f728b8f8322090aed88c06f983160dec2c7dfba725cc5548fe": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14817.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14900.jpg"
+    ],
+    "eb809225b964539f52d0d2dbb3f74d14f1067771ab72f523809273ae6fb850ed": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14863.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14997.jpg"
+    ],
+    "20bd3e84aff83de959118218742d0ed8d73a7ab260ce137ff0918b93adea0e7c": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14883.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14944.jpg"
+    ],
+    "ceed1cfe342f716ea4c065aef5e74c5310473844eca500eef0b9baeb568c8e0e": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14954.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15051.jpg"
+    ],
+    "594b89ff16eae91eec43b6daa46036c0b8ad9822474ed81c883724bc378b4118": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15040.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15058.jpg"
+    ],
+    "b73bf36a1103ee1c57b7c245c21445499b584c72e302a4d9ae00e2dd1ce0f8d2": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15293.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15737.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15744.jpg"
+    ],
+    "5741330e0a848c59d4f203cd12b8530a38f2a97663e9c4ddf3ce13d16c0e9379": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15383.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16170.jpg"
+    ],
+    "b871394248389d9318a3850bc5cbf83f7fd47f98db727789efa65d8dcae57507": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15458.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16212.jpg"
+    ],
+    "ba1fc68a8a04d5fbf6dc480321bae98f6901e19683aebc57920b82ee3b79a93f": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15495.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15934.jpg"
+    ],
+    "a77646c706ba9840f7ea5eb3124af85c01e6afe7beef14af8b6ae7286ab035f8": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15545.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15683.jpg"
+    ],
+    "b13bb46587e50db162863ee6b27454a21d382540bbaa7fd1010cc19070b20bf7": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15703.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16263.jpg"
+    ],
+    "ce61c7b6b1eb91394b99019add65d2d8213da1e9bc15c1458685abece1b700bc": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15713.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16270.jpg"
+    ],
+    "535c3246f71f4eb73fe6a3a0d8198e0cc3b27d1b6ae44ed5b6f56be600bdb72a": [
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16091.jpg",
+      "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16200.jpg"
+    ]
+  },
+  "near_duplicate_pair_count": 276,
+  "near_duplicate_pairs": [
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07517.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08065.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07735.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08065.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00298.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00349.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00298.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00568.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00349.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00568.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15713.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16270.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02373.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12948.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15389.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16101.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07188.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08135.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00060.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00459.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00064.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00661.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05053.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05349.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00789.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00851.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07246.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07414.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00706.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00727.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00108.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00480.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00108.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00808.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00180.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00530.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00462.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00589.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00480.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00808.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12506.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12823.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01887.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01889.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07837.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07843.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00263.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00525.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00779.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00840.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00140.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00527.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00142.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00587.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00454.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00855.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion09879.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion10183.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14306.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15089.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14364.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14460.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14364.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15213.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14701.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14962.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14957.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15125.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15083.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15089.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15419.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15431.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14943.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15110.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15184.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15232.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00216.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00825.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14742.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14793.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01298.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01773.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07493.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08075.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11308.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12138.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00296.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00546.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00302.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00405.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07179.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08095.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00452.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00734.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13382.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14246.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00464.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00645.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00464.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00892.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00645.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00892.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00488.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00739.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00499.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00954.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15592.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15661.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00519.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00689.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00544.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00703.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12385.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12487.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12507.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13107.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00578.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00949.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00605.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00687.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00741.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00787.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00764.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00873.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04298.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05725.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14281.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14977.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07073.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07229.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07073.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07625.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07073.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07923.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07229.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07923.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13663.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13929.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14449.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15254.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14331.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15245.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00890.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00932.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13600.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13721.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00924.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/1. Single/Onion00936.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13921.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14183.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12311.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12427.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12654.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12900.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01075.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01378.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01378.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01836.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01040.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01426.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01840.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01930.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01093.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01631.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01126.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01428.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01126.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01613.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01428.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01613.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07500.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07857.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13495.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13810.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14624.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14826.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01173.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01874.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14785.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15142.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01211.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01678.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01213.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01649.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01299.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01849.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01291.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01658.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02346.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02906.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01363.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01366.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01389.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01706.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01389.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01856.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01706.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01856.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05107.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06764.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01485.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01719.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01569.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01894.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05285.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06264.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06264.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06935.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01573.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion02019.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13533.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13593.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01652.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01907.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01655.jpg",
+      "file2": "New Onion - Copy/1. Leaves/1. Healthy/2. Multiple/Onion01973.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12987.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13004.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14863.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14997.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06084.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06792.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12678.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13062.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13590.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14052.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04122.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05356.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14505.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14508.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14128.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14172.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02122.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02208.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15383.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16170.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14580.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14924.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12338.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12740.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02174.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02719.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion08423.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion09168.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14702.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14939.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02336.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02774.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02338.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02873.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02404.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02873.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14001.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14140.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14883.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14944.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02634.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02995.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02665.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02691.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02833.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02943.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14582.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14782.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion02966.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/1. Single/Onion03004.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07186.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07911.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14819.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15103.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03046.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03919.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03074.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03943.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04129.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06345.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13480.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14269.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03242.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03757.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03337.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03428.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03338.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03591.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03342.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03359.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03350.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03660.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03609.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03660.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04313.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06222.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14608.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14931.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03535.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03635.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03564.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03718.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03579.jpg",
+      "file2": "New Onion - Copy/1. Leaves/2. Unhealthy/2. Multiple/Onion03688.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04271.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04566.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14691.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14955.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05428.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05869.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06442.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06541.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04455.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05314.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04665.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06536.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07608.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08118.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06177.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06667.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06597.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06667.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04622.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05325.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12267.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12497.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16156.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16187.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15293.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15737.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15293.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15744.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15737.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15744.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05127.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05169.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05175.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06023.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12353.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12608.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05268.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06916.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14733.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14891.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05299.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05912.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05512.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06788.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14680.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14788.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06199.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06649.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14817.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14900.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06325.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06343.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12845.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13184.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12276.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12390.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion08243.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion11150.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion09418.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion10349.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11830.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11922.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07571.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08136.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13609.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14254.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13349.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13845.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07113.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07518.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07342.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07813.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07141.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07575.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07484.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07943.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07193.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07205.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07212.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07779.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07249.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07777.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13360.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13919.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07330.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07481.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07352.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08039.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07562.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07800.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07442.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07908.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07448.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07925.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07483.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion08080.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07498.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07946.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07716.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07973.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07842.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/2. Multiple/Onion07849.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15452.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16133.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion08284.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion09545.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14286.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14488.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15545.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15683.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14786.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15105.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14954.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15051.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14584.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14660.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14313.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15144.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15459.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15643.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11597.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12221.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12221.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12240.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13363.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14276.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11173.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11604.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11192.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11954.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11261.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11948.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11271.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11948.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11276.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11698.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11305.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11869.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11412.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12129.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11442.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11571.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11699.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11977.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11643.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11913.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11709.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12015.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11717.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11895.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11822.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12164.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11884.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12048.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13348.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13731.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12014.jpg",
+      "file2": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion12223.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12574.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12704.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12698.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12789.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12858.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13142.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12971.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13156.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12993.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13170.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13322.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13717.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13323.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14131.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13353.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13744.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14512.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14896.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13819.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13885.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13408.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13964.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13424.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14222.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13454.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14079.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13482.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14070.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13583.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14151.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13607.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14226.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13655.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13790.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13690.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13793.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13811.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14261.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13849.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13944.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13954.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14239.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion13937.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14047.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14048.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/2. Multiple/Onion14058.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14321.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15115.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14320.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14501.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14335.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15048.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14335.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15093.jpg",
+      "hamming_distance": 2
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15048.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15093.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14524.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15154.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14543.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14682.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14619.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14713.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14644.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14809.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14714.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14893.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14748.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14908.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14994.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15266.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion14999.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15175.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15040.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15058.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15106.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15139.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15150.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/1. Single/Onion15233.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15297.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15571.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16020.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16152.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15458.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16212.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15495.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15934.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15703.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16263.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15958.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16093.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15863.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16126.jpg",
+      "hamming_distance": 3
+    },
+    {
+      "file1": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16091.jpg",
+      "file2": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion16200.jpg",
+      "hamming_distance": 0
+    }
+  ]
+}

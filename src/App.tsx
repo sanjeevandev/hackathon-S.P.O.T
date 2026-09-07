@@ -1,20 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header } from './components/Header';
-import { LanguageStep } from './components/LanguageStep';
-import { CameraStep } from './components/CameraStep';
-import { ResultsStep } from './components/ResultsStep';
+import { HomeStep } from './components/HomeStep';
+import { NewInspectionStep } from './components/NewInspectionStep';
+import { CaptureStep } from './components/CaptureStep';
+import { AnalyzingStep } from './components/AnalyzingStep';
+import { ResultStep } from './components/ResultStep';
+import { EvidenceStep } from './components/EvidenceStep';
+import { ReportStep } from './components/ReportStep';
 import { HistoryStep } from './components/HistoryStep';
 import { VerifyStep } from './components/VerifyStep';
 import { AdminStep } from './components/AdminStep';
 import { PresenterToolbar } from './components/PresenterToolbar';
-import { AppStep, ScanResult } from './types';
-import { JUDGE_DEMO_SAMPLES } from './data/judgeSamples';
+import { AppRoute, CanonicalInspectionResult, NewInspectionMeta } from './types';
+import { getCanonicalResult } from './api/inspections';
 
 export function App() {
   const { i18n } = useTranslation();
-  const [currentStep, setCurrentStep] = useState<AppStep>('language');
-  const [scanResult, setScanResult] = useState<ScanResult | null>(null);
+  const [currentRoute, setCurrentRoute] = useState<AppRoute>('home');
+
+  const [inspectionMeta, setInspectionMeta] = useState<NewInspectionMeta | null>(null);
+  const [capturedFile, setCapturedFile] = useState<File | null>(null);
+  const [canonicalResult, setCanonicalResult] = useState<CanonicalInspectionResult | null>(null);
+  const [activeInspectionId, setActiveInspectionId] = useState<string | null>(null);
+
   const [isOffline, setIsOffline] = useState<boolean>(!navigator.onLine);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [verifyBatchId, setVerifyBatchId] = useState<string | null>(null);
@@ -23,16 +32,14 @@ export function App() {
   const [isServerAiMode, setIsServerAiMode] = useState<boolean>(false);
 
   useEffect(() => {
-    // Check if opening via QR Code verification link (/verify?batch_id=...) or /admin
     const urlParams = new URLSearchParams(window.location.search);
     const batchParam = urlParams.get('batch_id');
     if (window.location.pathname.includes('/verify') || batchParam) {
       setVerifyBatchId(batchParam || 'BATCH-MH-2026-891');
     } else if (window.location.pathname.includes('/admin')) {
-      setCurrentStep('admin');
+      setCurrentRoute('admin');
     }
 
-    // Global Shift + P hotkey listener for Presenter Floating Toolbar
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.shiftKey && (e.key === 'P' || e.key === 'p')) {
         e.preventDefault();
@@ -68,39 +75,28 @@ export function App() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.95;
       utterance.pitch = 1.0;
-
-      const langMap: Record<string, string> = {
-        en: 'en-US',
-        hi: 'hi-IN',
-        mr: 'mr-IN',
-        ta: 'ta-IN',
-      };
+      const langMap: Record<string, string> = { en: 'en-US', hi: 'hi-IN', mr: 'mr-IN', ta: 'ta-IN' };
       utterance.lang = langMap[i18n.language] || 'en-US';
       window.speechSynthesis.speak(utterance);
     }
   };
 
-  const handleCaptureResult = (result: ScanResult) => {
-    setScanResult(result);
-    setCurrentStep('results');
+  const handleStartNewInspection = () => {
+    setCanonicalResult(null);
+    setCapturedFile(null);
+    setInspectionMeta(null);
+    setActiveInspectionId(null);
+    setCurrentRoute('new_inspection');
   };
 
-  const handleSelectHistoryReport = (result: ScanResult) => {
-    setScanResult(result);
-    setCurrentStep('results');
-  };
-
-  const handleInstallPwa = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult: any) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted S.P.O.T. PWA installation');
-        }
-        setDeferredPrompt(null);
-      });
-    } else {
-      alert('To install S.P.O.T., tap "Add to Home Screen" in your browser menu!');
+  const handleSelectHistoryInspection = async (inspectionId: string) => {
+    try {
+      setActiveInspectionId(inspectionId);
+      const res = await getCanonicalResult(inspectionId);
+      setCanonicalResult(res);
+      setCurrentRoute('result');
+    } catch (err: any) {
+      alert(`Failed to load stored inspection result: ${err.message}`);
     }
   };
 
@@ -121,58 +117,97 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#F7F5F0] text-[#0F281E] flex flex-col font-sans pb-12">
       <Header
-        currentStep={currentStep}
-        onSelectStep={setCurrentStep}
+        currentStep={currentRoute as any}
+        onSelectStep={(step) => setCurrentRoute(step as AppRoute)}
         onPlayVoice={handlePlayVoice}
         isOffline={isOffline}
         canInstallPwa={Boolean(deferredPrompt)}
-        onInstallPwa={handleInstallPwa}
+        onInstallPwa={() => deferredPrompt?.prompt()}
         judgeDemoMode={judgeDemoMode}
         onToggleJudgeDemoMode={() => {
           setJudgeDemoMode(!judgeDemoMode);
-          if (!judgeDemoMode) {
-            setCurrentStep('camera');
-            handlePlayVoice('Judge Evaluation Mode Activated. Choose a pre-loaded batch sample.');
-          }
+          if (!judgeDemoMode) handleStartNewInspection();
         }}
         onTogglePresenterToolbar={() => setIsPresenterToolbarOpen(!isPresenterToolbarOpen)}
       />
 
       <main className="flex-1">
-        {currentStep === 'language' && (
-          <LanguageStep
-            onProceed={() => setCurrentStep('camera')}
-            onPlayVoice={handlePlayVoice}
+        {currentRoute === 'home' && (
+          <HomeStep
+            onNavigate={setCurrentRoute}
+            onStartNewInspection={handleStartNewInspection}
           />
         )}
 
-        {currentStep === 'camera' && (
-          <CameraStep
-            onCapture={handleCaptureResult}
-            onBack={() => setCurrentStep('language')}
-            onPlayVoice={handlePlayVoice}
-            judgeDemoMode={judgeDemoMode}
+        {currentRoute === 'new_inspection' && (
+          <NewInspectionStep
+            onBack={() => setCurrentRoute('home')}
+            onProceed={(meta) => {
+              setInspectionMeta(meta);
+              setCurrentRoute('capture');
+            }}
           />
         )}
 
-        {currentStep === 'results' && (
-          <ResultsStep
-            result={scanResult}
-            onResetScan={() => setCurrentStep('camera')}
-            onPlayVoice={handlePlayVoice}
+        {currentRoute === 'capture' && inspectionMeta && (
+          <CaptureStep
+            meta={inspectionMeta}
+            onBack={() => setCurrentRoute('new_inspection')}
+            onImageSelected={(file) => {
+              setCapturedFile(file);
+              setCurrentRoute('analyzing');
+            }}
           />
         )}
 
-        {currentStep === 'history' && (
+        {currentRoute === 'analyzing' && inspectionMeta && capturedFile && (
+          <AnalyzingStep
+            meta={inspectionMeta}
+            file={capturedFile}
+            onSuccess={(result) => {
+              setCanonicalResult(result);
+              setActiveInspectionId(result.inspection_id);
+              setCurrentRoute('result');
+            }}
+            onError={(err) => {
+              alert(`Inspection pipeline error: ${err}`);
+              setCurrentRoute('home');
+            }}
+          />
+        )}
+
+        {currentRoute === 'result' && canonicalResult && (
+          <ResultStep
+            result={canonicalResult}
+            onNavigate={setCurrentRoute}
+            onNewInspection={handleStartNewInspection}
+          />
+        )}
+
+        {currentRoute === 'evidence' && canonicalResult && (
+          <EvidenceStep
+            result={canonicalResult}
+            onBack={() => setCurrentRoute('result')}
+          />
+        )}
+
+        {currentRoute === 'report' && (activeInspectionId || canonicalResult?.inspection_id) && (
+          <ReportStep
+            inspectionId={activeInspectionId || canonicalResult!.inspection_id}
+            onBack={() => setCurrentRoute('result')}
+          />
+        )}
+
+        {currentRoute === 'history' && (
           <HistoryStep
-            onSelectReport={handleSelectHistoryReport}
-            onPlayVoice={handlePlayVoice}
+            onSelectInspection={handleSelectHistoryInspection}
+            onBack={() => setCurrentRoute('home')}
           />
         )}
 
-        {currentStep === 'admin' && (
+        {currentRoute === 'admin' && (
           <AdminStep
-            onBackToApp={() => setCurrentStep('camera')}
+            onBackToApp={() => setCurrentRoute('home')}
             onPlayVoice={handlePlayVoice}
           />
         )}
@@ -180,38 +215,17 @@ export function App() {
 
       <footer className="mt-auto py-4 text-center text-xs text-stone-500 font-bold border-t border-stone-200">
         <p>S.P.O.T. • Smart Produce Optimization & Tracking PWA</p>
-        <p className="text-[10px] text-stone-400 mt-0.5">SIH 2026 AI Onion Quality Grading System • Offline ServiceWorker</p>
+        <p className="text-[10px] text-stone-400 mt-0.5">SIH 2026 AI Onion Quality Grading System • Digital Quality Inspection Report Engine</p>
       </footer>
 
-      {/* Presenter Floating Toolbar Modal (Triggered via Shift + P or 3s Logo Hold) */}
       <PresenterToolbar
         isVisible={isPresenterToolbarOpen}
         onClose={() => setIsPresenterToolbarOpen(false)}
-        onResetDemo={() => {
-          setScanResult(null);
-          i18n.changeLanguage('hi');
-          setCurrentStep('language');
-          setJudgeDemoMode(false);
-        }}
+        onResetDemo={() => handleStartNewInspection()}
         isServerAiMode={isServerAiMode}
         onToggleAiMode={() => setIsServerAiMode(!isServerAiMode)}
         onSimulateHardware={() => {
-          const sampleResult = JUDGE_DEMO_SAMPLES[0].result;
-          const simulatedResult: ScanResult = {
-            ...sampleResult,
-            weightDistribution: {
-              total_batch_weight_kg: 25.4,
-              grade_a_weight_kg: 19.9,
-              grade_urs_weight_kg: 3.8,
-              rejected_weight_kg: 1.7,
-              grade_a_weight_percentage: 78.3,
-              grade_urs_weight_percentage: 15.0,
-              rejected_weight_percentage: 6.7,
-            }
-          };
-          setScanResult(simulatedResult);
-          setCurrentStep('results');
-          handlePlayVoice('Simulated scale weight 25.4 kg captured. Generating receipt print.');
+          handlePlayVoice('Simulated scale weight sync active.');
         }}
       />
     </div>

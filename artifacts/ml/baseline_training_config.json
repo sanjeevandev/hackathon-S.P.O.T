@@ -1,0 +1,13 @@
+{
+  "model_architecture": "ResNet18 / Feature Classifier",
+  "dataset_version": "1.0.0-audited",
+  "split_version": "1.0.0-grouped",
+  "input_features": 74,
+  "learning_rate": 0.001,
+  "batch_size": 64,
+  "epochs": 20,
+  "optimizer": "Adam",
+  "loss_function": "CrossEntropyLoss",
+  "seed": 42,
+  "training_time_seconds": 6.68
+}
