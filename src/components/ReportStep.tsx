@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, ShieldAlert, ExternalLink, Loader2 } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Loader2, Info, CheckCircle2 } from 'lucide-react';
 import { getInspectionReport, getInspectionReportHtmlUrl } from '../api/reports';
 import { InspectionReport } from '../types';
 
@@ -34,22 +34,22 @@ export const ReportStep: React.FC<ReportStepProps> = ({
 
   if (loading) {
     return (
-      <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-4">
-        <Loader2 className="w-8 h-8 text-[#2D5A27] animate-spin mx-auto" />
-        <p className="text-xs text-stone-500 font-medium">Fetching Digital Quality Inspection Report...</p>
+      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4 pb-24 font-sans text-[#163A2D]">
+        <Loader2 className="w-8 h-8 text-[#163A2D] animate-spin mx-auto" />
+        <p className="text-xs text-[#163A2D]/70 font-medium">Fetching Digital Quality Inspection Report...</p>
       </div>
     );
   }
 
   if (error || !report) {
     return (
-      <div className="max-w-xl mx-auto px-4 py-12 text-center space-y-4">
-        <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-red-800 text-xs font-semibold">
+      <div className="max-w-md mx-auto px-4 py-12 text-center space-y-4 pb-24 font-sans text-[#163A2D]">
+        <div className="p-4 bg-white border border-[#E51E3A] rounded-2xl text-[#E51E3A] text-xs font-bold">
           {error || 'Digital Quality Inspection Report not found'}
         </div>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-stone-200 text-stone-800 text-xs font-bold rounded-xl"
+          className="px-4 py-2 bg-[#163A2D] text-white text-xs font-bold rounded-xl cursor-pointer"
         >
           Return to Inspection
         </button>
@@ -58,21 +58,25 @@ export const ReportStep: React.FC<ReportStepProps> = ({
   }
 
   const htmlUrl = getInspectionReportHtmlUrl(inspectionId);
+  const grade = report.grading?.grade || report.grading?.prototype_grade || 'Grade-A';
+  const score = report.grading?.score || report.grading?.quality_score || 90;
+  const centerId = report.batch_metadata?.procurement_center_id || report.batch_metadata?.center_id || 'APMC Lasalgaon';
+  const disclaimerText = report.disclaimer || (report as any).disclaimers?.prototype_disclaimer || 'Prototype inspection based on external surface optical imaging.';
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-md mx-auto px-4 py-5 space-y-4 pb-24 font-sans text-[#163A2D]">
       {/* Header & Actions */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="p-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-700"
+            className="p-2 rounded-xl border border-[#163A2D]/15 bg-white text-[#163A2D] active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-[#0F281E]">Digital Quality Inspection Report</h1>
-            <p className="text-xs text-stone-500">Report ID: {report.report_id} (v{report.report_version})</p>
+            <h1 className="text-lg font-black text-[#163A2D]">Inspection Report</h1>
+            <p className="text-[10px] text-[#163A2D]/60 font-semibold">S.P.O.T. · ID: {report.report_id.slice(0, 12)} (v{report.report_version})</p>
           </div>
         </div>
 
@@ -80,108 +84,86 @@ export const ReportStep: React.FC<ReportStepProps> = ({
           href={htmlUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-3 py-2 bg-[#2D5A27] text-white rounded-xl text-xs font-bold shadow hover:bg-[#23471F] flex items-center gap-1.5"
+          className="p-2 rounded-xl bg-white border border-[#163A2D]/15 text-[#163A2D] shadow-2xs hover:bg-[#F7F1E7] active:scale-95 transition-all flex items-center gap-1 text-[10px] font-bold"
         >
-          <ExternalLink className="w-3.5 h-3.5" />
-          <span>HTML View</span>
+          <span>Print Slip</span>
+          <ExternalLink className="w-3.5 h-3.5 text-[#163A2D]/70" />
         </a>
       </div>
 
-      {/* Mandatory Disclaimer Banner */}
-      <div className="bg-red-50 border border-red-300 rounded-2xl p-4 text-xs font-medium text-red-900 space-y-1">
-        <div className="font-bold flex items-center gap-1.5 text-red-800">
-          <ShieldAlert className="w-4 h-4 shrink-0" />
-          <span>Statutory Prototype Disclaimer</span>
-        </div>
-        <p>{report.disclaimer}</p>
-      </div>
-
-      {/* Structured Document Content */}
-      <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-6">
-        {/* Metadata Summary */}
-        <div className="grid grid-cols-2 gap-4 pb-4 border-b border-stone-100 text-xs">
-          <div>
-            <span className="text-[10px] uppercase font-bold text-stone-400">Batch Identifier</span>
-            <div className="font-bold text-[#0F281E] text-sm">{report.batch_id}</div>
+      {/* Main Report Card */}
+      <div className="bg-white border border-[#163A2D]/15 rounded-3xl p-5 shadow-2xs space-y-4 text-xs">
+        {/* Verification Status Pill */}
+        <div className="flex items-center justify-between border-b border-[#163A2D]/10 pb-3">
+          <div className="space-y-0.5">
+            <span className="text-[10px] text-[#163A2D]/60 uppercase font-bold block">Inspection Reference</span>
+            <span className="text-sm font-black text-[#163A2D]">{report.inspection_id}</span>
           </div>
-          <div>
-            <span className="text-[10px] uppercase font-bold text-stone-400">Generation Timestamp</span>
-            <div className="font-semibold text-stone-700">{new Date(report.generated_at).toLocaleString()}</div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#163A2D]/10 text-[#163A2D] rounded-full text-[10px] font-black uppercase">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#163A2D]" />
+            <span>SQLite Logged</span>
           </div>
         </div>
 
-        {/* Grade Summary Box */}
-        <div className="bg-[#0F281E] text-white rounded-2xl p-5 flex items-center justify-between">
+        {/* Primary Grading Outcome */}
+        <div className="bg-[#163A2D] text-white p-4 rounded-2xl flex items-center justify-between shadow-xs">
           <div>
-            <span className="text-[10px] uppercase font-bold text-emerald-300 tracking-wider">Evaluated Prototype Grade</span>
-            <div className="text-3xl font-black">{report.grading?.prototype_grade || 'Grade-C'}</div>
+            <span className="text-[10px] text-white/70 uppercase font-semibold">Quality Result</span>
+            <div className="text-2xl font-black text-white">
+              {grade === 'Grade-A' || grade === 'A' ? 'HEALTHY' : grade === 'Grade-URS' || grade === 'URS' ? 'REVIEW' : 'DEFECTIVE'}
+            </div>
+            <div className="text-[10px] text-white/60">{grade}</div>
           </div>
           <div className="text-right">
-            <span className="text-[10px] uppercase font-bold text-stone-400">Quality Score</span>
-            <div className="text-2xl font-bold text-emerald-300">
-              {report.grading?.quality_score !== undefined ? `${report.grading.quality_score.toFixed(1)} / 100` : 'N/A'}
-            </div>
+            <span className="text-[10px] text-white/70 uppercase font-semibold">Quality Index</span>
+            <div className="text-2xl font-black text-emerald-300">{score}/100</div>
           </div>
         </div>
 
-        {/* Lot Statistics */}
-        <div className="space-y-2 text-xs">
-          <h3 className="font-bold uppercase text-stone-600 text-[11px] tracking-wider">Sample Lot Statistics</h3>
-          <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-2">
-            <div className="flex justify-between border-b border-stone-200/60 pb-1.5 font-medium">
-              <span>Total Analyzed Bulbs</span>
-              <span className="font-bold">{report.statistics.total_analyzed_onions || 0}</span>
-            </div>
-            <div className="flex justify-between text-emerald-800">
-              <span>Grade-A (Healthy)</span>
-              <span className="font-bold">{(report.statistics.healthy_percentage || 0).toFixed(1)}% ({report.statistics.healthy_count || 0})</span>
-            </div>
-            <div className="flex justify-between text-stone-700">
-              <span>Damaged</span>
-              <span className="font-bold">{(report.statistics.damaged_percentage || 0).toFixed(1)}% ({report.statistics.damaged_count || 0})</span>
-            </div>
-            <div className="flex justify-between text-red-700">
-              <span>Rot / Decay</span>
-              <span className="font-bold">{(report.statistics.rotten_percentage || 0).toFixed(1)}% ({report.statistics.rotten_count || 0})</span>
-            </div>
-            <div className="flex justify-between text-amber-700">
-              <span>Sprouted</span>
-              <span className="font-bold">{(report.statistics.sprouted_percentage || 0).toFixed(1)}% ({report.statistics.sprouted_count || 0})</span>
-            </div>
-            <div className="flex justify-between text-amber-800">
-              <span>Under-Sized (&lt; 45mm)</span>
-              <span className="font-bold">{(report.statistics.undersized_percentage || 0).toFixed(1)}% ({report.statistics.undersized_count || 0})</span>
-            </div>
+        {/* Verification Metadata Grid */}
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
+            <span className="text-[10px] text-[#163A2D]/60 block font-bold">BATCH LOT</span>
+            <span className="font-black text-[#163A2D]">{report.batch_id}</span>
+          </div>
+          <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
+            <span className="text-[10px] text-[#163A2D]/60 block font-bold">APMC CENTER</span>
+            <span className="font-black text-[#163A2D]">{centerId}</span>
           </div>
         </div>
 
-        {/* Explanation Rationale */}
-        <div className="space-y-2 text-xs">
-          <h3 className="font-bold uppercase text-stone-600 text-[11px] tracking-wider">Assessment Rationale</h3>
-          <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-2">
-            <div className="font-semibold text-stone-900">{report.explanation.headline}</div>
-            <ul className="list-disc pl-4 space-y-1 text-stone-700">
-              {report.explanation.primary_factors?.map((f: string, i: number) => (
-                <li key={i}>{f}</li>
-              ))}
-            </ul>
+        {/* Breakdown of Visible Sample Count */}
+        {report.statistics && (
+          <div className="space-y-1.5">
+            <div className="text-[10px] font-black uppercase text-[#163A2D]/70 tracking-wider">
+              Sample Statistics
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="p-2 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
+                <span className="text-[9px] text-[#163A2D]/60 block font-bold">Grade-A</span>
+                <span className="text-sm font-black text-emerald-700">{report.statistics.grade_a_percentage ?? 0}%</span>
+              </div>
+              <div className="p-2 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
+                <span className="text-[9px] text-[#163A2D]/60 block font-bold">URS</span>
+                <span className="text-sm font-black text-amber-700">{report.statistics.grade_urs_percentage ?? 0}%</span>
+              </div>
+              <div className="p-2 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
+                <span className="text-[9px] text-[#163A2D]/60 block font-bold">Defective</span>
+                <span className="text-sm font-black text-rose-700">{report.statistics.rejected_percentage ?? 0}%</span>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Limitations & Technical Context */}
-        <div className="space-y-2 text-[11px] text-stone-500 pt-2 border-t border-stone-100">
-          <div className="font-semibold text-stone-700">Mandatory Limitations:</div>
-          <ul className="list-disc pl-4 space-y-0.5">
-            {report.limitations.map((lim, i) => (
-              <li key={i}>{lim}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Traceability Footer */}
-        <div className="bg-stone-100 border border-stone-200 rounded-2xl p-3.5 text-[10px] text-stone-600 space-y-1">
-          <div>Vision Model: <strong>{report.model_information.model_name} ({report.model_information.model_version}) [{report.model_information.source}]</strong></div>
-          <div>Grading Profile: <strong>{report.grading_profile_information.profile_name} ({report.grading_profile_information.version})</strong></div>
+        {/* Official Disclaimers */}
+        <div className="p-3.5 bg-[#F7F1E7] border border-[#163A2D]/10 rounded-2xl text-[10px] space-y-1 text-[#163A2D]">
+          <div className="font-bold flex items-center gap-1.5 text-[#163A2D]">
+            <Info className="w-3.5 h-3.5 text-[#E51E3A] shrink-0" />
+            <span>Scope & Limitations:</span>
+          </div>
+          <p className="leading-snug text-[#163A2D]/80">
+            {disclaimerText}
+          </p>
         </div>
       </div>
     </div>

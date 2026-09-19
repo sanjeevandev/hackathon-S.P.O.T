@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./pwa-192x192.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1E3A2B" />
-    <meta name="description" content="S.P.O.T. - Agricultural Onion Quality Grading Progressive Web App" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#163A2D" />
+    <meta name="description" content="S.P.O.T. - Smart Onion Quality Detector" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="S.P.O.T." />
@@ -17,21 +17,69 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"></noscript>
     
-    <title>S.P.O.T. - Onion Quality Scanner</title>
+    <title>S.P.O.T. - Smart Onion Quality Detector</title>
+
+    <!-- Global WebView Crash Guard: Logs any unhandled rejection without blocking rendering -->
+    <script>
+      window.addEventListener('unhandledrejection', function (event) {
+        console.warn('[S.P.O.T. Guard] Caught unhandled promise rejection:', event.reason);
+      });
+    </script>
   </head>
-  <body class="bg-[#F7F5F0] text-[#0F281E]">
+  <body class="bg-[#F7F1E7] text-[#163A2D]">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- PWA Service Worker Registration for Offline Connectivity -->
+    <!-- PWA Service Worker Registration for Offline Web & Safe Capacitor Handling -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('S.P.O.T. ServiceWorker active:', reg.scope))
-            .catch(err => console.log('S.P.O.T. ServiceWorker error:', err));
-        });
-      }
+      (function() {
+        if (!('serviceWorker' in navigator)) return;
+
+        // Native Capacitor / Android WebView detection
+        var isCapacitorNative =
+          window.Capacitor !== undefined ||
+          window.location.protocol === 'capacitor:' ||
+          window.location.protocol === 'ionic:' ||
+          window.location.hostname === 'capacitor.localhost' ||
+          (window.location.protocol === 'https:' && window.location.hostname === 'localhost' && !window.location.port) ||
+          (window.location.protocol === 'http:' && window.location.hostname === 'localhost' && !window.location.port);
+
+        var isInternalOrAnnotation =
+          window.location.pathname.indexOf('/internal') !== -1 ||
+          window.location.hash.indexOf('annotation') !== -1;
+
+        if (isCapacitorNative || isInternalOrAnnotation) {
+          // Immediately unregister all service workers in Native WebView
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (var i = 0; i < registrations.length; i++) {
+              registrations[i].unregister();
+            }
+          }).catch(function() {});
+
+          // Purge stale cache storage created by prior service workers in this WebView
+          if ('caches' in window) {
+            caches.keys().then(function(keys) {
+              for (var j = 0; j < keys.length; j++) {
+                caches.delete(keys[j]);
+              }
+            }).catch(function() {});
+          }
+        } else {
+          // Standard Web PWA only (skip in local development server ports)
+          var isDevPort = window.location.port === '5173' || window.location.port === '3000';
+          if (!isDevPort) {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/sw.js')
+                .then(function(reg) {
+                  console.log('S.P.O.T. ServiceWorker active:', reg.scope);
+                })
+                .catch(function(err) {
+                  console.warn('S.P.O.T. ServiceWorker registration skipped:', err);
+                });
+            });
+          }
+        }
+      })();
     </script>
   </body>
 </html>

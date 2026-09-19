@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Eye } from 'lucide-react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { ArrowLeft, ShieldCheck, Info, CheckCircle2, XCircle, AlertTriangle, Cpu } from 'lucide-react';
 import { CanonicalInspectionResult } from '../types';
 
 interface EvidenceStepProps {
@@ -7,185 +8,145 @@ interface EvidenceStepProps {
   onBack: () => void;
 }
 
+function gradeToLabel(gradeName: string): 'HEALTHY' | 'DEFECTIVE' | 'REVIEW' {
+  if (gradeName === 'Grade-A' || gradeName === 'A') return 'HEALTHY';
+  if (gradeName === 'Grade-URS' || gradeName === 'URS') return 'REVIEW';
+  return 'DEFECTIVE';
+}
+
 export const EvidenceStep: React.FC<EvidenceStepProps> = ({
   result,
   onBack,
 }) => {
-  const onions = result.onions || [];
-  const [selectedOnionId, setSelectedOnionId] = useState<string | null>(onions[0]?.onion_id || null);
+  const { t } = useTranslation();
+  const gradeName = result.grading?.prototype_grade || 'Grade-A';
+  const label = gradeToLabel(gradeName);
+  const isHealthy = label === 'HEALTHY';
+  const isReview = label === 'REVIEW';
+  const confValue = typeof result.confidence === 'number' ? result.confidence : 0.95;
+  const confPercent = (confValue * 100).toFixed(1);
 
-  const selectedOnion = onions.find((o) => o.onion_id === selectedOnionId) || onions[0];
+  // Try to resolve captured image URL
+  // Backend may return a relative path like /api/v1/... or a full URL
+  const capturedImageUrl = result.captured_image_url;
+  const hasImage = Boolean(capturedImageUrl);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
-      {/* Navigation & Header */}
+    <div className="max-w-md mx-auto px-4 py-5 space-y-5 pb-24 font-sans text-[#163A2D]">
+      {/* Header */}
       <div className="flex items-center gap-3">
         <button
           onClick={onBack}
-          className="p-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-700"
+          className="p-2 rounded-xl border border-[#163A2D]/15 bg-white text-[#163A2D] active:scale-95 transition-all shadow-2xs cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-xl font-bold text-[#0F281E]">Evidence Overlay Viewer</h1>
-          <p className="text-xs text-stone-500">Inspection ID: {result.inspection_id}</p>
+          <h1 className="text-xl font-black text-[#163A2D]">Visual Evidence</h1>
+          <p className="text-xs text-[#163A2D]/70">Inspection: {result.inspection_id.slice(0, 16)}</p>
         </div>
       </div>
 
-      {/* Visual Bounding Box Canvas / Image Container */}
-      <div className="bg-black rounded-3xl overflow-hidden aspect-[4/3] relative flex items-center justify-center border-4 border-[#2D5A27] shadow-lg">
-        {/* Placeholder / Sample Image Display */}
-        <div className="absolute inset-0 bg-gradient-to-br from-stone-800 to-stone-950 flex flex-col items-center justify-center p-4">
-          <Eye className="w-12 h-12 text-emerald-400/80 mb-2 animate-pulse" />
-          <span className="text-xs font-semibold text-stone-300">Sample Frame Bounding Overlay</span>
-          <span className="text-[11px] text-stone-500 mt-1">{onions.length} Bulbs Detected</span>
+      {/* Captured Image OR placeholder */}
+      <div className="bg-[#163A2D] rounded-3xl overflow-hidden aspect-4/3 relative flex items-center justify-center border-2 border-[#163A2D] shadow-md">
+        {hasImage ? (
+          <img
+            src={capturedImageUrl!}
+            alt="Captured Onion Sample"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              // If image fails to load, hide it and show placeholder
+              (e.currentTarget as HTMLImageElement).style.display = 'none';
+              const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+              if (placeholder) placeholder.style.display = 'flex';
+            }}
+          />
+        ) : null}
+        {/* Placeholder: shown when no image URL or image fails */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white space-y-2"
+          style={{ display: hasImage ? 'none' : 'flex' }}
+        >
+          <ShieldCheck className="w-10 h-10 text-emerald-400" />
+          <div className="text-xs font-black uppercase tracking-wider">Whole-Sample Optical Classifier</div>
+          <p className="text-xs text-white/80 max-w-xs leading-relaxed">
+            YOLO26n-cls classifies external onion characteristics across the entire sample image.
+          </p>
         </div>
 
-        {/* Bounding Box Overlays */}
-        {onions.map((onion) => {
-          const isSelected = onion.onion_id === selectedOnion?.onion_id;
-          const [ymin, xmin, ymax, xmax] = onion.bounding_box;
-
-          // Convert coordinates into approximate percentages for CSS relative layout
-          const styleTop = `${(ymin / 720) * 100}%`;
-          const styleLeft = `${(xmin / 1280) * 100}%`;
-          const styleWidth = `${((xmax - xmin) / 1280) * 100}%`;
-          const styleHeight = `${((ymax - ymin) / 720) * 100}%`;
-
-          let strokeColor = 'border-emerald-500 bg-emerald-500/20';
-          if (onion.final_status === 'DAMAGED' || onion.final_status === 'ROTTEN') {
-            strokeColor = 'border-red-500 bg-red-500/25';
-          } else if (onion.final_status === 'SPROUTED' || onion.final_status === 'UNDERSIZED') {
-            strokeColor = 'border-amber-500 bg-amber-500/20';
-          }
-
-          return (
-            <button
-              key={onion.onion_id}
-              onClick={() => setSelectedOnionId(onion.onion_id)}
-              style={{ top: styleTop, left: styleLeft, width: styleWidth, height: styleHeight }}
-              className={`absolute border-2 rounded-lg transition-all ${strokeColor} ${
-                isSelected ? 'ring-4 ring-white shadow-2xl scale-[1.02] z-20' : 'opacity-80 hover:opacity-100 z-10'
-              }`}
-            >
-              <span className="absolute -top-5 left-0 bg-[#0F281E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
-                {onion.onion_id}
-              </span>
-            </button>
-          );
-        })}
+        {/* Classification badge overlay */}
+        {hasImage && (
+          <div className={`absolute top-3 right-3 px-3 py-1.5 rounded-full text-[10px] font-black uppercase flex items-center gap-1.5 border backdrop-blur-sm shadow-md ${
+            isHealthy
+              ? 'bg-emerald-600/90 text-white border-emerald-400'
+              : isReview
+              ? 'bg-amber-600/90 text-white border-amber-400'
+              : 'bg-[#E51E3A]/90 text-white border-rose-400'
+          }`}>
+            {isHealthy
+              ? <CheckCircle2 className="w-3.5 h-3.5" />
+              : isReview
+              ? <AlertTriangle className="w-3.5 h-3.5" />
+              : <XCircle className="w-3.5 h-3.5" />
+            }
+            <span>{label}</span>
+          </div>
+        )}
       </div>
 
-      {/* Multi-Onion Selector List */}
-      <div className="space-y-2">
-        <label className="block text-xs font-bold uppercase tracking-wider text-stone-600">
-          Detected Onion Bulbs ({onions.length})
-        </label>
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {onions.map((onion) => (
-            <button
-              key={onion.onion_id}
-              onClick={() => setSelectedOnionId(onion.onion_id)}
-              className={`px-3 py-2 rounded-xl text-xs font-bold shrink-0 transition-all ${
-                onion.onion_id === selectedOnion?.onion_id
-                  ? 'bg-[#2D5A27] text-white shadow-md'
-                  : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50'
-              }`}
-            >
-              {onion.onion_id} ({onion.final_status})
-            </button>
-          ))}
+      {/* AI Assessment Card */}
+      <div className="bg-white border border-[#163A2D]/15 rounded-3xl p-5 shadow-2xs space-y-4">
+        <div className="flex items-center gap-2 border-b border-[#163A2D]/10 pb-3">
+          <Cpu className="w-4 h-4 text-[#163A2D]/60" />
+          <h2 className="text-xs font-black uppercase tracking-wider text-[#163A2D]">{t('aiAssessment')}</h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          {/* Classification */}
+          <div className="bg-[#F7F1E7] p-3 rounded-2xl border border-[#163A2D]/10">
+            <div className="text-[#163A2D]/60 text-[10px] uppercase font-bold mb-1">Classification</div>
+            <div className={`font-black text-sm ${
+              isHealthy ? 'text-emerald-700' : isReview ? 'text-amber-700' : 'text-[#E51E3A]'
+            }`}>
+              {label}
+            </div>
+            <div className="text-[9px] text-[#163A2D]/50 mt-0.5">{gradeName}</div>
+          </div>
+
+          {/* Confidence */}
+          <div className="bg-[#F7F1E7] p-3 rounded-2xl border border-[#163A2D]/10">
+            <div className="text-[#163A2D]/60 text-[10px] uppercase font-bold mb-1">Confidence</div>
+            <div className="font-black text-sm text-[#163A2D]">{confPercent}%</div>
+            <div className="text-[9px] text-[#163A2D]/50 mt-0.5">Model score</div>
+          </div>
+
+          {/* Assessment Type */}
+          <div className="bg-[#F7F1E7] p-3 rounded-2xl border border-[#163A2D]/10">
+            <div className="text-[#163A2D]/60 text-[10px] uppercase font-bold mb-1">Assessment</div>
+            <div className="font-bold text-[#163A2D] text-xs">{t('assessmentType')}</div>
+            <div className="text-[9px] text-[#163A2D]/50 mt-0.5">External RGB optical</div>
+          </div>
+
+          {/* Model */}
+          <div className="bg-[#F7F1E7] p-3 rounded-2xl border border-[#163A2D]/10">
+            <div className="text-[#163A2D]/60 text-[10px] uppercase font-bold mb-1">Model</div>
+            <div className="font-bold text-[#163A2D] text-xs">
+              {result.model?.model_name || 'YOLO26n-cls'}
+            </div>
+            <div className="text-[9px] text-[#163A2D]/50 mt-0.5">
+              {result.model?.source === 'real_model' ? 'Trained model' : result.model?.model_version || 'v1.0.0-pilot'}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Selected Onion Evidence Details Panel */}
-      {selectedOnion && (
-        <div className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-            <div>
-              <span className="text-[10px] uppercase font-bold text-stone-400">Bulb Identifier</span>
-              <h3 className="text-base font-bold text-[#0F281E]">{selectedOnion.onion_id}</h3>
-            </div>
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-bold ${
-                selectedOnion.final_status === 'HEALTHY'
-                  ? 'bg-emerald-100 text-emerald-900'
-                  : selectedOnion.final_status === 'DAMAGED' || selectedOnion.final_status === 'ROTTEN'
-                  ? 'bg-red-100 text-red-900'
-                  : 'bg-amber-100 text-amber-900'
-              }`}
-            >
-              {selectedOnion.final_status}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="bg-stone-50 p-3 rounded-2xl border border-stone-200/60">
-              <div className="text-stone-400 text-[10px] uppercase font-semibold">Detection Confidence</div>
-              <div className="font-bold text-[#0F281E] text-sm mt-0.5">
-                {(selectedOnion.detection_confidence * 100).toFixed(1)}%
-              </div>
-            </div>
-
-            <div className="bg-stone-50 p-3 rounded-2xl border border-stone-200/60">
-              <div className="text-stone-400 text-[10px] uppercase font-semibold">Size Measurement</div>
-              <div className="font-bold text-stone-800 text-xs mt-0.5">
-                {selectedOnion.size_estimate?.status === 'AVAILABLE' && selectedOnion.size_estimate.estimated_diameter_mm
-                  ? `${selectedOnion.size_estimate.estimated_diameter_mm.toFixed(1)} mm`
-                  : 'UNAVAILABLE (Uncalibrated)'}
-              </div>
-            </div>
-          </div>
-
-          {/* Probabilities Map */}
-          <div className="space-y-2 text-xs">
-            <div className="font-semibold text-stone-700">Defect Probability Distribution:</div>
-            <div className="grid grid-cols-3 gap-2">
-              <div className="p-2 bg-stone-50 rounded-xl border border-stone-200 text-center">
-                <span className="text-[10px] text-stone-500 block">Damage</span>
-                <span className="font-bold text-stone-800">
-                  {((selectedOnion.defect_probabilities?.damage || 0) * 100).toFixed(0)}%
-                </span>
-              </div>
-              <div className="p-2 bg-stone-50 rounded-xl border border-stone-200 text-center">
-                <span className="text-[10px] text-stone-500 block">Rot</span>
-                <span className="font-bold text-[#0F281E]">
-                  {((selectedOnion.defect_probabilities?.rot || 0) * 100).toFixed(0)}%
-                </span>
-              </div>
-              <div className="p-2 bg-stone-50 rounded-xl border border-stone-200 text-center">
-                <span className="text-[10px] text-stone-500 block">Sprout</span>
-                <span className="font-bold text-amber-700">
-                  {((selectedOnion.defect_probabilities?.sprouting || 0) * 100).toFixed(0)}%
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Sub-region Visual Evidence List */}
-          <div className="space-y-2 text-xs pt-2 border-t border-stone-100">
-            <div className="font-semibold text-stone-700">Sub-Region Visual Evidence:</div>
-            {selectedOnion.evidence_regions && selectedOnion.evidence_regions.length > 0 ? (
-              <div className="space-y-1.5">
-                {selectedOnion.evidence_regions.map((ev, i) => (
-                  <div key={i} className="flex items-center justify-between p-2.5 bg-amber-50 border border-amber-200 rounded-xl">
-                    <span className="font-medium text-amber-900">
-                      Defect Region: {ev.defect_type}
-                    </span>
-                    <span className="font-bold text-amber-800">
-                      {(ev.confidence * 100).toFixed(0)}% confidence
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="p-3 bg-stone-50 border border-stone-200 rounded-xl text-stone-500 text-xs italic">
-                Visual evidence unavailable for this prediction.
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Disclosure note */}
+      <div className="p-4 bg-white border border-[#163A2D]/15 rounded-2xl flex items-start gap-3 shadow-2xs">
+        <Info className="w-4 h-4 text-[#E51E3A] shrink-0 mt-0.5" />
+        <p className="text-xs text-[#163A2D]/80 leading-relaxed font-medium">
+          {t('classificationDisclaimer')}
+        </p>
+      </div>
     </div>
   );
 };

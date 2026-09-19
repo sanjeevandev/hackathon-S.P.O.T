@@ -1,24 +1,68 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header } from './components/Header';
+import { BottomNav } from './components/BottomNav';
+import { LandingPage } from './components/LandingPage';
 import { HomeStep } from './components/HomeStep';
 import { NewInspectionStep } from './components/NewInspectionStep';
 import { CaptureStep } from './components/CaptureStep';
 import { AnalyzingStep } from './components/AnalyzingStep';
 import { ResultStep } from './components/ResultStep';
-import { EvidenceStep } from './components/EvidenceStep';
-import { ReportStep } from './components/ReportStep';
-import { HistoryStep } from './components/HistoryStep';
-import { VerifyStep } from './components/VerifyStep';
-import { AdminStep } from './components/AdminStep';
+import { VoiceCommandModal } from './components/VoiceCommandModal';
 import { PresenterToolbar } from './components/PresenterToolbar';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { App as CapacitorApp } from '@capacitor/app';
 import { AppRoute, CanonicalInspectionResult, NewInspectionMeta } from './types';
 import { getCanonicalResult } from './api/inspections';
+import { Loader2 } from 'lucide-react';
+
+// Lazy-loaded secondary & protected routes
+const AdminStep = lazy(() => import('./components/AdminStep').then(m => ({ default: m.AdminStep })));
+const AnnotationWorkstationStep = lazy(() => import('./components/AnnotationWorkstationStep').then(m => ({ default: m.AnnotationWorkstationStep })));
+const AnalyticsStep = lazy(() => import('./components/AnalyticsStep').then(m => ({ default: m.AnalyticsStep })));
+const AssistantStep = lazy(() => import('./components/AssistantStep').then(m => ({ default: m.AssistantStep })));
+const HistoryStep = lazy(() => import('./components/HistoryStep').then(m => ({ default: m.HistoryStep })));
+const ReportStep = lazy(() => import('./components/ReportStep').then(m => ({ default: m.ReportStep })));
+const EvidenceStep = lazy(() => import('./components/EvidenceStep').then(m => ({ default: m.EvidenceStep })));
+const VerifyStep = lazy(() => import('./components/VerifyStep').then(m => ({ default: m.VerifyStep })));
+
+function RouteLoadingFallback() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[300px] p-8 text-center space-y-3 font-sans">
+      <Loader2 className="w-8 h-8 text-[#163A2D] animate-spin" />
+      <span className="text-xs font-bold text-[#163A2D]/70 uppercase tracking-wider">
+        Loading...
+      </span>
+    </div>
+  );
+}
+
+function isAnnotationRoute(): boolean {
+  const path = window.location.pathname.toLowerCase();
+  const hash = window.location.hash.toLowerCase();
+  const search = window.location.search.toLowerCase();
+  return (
+    path.includes('/internal/annotation') ||
+    hash.includes('internal-annotation') ||
+    search.includes('annotation=true')
+  );
+}
+
+function getInitialRoute(): AppRoute {
+  if (isAnnotationRoute()) {
+    return 'internal_annotation';
+  }
+  const search = window.location.search.toLowerCase();
+  if (search.includes('verify=')) {
+    return 'home';
+  }
+  // Mobile app always launches cleanly into the Landing Screen
+  return 'landing';
+}
 
 export function App() {
   const { i18n } = useTranslation();
-  const [currentRoute, setCurrentRoute] = useState<AppRoute>('home');
-
+  const [currentRoute, setCurrentRoute] = useState<AppRoute>(getInitialRoute);
   const [inspectionMeta, setInspectionMeta] = useState<NewInspectionMeta | null>(null);
   const [capturedFile, setCapturedFile] = useState<File | null>(null);
   const [canonicalResult, setCanonicalResult] = useState<CanonicalInspectionResult | null>(null);
@@ -27,17 +71,19 @@ export function App() {
   const [isOffline, setIsOffline] = useState<boolean>(!navigator.onLine);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [verifyBatchId, setVerifyBatchId] = useState<string | null>(null);
-  const [judgeDemoMode, setJudgeDemoMode] = useState<boolean>(false);
   const [isPresenterToolbarOpen, setIsPresenterToolbarOpen] = useState<boolean>(false);
-  const [isServerAiMode, setIsServerAiMode] = useState<boolean>(false);
+  const [isVoiceCommandOpen, setIsVoiceCommandOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    // On native app launch, immediately reset any stale WebView URL path to root
+    try {
+      window.history.replaceState({}, '', '/');
+    } catch (_) {}
+
     const urlParams = new URLSearchParams(window.location.search);
-    const batchParam = urlParams.get('batch_id');
-    if (window.location.pathname.includes('/verify') || batchParam) {
-      setVerifyBatchId(batchParam || 'BATCH-MH-2026-891');
-    } else if (window.location.pathname.includes('/admin')) {
-      setCurrentRoute('admin');
+    const batchParam = urlParams.get('batch_id') || urlParams.get('verify');
+    if (batchParam) {
+      setVerifyBatchId(batchParam);
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -58,35 +104,79 @@ export function App() {
       e.preventDefault();
       setDeferredPrompt(e);
     };
-
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Native Android Hardware Back Button Handling
+    let backButtonHandle: any = null;
+    CapacitorApp.addListener('backButton', () => {
+      setCurrentRoute((prev) => {
+        if (prev === 'landing') {
+          CapacitorApp.exitApp();
+          return 'landing';
+        }
+        if (prev === 'evidence' || prev === 'report') {
+          return 'result';
+        }
+        if (prev === 'capture' || prev === 'analyzing') {
+          return 'new_inspection';
+        }
+        if (prev === 'new_inspection' || prev === 'history' || prev === 'analytics' || prev === 'assistant' || prev === 'admin' || prev === 'result') {
+          return 'home';
+        }
+        if (prev === 'home') {
+          return 'landing';
+        }
+        return 'home';
+      });
+    }).then((handle) => {
+      backButtonHandle = handle;
+    }).catch(() => {
+      // Ignore if not in native runtime
+    });
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      if (backButtonHandle) {
+        backButtonHandle.remove();
+      }
     };
   }, []);
 
+  const navigateToRoute = (route: AppRoute) => {
+    setCurrentRoute(route);
+  };
+
   const handlePlayVoice = (text: string) => {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.95;
-      utterance.pitch = 1.0;
-      const langMap: Record<string, string> = { en: 'en-US', hi: 'hi-IN', mr: 'mr-IN', ta: 'ta-IN' };
-      utterance.lang = langMap[i18n.language] || 'en-US';
-      window.speechSynthesis.speak(utterance);
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95;
+        utterance.pitch = 1.0;
+        const currentLang = i18n.language ? i18n.language.substring(0, 2) : 'en';
+        const langMap: Record<string, string> = { en: 'en-US', hi: 'hi-IN', mr: 'mr-IN', ta: 'ta-IN' };
+        utterance.lang = langMap[currentLang] || 'en-US';
+        window.speechSynthesis.speak(utterance);
+      } catch (err) {
+        console.warn('SpeechSynthesis error:', err);
+      }
     }
   };
 
   const handleStartNewInspection = () => {
     setCanonicalResult(null);
     setCapturedFile(null);
-    setInspectionMeta(null);
+    setInspectionMeta({
+      batch_id: 'BATCH-MH-NASHIK-01',
+      supplier: 'Nashik Farmers Producer Co.',
+      procurement_center_id: 'APMC-NASHIK-CENTER-04',
+      sampling_status: 'SAMPLE_ONLY',
+    });
     setActiveInspectionId(null);
-    setCurrentRoute('new_inspection');
+    navigateToRoute('new_inspection');
   };
 
   const handleSelectHistoryInspection = async (inspectionId: string) => {
@@ -96,138 +186,219 @@ export function App() {
       setCanonicalResult(res);
       setCurrentRoute('result');
     } catch (err: any) {
-      alert(`Failed to load stored inspection result: ${err.message}`);
+      alert(`Failed to load stored inspection result: ${err.message || err}`);
     }
   };
 
+  // Annotation route
+  if (currentRoute === 'internal_annotation') {
+    return (
+      <ErrorBoundary componentName="Annotation Workstation">
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <AnnotationWorkstationStep
+            onBackToApp={() => navigateToRoute('home')}
+          />
+        </Suspense>
+      </ErrorBoundary>
+    );
+  }
+
+  // Verification Gate route
   if (verifyBatchId) {
     return (
-      <div className="min-h-screen bg-[#F7F5F0] text-[#0F281E] font-sans">
-        <VerifyStep
-          batchId={verifyBatchId}
-          onBackToApp={() => {
-            setVerifyBatchId(null);
-            window.history.pushState({}, '', '/');
-          }}
-        />
+      <div className="min-h-screen bg-[#F7F1E7] text-[#163A2D] font-sans">
+        <ErrorBoundary componentName="Verification Gateway">
+          <Suspense fallback={<RouteLoadingFallback />}>
+            <VerifyStep
+              batchId={verifyBatchId}
+              onBackToApp={() => {
+                setVerifyBatchId(null);
+                window.history.pushState({}, '', '/');
+              }}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     );
   }
 
+  // 1. DEFAULT STARTUP VIEW: Standalone Mobile-First Landing Page
+  if (currentRoute === 'landing') {
+    return (
+      <ErrorBoundary componentName="Landing Page">
+        <LandingPage
+          onStartInspection={handleStartNewInspection}
+          onViewHistory={() => navigateToRoute('history')}
+          onContinue={() => navigateToRoute('home')}
+          onEnterDashboard={() => navigateToRoute('home')}
+          isOffline={isOffline}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  // 2. MAIN MOBILE APPLICATION SHELL
   return (
-    <div className="min-h-screen bg-[#F7F5F0] text-[#0F281E] flex flex-col font-sans pb-12">
-      <Header
-        currentStep={currentRoute as any}
-        onSelectStep={(step) => setCurrentRoute(step as AppRoute)}
-        onPlayVoice={handlePlayVoice}
-        isOffline={isOffline}
-        canInstallPwa={Boolean(deferredPrompt)}
-        onInstallPwa={() => deferredPrompt?.prompt()}
-        judgeDemoMode={judgeDemoMode}
-        onToggleJudgeDemoMode={() => {
-          setJudgeDemoMode(!judgeDemoMode);
-          if (!judgeDemoMode) handleStartNewInspection();
-        }}
-        onTogglePresenterToolbar={() => setIsPresenterToolbarOpen(!isPresenterToolbarOpen)}
-      />
+    <div className="min-h-screen bg-[#F7F1E7] text-[#163A2D] flex flex-col font-sans">
+      {/* Mobile-First Centered Container (Max 430px for perfection across all phones) */}
+      <div className="w-full max-w-md mx-auto min-h-screen bg-[#F7F1E7] flex flex-col shadow-xl relative border-x border-[#163A2D]/10">
+        <Header
+          currentStep={currentRoute}
+          onSelectStep={(step) => navigateToRoute(step)}
+          onPlayVoice={handlePlayVoice}
+          onOpenVoiceCommand={() => setIsVoiceCommandOpen(true)}
+          isOffline={isOffline}
+          canInstallPwa={Boolean(deferredPrompt)}
+          onInstallPwa={() => deferredPrompt?.prompt()}
+          onTogglePresenterToolbar={() => setIsPresenterToolbarOpen(!isPresenterToolbarOpen)}
+        />
 
-      <main className="flex-1">
-        {currentRoute === 'home' && (
-          <HomeStep
-            onNavigate={setCurrentRoute}
-            onStartNewInspection={handleStartNewInspection}
-          />
-        )}
+        <main className="flex-1">
+          <ErrorBoundary componentName="Application View">
+            {currentRoute === 'home' && (
+              <HomeStep
+                onNavigate={navigateToRoute}
+                onStartNewInspection={handleStartNewInspection}
+              />
+            )}
 
-        {currentRoute === 'new_inspection' && (
-          <NewInspectionStep
-            onBack={() => setCurrentRoute('home')}
-            onProceed={(meta) => {
-              setInspectionMeta(meta);
-              setCurrentRoute('capture');
-            }}
-          />
-        )}
+            {currentRoute === 'new_inspection' && (
+              <NewInspectionStep
+                onBack={() => navigateToRoute('home')}
+                onProceed={(meta) => {
+                  setInspectionMeta(meta);
+                  setCurrentRoute('capture');
+                }}
+              />
+            )}
 
-        {currentRoute === 'capture' && inspectionMeta && (
-          <CaptureStep
-            meta={inspectionMeta}
-            onBack={() => setCurrentRoute('new_inspection')}
-            onImageSelected={(file) => {
-              setCapturedFile(file);
-              setCurrentRoute('analyzing');
-            }}
-          />
-        )}
+            {currentRoute === 'capture' && (
+              <CaptureStep
+                meta={
+                  inspectionMeta || {
+                    batch_id: 'BATCH-MH-NASHIK-01',
+                    supplier: 'APMC Lot Intake',
+                    procurement_center_id: 'APMC-NASHIK-CENTER-04',
+                    sampling_status: 'SAMPLE_ONLY',
+                  }
+                }
+                onBack={() => navigateToRoute('home')}
+                onImageSelected={(file) => {
+                  setCapturedFile(file);
+                  setCurrentRoute('analyzing');
+                }}
+              />
+            )}
 
-        {currentRoute === 'analyzing' && inspectionMeta && capturedFile && (
-          <AnalyzingStep
-            meta={inspectionMeta}
-            file={capturedFile}
-            onSuccess={(result) => {
-              setCanonicalResult(result);
-              setActiveInspectionId(result.inspection_id);
-              setCurrentRoute('result');
-            }}
-            onError={(err) => {
-              alert(`Inspection pipeline error: ${err}`);
-              setCurrentRoute('home');
-            }}
-          />
-        )}
+            {currentRoute === 'analyzing' && capturedFile && (
+              <AnalyzingStep
+                meta={
+                  inspectionMeta || {
+                    batch_id: 'BATCH-MH-NASHIK-01',
+                    supplier: 'APMC Lot Intake',
+                    procurement_center_id: 'APMC-NASHIK-CENTER-04',
+                    sampling_status: 'SAMPLE_ONLY',
+                  }
+                }
+                file={capturedFile}
+                onSuccess={(result) => {
+                  setCanonicalResult(result);
+                  setActiveInspectionId(result.inspection_id);
+                  setCurrentRoute('result');
+                }}
+                onError={() => {
+                  navigateToRoute('home');
+                }}
+                onRetryScan={() => {
+                  setCurrentRoute('capture');
+                }}
+              />
+            )}
 
-        {currentRoute === 'result' && canonicalResult && (
-          <ResultStep
-            result={canonicalResult}
-            onNavigate={setCurrentRoute}
-            onNewInspection={handleStartNewInspection}
-          />
-        )}
+            {currentRoute === 'result' && canonicalResult && (
+              <ResultStep
+                result={canonicalResult}
+                onNavigate={setCurrentRoute}
+                onNewInspection={handleStartNewInspection}
+              />
+            )}
 
-        {currentRoute === 'evidence' && canonicalResult && (
-          <EvidenceStep
-            result={canonicalResult}
-            onBack={() => setCurrentRoute('result')}
-          />
-        )}
+            {currentRoute === 'evidence' && canonicalResult && (
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <EvidenceStep
+                  result={canonicalResult}
+                  onBack={() => setCurrentRoute('result')}
+                />
+              </Suspense>
+            )}
 
-        {currentRoute === 'report' && (activeInspectionId || canonicalResult?.inspection_id) && (
-          <ReportStep
-            inspectionId={activeInspectionId || canonicalResult!.inspection_id}
-            onBack={() => setCurrentRoute('result')}
-          />
-        )}
+            {currentRoute === 'report' && (activeInspectionId || canonicalResult?.inspection_id) && (
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <ReportStep
+                  inspectionId={activeInspectionId || canonicalResult!.inspection_id}
+                  onBack={() => setCurrentRoute('result')}
+                />
+              </Suspense>
+            )}
 
-        {currentRoute === 'history' && (
-          <HistoryStep
-            onSelectInspection={handleSelectHistoryInspection}
-            onBack={() => setCurrentRoute('home')}
-          />
-        )}
+            {currentRoute === 'history' && (
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <HistoryStep
+                  onSelectInspection={handleSelectHistoryInspection}
+                  onBack={() => navigateToRoute('home')}
+                />
+              </Suspense>
+            )}
 
-        {currentRoute === 'admin' && (
-          <AdminStep
-            onBackToApp={() => setCurrentRoute('home')}
-            onPlayVoice={handlePlayVoice}
-          />
-        )}
-      </main>
+            {currentRoute === 'analytics' && (
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <AnalyticsStep
+                  onBack={() => navigateToRoute('home')}
+                  onStartNewInspection={handleStartNewInspection}
+                />
+              </Suspense>
+            )}
 
-      <footer className="mt-auto py-4 text-center text-xs text-stone-500 font-bold border-t border-stone-200">
-        <p>S.P.O.T. • Smart Produce Optimization & Tracking PWA</p>
-        <p className="text-[10px] text-stone-400 mt-0.5">SIH 2026 AI Onion Quality Grading System • Digital Quality Inspection Report Engine</p>
-      </footer>
+            {currentRoute === 'assistant' && (
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <AssistantStep
+                  onBack={() => navigateToRoute('home')}
+                />
+              </Suspense>
+            )}
 
-      <PresenterToolbar
-        isVisible={isPresenterToolbarOpen}
-        onClose={() => setIsPresenterToolbarOpen(false)}
-        onResetDemo={() => handleStartNewInspection()}
-        isServerAiMode={isServerAiMode}
-        onToggleAiMode={() => setIsServerAiMode(!isServerAiMode)}
-        onSimulateHardware={() => {
-          handlePlayVoice('Simulated scale weight sync active.');
-        }}
-      />
+            {currentRoute === 'admin' && (
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <AdminStep
+                  onBackToApp={() => navigateToRoute('home')}
+                  onPlayVoice={handlePlayVoice}
+                />
+              </Suspense>
+            )}
+          </ErrorBoundary>
+        </main>
+
+        {/* Mobile Bottom Navigation */}
+        <BottomNav
+          currentRoute={currentRoute}
+          onNavigate={navigateToRoute}
+          onStartScan={handleStartNewInspection}
+        />
+
+        <VoiceCommandModal
+          isOpen={isVoiceCommandOpen}
+          onClose={() => setIsVoiceCommandOpen(false)}
+          onNavigate={navigateToRoute}
+          onStartNewInspection={handleStartNewInspection}
+          onPlayVoice={handlePlayVoice}
+        />
+
+        <PresenterToolbar
+          isVisible={isPresenterToolbarOpen}
+          onClose={() => setIsPresenterToolbarOpen(false)}
+          onResetDemo={() => handleStartNewInspection()}
+        />
+      </div>
     </div>
   );
 }
