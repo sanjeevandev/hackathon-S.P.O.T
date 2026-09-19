@@ -42,7 +42,7 @@ def test_production_mode_cannot_silently_use_mock():
     with pytest.raises(ProductionModelUnavailableError) as exc_info:
         get_vision_model(environment="production")
 
-    assert "Production Mode Error: No real vision model is registered" in str(exc_info.value)
+    assert "Production Mode Error: No real vision model is available" in str(exc_info.value)
 
 
 def test_production_mode_refuses_explicit_mock_request():

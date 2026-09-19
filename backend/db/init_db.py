@@ -58,18 +58,18 @@ def init_database() -> None:
                 is_active=True
             ))
 
-        if not db.query(ModelVersion).filter(ModelVersion.id == "MOD-1.0.0-YOLO26").first():
+        if not db.query(ModelVersion).filter(ModelVersion.id == "MOD-0.2.0-PILOTCLS").first():
             db.add(ModelVersion(
-                id="MOD-1.0.0-YOLO26",
-                model_id="YOLO26ClassifierModel",
-                model_name="YOLO26n-cls-pilot",
-                model_version="1.0.0-pilot",
+                id="MOD-0.2.0-PILOTCLS",
+                model_id="OnionClassifierModel",
+                model_name="YOLO11n-cls-pilot-onion",
+                model_version="0.2.0-pilot",
                 source="real_model",
-                framework="Ultralytics YOLO26",
-                weights_reference="artifacts/ml/experiments/yolo26n_cls_pilot_v1/weights/best.pt",
-                dataset_version="1.0.0-audited",
-                metrics_reference="Trained on 100-image human pilot annotations",
-                is_active=True
+                framework="Ultralytics YOLO11n-cls",
+                weights_reference="backend/models/onion_classifier.pt",
+                dataset_version=None,
+                metrics_reference=None,
+                is_active=False
             ))
 
         # 4. Seed Experimental Grading Profiles

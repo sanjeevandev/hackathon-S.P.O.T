@@ -81,8 +81,8 @@ export const ResultStep: React.FC<ResultStepProps> = ({
   const label = gradeToLabel(gradeName);
   const isHealthy = label === 'HEALTHY';
   const isReview = label === 'REVIEW';
-  const confValue = typeof confidence === 'number' ? confidence : 0.95;
-  const confPercent = Math.round(confValue * 100);
+  const hasConfidence = typeof confidence === 'number' && Number.isFinite(confidence);
+  const confPercent = hasConfidence ? Math.round(confidence * 100) : null;
 
   // Check if defect flags are meaningful (binary classifier may return all zeros)
   const hasAnyDefects = stats && (
@@ -135,7 +135,7 @@ export const ResultStep: React.FC<ResultStepProps> = ({
         <div className="flex items-center justify-center gap-2">
           <div className="bg-white rounded-2xl px-6 py-3 shadow-2xs border border-[#163A2D]/10 text-center">
             <span className="text-[10px] font-bold text-[#163A2D]/60 uppercase block">Confidence</span>
-            <span className="text-3xl font-black text-[#163A2D]">{confPercent}%</span>
+            <span className="text-3xl font-black text-[#163A2D]">{confPercent !== null ? `${confPercent}%` : '—'}</span>
           </div>
         </div>
       </div>
@@ -164,7 +164,7 @@ export const ResultStep: React.FC<ResultStepProps> = ({
             <Clock className="w-3.5 h-3.5 text-[#163A2D]/50 shrink-0 mt-0.5" />
             <div>
               <span className="text-[9px] font-bold text-[#163A2D]/60 block uppercase">Model</span>
-              <span className="font-black text-[#163A2D] text-[10px]">{result.model?.model_name || 'YOLO26n-cls'}</span>
+              <span className="font-black text-[#163A2D] text-[10px]">{result.model?.model_name || '—'}</span>
             </div>
           </div>
           <div className="flex items-start gap-2 bg-[#F7F1E7] p-2.5 rounded-xl border border-[#163A2D]/10">

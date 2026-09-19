@@ -28,18 +28,34 @@ _DEFAULT_CHECKPOINT = os.path.join(
     "yolo26n_cls_pilot_v1", "weights", "best.pt"
 )
 
+# Whether the trained checkpoint actually exists on disk. The registry uses this
+# so it never advertises (or silently selects) a model whose weights are absent.
+_YOLO26_CHECKPOINT_EXISTS = os.path.exists(_DEFAULT_CHECKPOINT)
+
 
 class YOLO26ClassifierModel(VisionModel):
     """Production-ready binary classifier using YOLO26n-cls trained on pilot data.
 
     Classifies whole onion images as healthy or defective.
     Does NOT fabricate bounding boxes, size estimates, or physical properties.
+
+    Note: `source` returns 'real_model' only when the checkpoint is actually
+    present on disk; otherwise this class is not usable and reports itself as
+    unavailable, so callers never treat a missing checkpoint as a real model.
     """
 
     def __init__(self, checkpoint_path: Optional[str] = None):
         self._checkpoint_path = checkpoint_path or _DEFAULT_CHECKPOINT
         self._model = None
         self._class_names = None
+
+    @property
+    def checkpoint_available(self) -> bool:
+        return os.path.exists(self._checkpoint_path)
+
+    @property
+    def runtime_device(self) -> str:
+        return "PyTorch / CPU (YOLO26n-cls)"
 
     def _load_model(self):
         """Lazy-load the YOLO26 model on first inference."""

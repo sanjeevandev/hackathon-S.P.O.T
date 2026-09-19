@@ -3,6 +3,9 @@ import sys
 import glob
 import os
 import json
+
+import pytest
+selenium = pytest.importorskip("selenium", reason="selenium not installed; browser E2E harness skipped")
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By

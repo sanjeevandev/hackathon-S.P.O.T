@@ -210,53 +210,28 @@ export const AdminStep: React.FC<AdminStepProps> = ({
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Model</span>
-            <span className="font-bold text-[#163A2D]">YOLO26n-cls</span>
+            <span className="font-bold text-[#163A2D]">YOLO11n-cls</span>
           </div>
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Mode</span>
-            <span className="font-bold text-[#163A2D]">Binary Classification</span>
+            <span className="font-bold text-[#163A2D]">4-Class Classification</span>
           </div>
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Target Classes</span>
-            <span className="font-bold text-[#163A2D]">Healthy / Defective</span>
+            <span className="font-bold text-[#163A2D]">healthy / disease / rotten / sprouted</span>
           </div>
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Model Size</span>
-            <span className="font-bold text-[#163A2D]">3.04 MB</span>
+            <span className="font-bold text-[#163A2D]">6.0 MB</span>
           </div>
         </div>
 
         {/* Pilot Validation Metrics Section */}
         <div className="space-y-2 pt-1 border-t border-[#163A2D]/10">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-[#163A2D]">
-              Pilot Validation Metrics
-            </span>
-            <span className="text-[9px] text-[#163A2D]/60 font-semibold">19-image split</span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="p-2 bg-[#F7F1E7] border border-[#163A2D]/15 rounded-xl">
-              <span className="text-[8px] text-[#163A2D]/70 uppercase font-bold block">Accuracy</span>
-              <span className="font-black text-[#163A2D] text-sm">94.74%</span>
-              <span className="text-[8px] text-[#163A2D]/60 block">18/19</span>
-            </div>
-            <div className="p-2 bg-[#F7F1E7] border border-[#163A2D]/15 rounded-xl">
-              <span className="text-[8px] text-[#163A2D]/70 uppercase font-bold block">Defect Recall</span>
-              <span className="font-black text-[#163A2D] text-sm">90.0%</span>
-              <span className="text-[8px] text-[#163A2D]/60 block">Sensitivity</span>
-            </div>
-            <div className="p-2 bg-[#F7F1E7] border border-[#163A2D]/15 rounded-xl">
-              <span className="text-[8px] text-[#163A2D]/70 uppercase font-bold block">CPU Latency</span>
-              <span className="font-black text-[#163A2D] text-sm">~31 ms</span>
-              <span className="text-[8px] text-[#163A2D]/60 block">Inference</span>
-            </div>
-          </div>
-
           <div className="p-3 bg-white border border-[#163A2D]/15 rounded-xl text-[10px] text-[#163A2D] flex items-start gap-1.5 shadow-2xs">
             <Info className="w-3.5 h-3.5 text-[#E51E3A] shrink-0 mt-0.5" />
             <p className="leading-tight font-medium">
-              <strong>Pilot Validation Metrics:</strong> YOLO26n-cls achieved 94.74% validation accuracy on our pilot validation split (19 images). This is a pilot validation metric, not a guaranteed production accuracy.
+              <strong>Checkpoint is a pilot model.</strong> The deployed <code>onion_classifier.pt</code> is a 4-class prototype. Validation metrics are not yet available in the repository; re-train the target classifier and commit its metrics before treating this as a production model.
             </p>
           </div>
         </div>

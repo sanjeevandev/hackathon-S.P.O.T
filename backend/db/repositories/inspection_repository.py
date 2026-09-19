@@ -68,7 +68,22 @@ class InspectionRepository:
             )
 
             # 2. Get active ModelVersion & GradingProfile reference
-            model_ver = self.db.query(ModelVersion).filter(ModelVersion.source == pipeline_result.vision_result.source).first() if pipeline_result.vision_result else None
+            # Link by the *actual* model name that ran, so reports never mislabel
+            # one model as another (e.g. a mock run labelled "YOLO26n-cls-pilot").
+            model_ver = None
+            if pipeline_result.vision_result:
+                vr = pipeline_result.vision_result
+                model_ver = (
+                    self.db.query(ModelVersion)
+                    .filter(ModelVersion.model_name == vr.model_name)
+                    .first()
+                )
+                if model_ver is None:
+                    model_ver = (
+                        self.db.query(ModelVersion)
+                        .filter(ModelVersion.source == vr.source)
+                        .first()
+                    )
             model_ver_id = model_ver.id if model_ver else "MOD-0.1.0-MOCK"
 
             insp_id = f"INSP-{pipeline_result.request_id}" if pipeline_result.request_id else f"INSP-{uuid.uuid4().hex[:8].upper()}"

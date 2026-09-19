@@ -54,8 +54,13 @@ class AIHealthDiagnostics:
             source = model.source
             model_name = model.model_name
             model_version = model.model_version
-            runtime = "PyTorch / CPU (Mock Double)" if source == "development_mock" else "PyTorch / CUDA (Real Model)"
-            capabilities = ["object_detection", "damage_classification", "rot_classification", "sprouting_classification"]
+            if source == "development_mock":
+                runtime = "PyTorch / CPU (Mock Double)"
+                capabilities = ["object_detection", "damage_classification", "rot_classification", "sprouting_classification"]
+            else:
+                # Real model: report the device it actually runs on.
+                runtime = getattr(model, "runtime_device", None) or "PyTorch / CPU"
+                capabilities = ["binary_quality_classification"]
         except ProductionModelUnavailableError:
             is_available = False
             model_status = "UNAVAILABLE"
