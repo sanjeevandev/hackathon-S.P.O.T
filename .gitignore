@@ -5,8 +5,11 @@ __pycache__/
 *.pyd
 *.db
 *.sqlite3
-.venv/
-venv/
+
+# Environment
+.env
+.env.*
+!.env.example
 
 # Logs
 logs
@@ -33,3 +36,13 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+.venv/
+runs/
+*.zip
+backend/dataset_raw/
+backend/dataset_classification/
+yolo*.pt
+artifacts/ml/
+
+
+
