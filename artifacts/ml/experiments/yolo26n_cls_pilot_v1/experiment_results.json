@@ -1,0 +1,92 @@
+{
+  "experiment_name": "YOLO26n-cls Pilot Binary Classification",
+  "experiment_id": "yolo26n-cls-pilot-v1",
+  "model_name": "YOLO26n-cls",
+  "model_version": "1.0.0-pilot",
+  "source": "real_model",
+  "task": "binary_classification",
+  "classes": [
+    "healthy",
+    "defective"
+  ],
+  "dataset": {
+    "name": "SPOT-PILOT-YOLO-CLS-V1",
+    "train_samples": 80,
+    "val_samples": 19,
+    "total_usable": 99
+  },
+  "training": {
+    "epochs_configured": 50,
+    "imgsz": 224,
+    "batch_size": 8,
+    "lr0": 0.001,
+    "frozen_layers": 10,
+    "patience": 15,
+    "device": "cpu",
+    "training_time_seconds": 23.01,
+    "seed": 42,
+    "transfer_learning": true,
+    "pretrained_on": "ImageNet"
+  },
+  "metrics": {
+    "accuracy": 1.0,
+    "macro_precision": 1.0,
+    "macro_recall": 1.0,
+    "macro_f1": 1.0,
+    "top1_accuracy": 1.0,
+    "top5_accuracy": 1.0,
+    "per_class": {
+      "healthy": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "true_positives": 9,
+        "false_positives": 0,
+        "false_negatives": 0
+      },
+      "defective": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "true_positives": 10,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    }
+  },
+  "inference": {
+    "avg_latency_ms": 22.44,
+    "min_latency_ms": 8.53,
+    "max_latency_ms": 75.02,
+    "device": "cpu",
+    "imgsz": 224
+  },
+  "model_file": {
+    "best_checkpoint": "/home/sanjeeva/Desktop/SPOT REBUILD/hackathon-S.P.O.T/artifacts/ml/experiments/yolo26n_cls_pilot_v1/weights/best.pt",
+    "size_bytes": 3186754,
+    "size_mb": 3.04
+  },
+  "comparison_vs_baseline": {
+    "baseline_model": "ResNet18 Baseline Classifier",
+    "note": "ResNet18 baseline was trained on 74-dim feature vectors (tabular MLP), not raw images. Architecturally different from YOLO26 CNN. Comparison is directional only.",
+    "baseline_accuracy": 0.7854,
+    "baseline_f1": 0.6237,
+    "baseline_unhealthy_recall": 0.6451,
+    "baseline_model_size_mb": 0.08,
+    "baseline_latency_ms": 0.001,
+    "yolo26_accuracy": 1.0,
+    "yolo26_f1": 1.0,
+    "yolo26_defect_recall": 1.0,
+    "yolo26_model_size_mb": 3.04,
+    "yolo26_latency_ms": 22.44
+  },
+  "limitations": [
+    "Trained on 80 images (small pilot dataset)",
+    "Single annotator labels \u2014 no IAA validation",
+    "CPU training",
+    "Binary classification (healthy vs defective) \u2014 preserves fine-grained labels in pilot_v1 dataset",
+    "Metrics on 19-sample validation set have expected sample variance",
+    "Transfer learning used (ImageNet pretrained YOLO26 backbone)"
+  ],
+  "created_at": "2026-09-19T16:24:39.892285+00:00"
+}
