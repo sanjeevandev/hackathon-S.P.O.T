@@ -7,7 +7,8 @@ import { ScanResult } from '../types';
 import { QRCodeSVG } from 'qrcode.react';
 import { BoundingBoxCanvas } from './BoundingBoxCanvas';
 import { printThermalReceiptViaBluetooth, PrinterStatus } from '../utils/thermalPrinter';
-import { API_BASE_URL } from '../config';
+import { getApiUrl } from '../api/client';
+import { ErrorBoundary } from './ErrorBoundary';
 
 interface ResultsStepProps {
   result: ScanResult | null;
@@ -71,7 +72,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
     isInferenceEdge: true,
     edgeLatencyMs: 185,
     serverLatencyMs: 850,
-    benchmarkLog: `[OFFLINE EDGE INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX WebAssembly/WebGL Latency: 185ms\n☁️ Server API Network Latency: ~850ms\n🚀 Speedup: 4.6x Faster (Target < 1500ms: PASSED ✅)\n📱 Mobile Viewport Optimization: WebAssembly SIMD + WebGL Enabled`,
+    benchmarkLog: `[INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX Engine Latency: 185ms\n☁️ Server API Processing Latency: ~850ms\n📱 Mobile Viewport Optimization: WebAssembly SIMD Enabled`,
   };
 
   const pieChartData = [
@@ -113,7 +114,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
     const element = reportRef.current;
     const opt = {
       margin: 8,
-      filename: `KrishiDrishti_${activeResult.batchId}_Report.pdf`,
+      filename: `SPOT_${activeResult.batchId}_Report.pdf`,
       image: { type: 'jpeg' as const, quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
@@ -139,7 +140,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'KrishiDrishti Digital Quality Report',
+        title: 'S.P.O.T. Digital Quality Report',
         text: `Batch: ${activeResult.batchId}. Grade: ${activeResult.overallGrade}. Grade-A: ${activeResult.gradeAPercentage}%, Grade-URS: ${activeResult.gradeURSPercentage}%`,
         url: window.location.href,
       }).catch(() => {});
@@ -199,7 +200,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
               </div>
               <div>
                 <span className="text-[10px] uppercase font-black tracking-widest bg-white/20 px-3 py-1 rounded-full">
-                  OFFICIAL APMC REPORT
+                  DIGITAL QUALITY INSPECTION REPORT
                 </span>
                 <h2 className="text-2xl font-black mt-1 tracking-tight">
                   {activeResult.overallGrade}
@@ -213,8 +214,10 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
                 <div className={`w-4 h-4 rounded-full ${activeResult.grade === 'URS' ? 'bg-amber-400 ring-2 ring-white' : 'bg-stone-700 opacity-40'}`} />
                 <div className={`w-4 h-4 rounded-full ${activeResult.grade === 'C' ? 'bg-rose-500 ring-2 ring-white' : 'bg-stone-700 opacity-40'}`} />
               </div>
-              <span className="text-[10px] font-black tracking-wider text-emerald-200 mt-1">
-                AI CONFIDENCE {activeResult.score}%
+              <span className="text-[10px] font-black tracking-wider text-emerald-200 mt-1 text-center">
+                {activeResult.source === 'development_mock'
+                  ? 'Development Vision Model (development_mock)'
+                  : `CONFIDENCE ${activeResult.score}%`}
               </span>
             </div>
           </div>
@@ -234,17 +237,17 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
           </div>
         </div>
 
-        {/* ONNX Edge Execution Speed Benchmark Card */}
+        {/* Execution Speed & Quality Benchmark Card */}
         <div className="bg-stone-900 text-white p-4 rounded-3xl border-3 border-emerald-500/60 shadow-xl space-y-3">
           <div className="flex items-center justify-between border-b pb-2.5 border-stone-800">
             <div className="flex items-center gap-2">
               <Cpu className="w-5 h-5 text-emerald-400 animate-pulse" />
               <h3 className="text-sm font-black text-emerald-300 uppercase tracking-wide">
-                ⚡ ONNX Execution Benchmark Log
+                ⚡ Runtime Inference Metrics
               </h3>
             </div>
             <span className="text-[10px] font-black bg-emerald-400 text-stone-950 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-              {activeResult.edgeLatencyMs ? `${activeResult.edgeLatencyMs}ms Edge` : '185ms Edge'}
+              {activeResult.isInferenceEdge ? `${activeResult.edgeLatencyMs}ms WASM` : `${activeResult.serverLatencyMs || 850}ms Cloud`}
             </span>
           </div>
 
@@ -260,25 +263,40 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
             <div className="bg-stone-950 p-3 rounded-2xl border border-stone-800">
               <span className="text-[10px] text-stone-400 uppercase font-bold block">☁️ Server FastAPI API</span>
               <span className="text-lg font-black text-amber-300">
-                ~{activeResult.serverLatencyMs || 850} ms
+                {activeResult.serverLatencyMs || 850} ms
               </span>
               <span className="text-[9px] text-stone-400 block font-semibold">Remote Cloud Network</span>
             </div>
           </div>
 
-          {/* Benchmark Comparison Output Log */}
-          <div className="bg-black/80 p-3 rounded-2xl border border-emerald-500/40 font-mono text-[11px] space-y-1">
-            <div className="flex items-center justify-between text-emerald-400 font-bold border-b border-stone-800 pb-1">
-              <span>🚀 Mobile Speedup Factor:</span>
-              <span className="text-white bg-emerald-700/80 px-2 py-0.5 rounded text-[10px]">
-                {((activeResult.serverLatencyMs || 850) / (activeResult.edgeLatencyMs || 185)).toFixed(1)}x FASTER
+          {activeResult.benchmarkLog && (
+            <div className="bg-black/80 p-3 rounded-2xl border border-emerald-500/40 font-mono text-[11px] space-y-1">
+              <p className="text-stone-300 pt-1 leading-relaxed whitespace-pre-line text-[10px]">
+                {activeResult.benchmarkLog}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* SHA-256 Tamper Integrity Cryptographic Hash */}
+        {activeResult.sha256Hash && (
+          <div className="bg-stone-900 text-white p-4 rounded-3xl border-2 border-emerald-500/40 shadow-xl space-y-2">
+            <div className="flex items-center justify-between border-b pb-2 border-stone-800">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <h4 className="text-xs font-black text-emerald-300 uppercase tracking-wider">
+                  Tamper-Proof Audit Hash (SHA-256)
+                </h4>
+              </div>
+              <span className="text-[9px] font-black bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30 uppercase">
+                Cryptographic Verified
               </span>
             </div>
-            <p className="text-stone-300 pt-1 leading-relaxed whitespace-pre-line text-[10px]">
-              {activeResult.benchmarkLog || `[OFFLINE EDGE INFERENCE BENCHMARK LOG]\n⚡ Edge ONNX WebAssembly/WebGL Latency: 185ms\n☁️ Server API Network Latency: ~850ms\n🚀 Speedup: 4.6x Faster (Target < 1500ms: PASSED ✅)\n📱 Mobile Viewport Optimization: WebAssembly SIMD + WebGL Enabled`}
+            <p className="font-mono text-[10px] text-stone-300 bg-black/60 p-2.5 rounded-xl border border-stone-800 break-all select-all shadow-inner">
+              {activeResult.sha256Hash}
             </p>
           </div>
-        </div>
+        )}
 
         {/* HTML5 Canvas Bounding Box Visualizer */}
         <div className="bg-white p-4 rounded-3xl border-3 border-stone-200 shadow-md space-y-3">
@@ -328,26 +346,28 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
           </div>
 
           <div className="h-64 w-full flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={pieChartData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={55}
-                  outerRadius={85}
-                  paddingAngle={5}
-                  dataKey="value"
-                  label={({ value }) => `${value}%`}
-                >
-                  {pieChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value: any) => [`${value}%`, 'Share']} />
-                <Legend verticalAlign="bottom" height={36} iconType="circle" />
-              </PieChart>
-            </ResponsiveContainer>
+            <ErrorBoundary componentName="Batch Distribution Pie Chart">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieChartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={55}
+                    outerRadius={85}
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={({ value }) => `${value}%`}
+                  >
+                    {pieChartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: any) => [`${value}%`, 'Share']} />
+                  <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                </PieChart>
+              </ResponsiveContainer>
+            </ErrorBoundary>
           </div>
         </div>
 
@@ -481,7 +501,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
 
                 // Send dispute status update to SQLite database backend
                 try {
-                  await fetch(`${API_BASE_URL}/sessions/${activeResult.batchId}/dispute`, {
+                  await fetch(`${getApiUrl()}/api/v1/sessions/${activeResult.batchId}/dispute`, {
                     method: 'POST'
                   });
                 } catch (e) {
