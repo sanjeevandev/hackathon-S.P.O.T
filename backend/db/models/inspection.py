@@ -20,6 +20,7 @@ class Inspection(Base):
     inspection_confidence: Mapped[float] = mapped_column(Float, default=0.0)
     review_status: Mapped[str] = mapped_column(String(32), default="NOT_REVIEWED")  # NOT_REVIEWED, PASS, REVIEW_REQUIRED
     review_reason: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    sha256_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     batch: Mapped["Batch"] = relationship("Batch", lazy="joined")

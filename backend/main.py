@@ -22,12 +22,15 @@ from backend.grading.grading_engine import GradingPolicyEngine
 from backend.grading.profiles import list_grading_profiles, get_grading_profile, register_grading_profile
 from backend.db import get_db, init_database
 from backend.db.repositories.inspection_repository import InspectionRepository
-from backend.database import get_all_grading_sessions, get_session_by_batch_id
+from backend.database import get_all_grading_sessions, get_session_by_batch_id, update_session_status
+from backend.schemas import OnionAnalysisResponse
+from backend.services.vision_service import AIVisionService, validate_onion_image
 
 from backend.contracts.schemas import CanonicalInspectionResult
 from backend.reporting.report_contract import InspectionReport
 from backend.reporting.report_renderer import ReportRenderer
 from backend.reporting.service import ReportingService
+from backend.api.annotation_router import router as annotation_router
 
 app = FastAPI(
     title="S.P.O.T. AI Onion Quality & Grading API",
@@ -35,9 +38,19 @@ app = FastAPI(
     version="5.0.0"
 )
 
+app.include_router(annotation_router)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -84,7 +97,6 @@ async def get_ai_status():
 
 
 @app.post("/api/v1/inspect", response_model=PipelineResult)
-@app.post("/api/v1/analyze-onion", response_model=PipelineResult)
 async def inspect_onion(
     file: UploadFile = File(...),
     center_id: str = Query(default="APMC-NASHIK-CENTER-04", description="Procurement center identifier"),
@@ -122,7 +134,7 @@ async def inspect_onion(
         declared_weight = None
         w_source = "UNAVAILABLE"
 
-        if pipeline_result.vision_result:
+        if pipeline_result.status == "SUCCESS" and pipeline_result.vision_result:
             agg_res = BatchIntelligenceEngine.aggregate_batch(target_batch_id, [pipeline_result.vision_result])
             declared_weight = agg_res.weight_distribution.total_batch_weight_kg
             w_source = agg_res.weight_distribution.weight_source
@@ -134,20 +146,62 @@ async def inspect_onion(
             )
             grading_res = GradingPolicyEngine.evaluate(grading_req)
 
-        repo = InspectionRepository(db)
-        repo.save_inspection_result(
-            batch_id=target_batch_id,
-            pipeline_result=pipeline_result,
-            grading_result=grading_res,
-            center_id=center_id,
-            declared_weight_kg=declared_weight,
-            weight_source=w_source
-        )
+            repo = InspectionRepository(db)
+            repo.save_inspection_result(
+                batch_id=target_batch_id,
+                pipeline_result=pipeline_result,
+                grading_result=grading_res,
+                center_id=center_id,
+                declared_weight_kg=declared_weight,
+                weight_source=w_source
+            )
     except Exception as db_err:
         import logging
         logging.error(f"Failed to persist inspection to database: {str(db_err)}")
 
     return pipeline_result
+
+
+@app.post("/api/v1/analyze-onion", response_model=OnionAnalysisResponse)
+async def analyze_onion(
+    file: UploadFile = File(...),
+    center_id: str = Query(default="APMC-NASHIK-CENTER-04", description="Procurement center identifier")
+):
+    """
+    Dedicated onion quality inspection endpoint for frontend PWA.
+    Runs input validation heuristic, OpenCV bulb detection, YOLO defect classification,
+    and returns full analysis payload with SHA-256 tamper hash.
+    """
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No file provided")
+
+    contents = await file.read()
+    if not contents:
+        raise HTTPException(status_code=400, detail="Empty file submitted")
+
+    # Real input validation heuristic
+    is_valid, validation_msg, metrics = validate_onion_image(contents)
+    if not is_valid:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "message": validation_msg,
+                "metrics": metrics,
+                "recommendation": "Scan onion only. Please place onion bulbs inside the camera frame and retake."
+            }
+        )
+
+    try:
+        response = AIVisionService.process_onion_image(
+            image_bytes=contents,
+            filename=file.filename,
+            center_id=center_id
+        )
+        return response
+    except Exception as e:
+        import logging
+        logging.exception(f"Error analyzing onion: {e}")
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
 
 @app.get("/api/v1/inspections")
@@ -315,7 +369,16 @@ async def get_session(batch_id: str):
     return session
 
 
+@app.post("/api/v1/sessions/{batch_id}/dispute")
+async def flag_dispute(batch_id: str):
+    """Flags a batch session as disputed in SQLite database. Returns 404 if batch_id not found."""
+    success = update_session_status(batch_id, "DISPUTED")
+    if not success:
+        raise HTTPException(status_code=404, detail=f"Batch ID '{batch_id}' not found in database")
+    return {"status": "success", "batch_id": batch_id, "review_status": "DISPUTED"}
+
+
 if __name__ == "__main__":
     import uvicorn
     init_database()
-    uvicorn.run("backend.main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

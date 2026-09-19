@@ -65,3 +65,31 @@ def test_low_res_image_fails_quality_gate():
     assert res.status == "RETAKE_REQUIRED"
     assert res.passed is False
     assert "IMAGE_RESOLUTION_TOO_LOW" in res.reasons
+
+
+def test_non_onion_image_fails_quality_gate():
+    """Verify non-onion input (e.g. artificial blue screen) is rejected before quality classification."""
+    import io
+    import numpy as np
+    from PIL import Image
+
+    # Create artificial vivid blue test image
+    arr = np.zeros((480, 640, 3), dtype=np.uint8)
+    arr[:, :] = [20, 80, 240]  # Vivid blue non-onion
+    # Add some high contrast stripes to pass blur and contrast checks
+    for i in range(0, 480, 50):
+        arr[i:i+10, :, :] = [10, 50, 200]
+
+    img = Image.fromarray(arr)
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG")
+    non_onion_bytes = buf.getvalue()
+
+    gate = ImageQualityGate()
+    res = gate.evaluate(non_onion_bytes)
+
+    assert res.status == "REJECTED_NOT_ONION"
+    assert res.passed is False
+    assert "NOT_AN_ONION" in res.reasons
+    assert any("Scan onion only" in r for r in res.recommendations)
+

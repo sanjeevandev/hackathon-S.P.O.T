@@ -2,6 +2,7 @@
 
 import json
 from datetime import datetime, timezone
+from sqlalchemy import text
 from backend.db.engine import engine, Base, SessionLocal
 from backend.db.models.user import User
 from backend.db.models.procurement_center import ProcurementCenter
@@ -13,6 +14,14 @@ from backend.grading.profiles import list_grading_profiles
 def init_database() -> None:
     """Creates all database tables and seeds default model versions and grading profiles."""
     Base.metadata.create_all(bind=engine)
+
+    # SQLite table migration check
+    with engine.connect() as conn:
+        try:
+            conn.execute(text("ALTER TABLE inspections ADD COLUMN sha256_hash VARCHAR(64)"))
+            conn.commit()
+        except Exception:
+            pass
 
     db = SessionLocal()
     try:
@@ -34,7 +43,7 @@ def init_database() -> None:
                 is_active=True
             ))
 
-        # 3. Seed Default Model Version
+        # 3. Seed Default Model Versions
         if not db.query(ModelVersion).filter(ModelVersion.id == "MOD-0.1.0-MOCK").first():
             db.add(ModelVersion(
                 id="MOD-0.1.0-MOCK",
@@ -46,6 +55,20 @@ def init_database() -> None:
                 weights_reference=None,
                 dataset_version=None,
                 metrics_reference="Synthetic pipeline mechanics test double",
+                is_active=True
+            ))
+
+        if not db.query(ModelVersion).filter(ModelVersion.id == "MOD-1.0.0-YOLO26").first():
+            db.add(ModelVersion(
+                id="MOD-1.0.0-YOLO26",
+                model_id="YOLO26ClassifierModel",
+                model_name="YOLO26n-cls-pilot",
+                model_version="1.0.0-pilot",
+                source="real_model",
+                framework="Ultralytics YOLO26",
+                weights_reference="artifacts/ml/experiments/yolo26n_cls_pilot_v1/weights/best.pt",
+                dataset_version="1.0.0-audited",
+                metrics_reference="Trained on 100-image human pilot annotations",
                 is_active=True
             ))
 
