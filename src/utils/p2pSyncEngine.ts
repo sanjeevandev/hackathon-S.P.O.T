@@ -22,6 +22,7 @@ class P2PMeshSyncEngine {
   private broadcastChannel: BroadcastChannel | null = null;
   private crdtStore: Map<string, CRDTLogItem> = new Map();
   private vectorClock: number = 0;
+  private activePeers: Map<string, number> = new Map(); // peerId -> lastSeenMs
 
   constructor() {
     this.deviceId = 'SPOT-INSPECTOR-' + Math.random().toString(36).substring(2, 7).toUpperCase();
@@ -37,7 +38,7 @@ class P2PMeshSyncEngine {
   }
 
   /**
-   * Initializes BroadcastChannel / WebRTC DataChannel fallback mesh for local Wi-Fi / Hotspot discovery.
+   * Initializes BroadcastChannel mesh for real same-origin peer sync across tabs/windows.
    */
   private initBroadcastMesh() {
     if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
@@ -45,7 +46,11 @@ class P2PMeshSyncEngine {
       
       this.broadcastChannel.onmessage = (event) => {
         const { type, payload, senderId } = event.data || {};
-        if (senderId === this.deviceId) return;
+        if (!senderId || senderId === this.deviceId) return;
+
+        // Register peer activity
+        this.activePeers.set(senderId, Date.now());
+        this.pruneStalePeers();
 
         if (type === 'HEARTBEAT_PING') {
           this.broadcastChannel?.postMessage({
@@ -53,30 +58,42 @@ class P2PMeshSyncEngine {
             senderId: this.deviceId,
             payload: { activeCount: this.peerCount }
           });
-          this.updatePeerCount(Math.min(5, this.peerCount + 1));
-        } else if (type === 'HEARTBEAT_PONG') {
-          this.updatePeerCount(Math.min(5, this.peerCount + 1));
         } else if (type === 'SYNC_CRDT_LOGS') {
           this.handleIncomingCRDTLogs(payload as CRDTLogItem[], senderId);
         }
       };
 
-      // Broadcast presence ping
+      // Periodic heartbeat broadcast & prune
+      setInterval(() => {
+        this.pruneStalePeers();
+        if (this.broadcastChannel) {
+          this.broadcastChannel.postMessage({
+            type: 'HEARTBEAT_PING',
+            senderId: this.deviceId
+          });
+        }
+      }, 5000);
+
+      // Immediate announcement
       this.broadcastChannel.postMessage({
         type: 'HEARTBEAT_PING',
         senderId: this.deviceId
       });
-
-      // Simulate local Wi-Fi peer discovery in agricultural mandis
-      setTimeout(() => {
-        this.updatePeerCount(3); // Simulated 3 peer inspector devices nearby
-      }, 1200);
     }
   }
 
-  private updatePeerCount(count: number) {
-    this.peerCount = count;
-    this.peerListeners.forEach((listener) => listener(this.peerCount));
+  private pruneStalePeers() {
+    const now = Date.now();
+    for (const [id, lastSeen] of this.activePeers.entries()) {
+      if (now - lastSeen > 12000) {
+        this.activePeers.delete(id);
+      }
+    }
+    const realCount = 1 + this.activePeers.size;
+    if (realCount !== this.peerCount) {
+      this.peerCount = realCount;
+      this.peerListeners.forEach((listener) => listener(this.peerCount));
+    }
   }
 
   public subscribePeerCount(listener: PeerMeshListener): () => void {
