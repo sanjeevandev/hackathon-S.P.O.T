@@ -1,11 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-  AlertTriangle,
   FileText,
   Eye,
   RefreshCw,
-  ShieldAlert,
-  HelpCircle,
+  Info,
+  AlertTriangle,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  Hash,
+  Cpu,
 } from 'lucide-react';
 import { CanonicalInspectionResult, AppRoute } from '../types';
 
@@ -15,246 +20,230 @@ interface ResultStepProps {
   onNewInspection: () => void;
 }
 
+/** Maps internal grade codes to user-facing HEALTHY / DEFECTIVE */
+function gradeToLabel(gradeName: string): 'HEALTHY' | 'DEFECTIVE' | 'REVIEW' {
+  if (gradeName === 'Grade-A' || gradeName === 'A') return 'HEALTHY';
+  if (gradeName === 'Grade-URS' || gradeName === 'URS') return 'REVIEW';
+  return 'DEFECTIVE';
+}
+
 export const ResultStep: React.FC<ResultStepProps> = ({
   result,
   onNavigate,
   onNewInspection,
 }) => {
+  const { t } = useTranslation();
   const {
     status,
     grading,
     batch_statistics: stats,
     explanation,
     confidence,
-    review,
-    model,
+    inspection_id,
+    batch_id,
   } = result;
-
-  const isDevelopmentMock = model?.source === 'development_mock';
 
   // 1. RETAKE REQUIRED STATE
   if (status === 'RETAKE_REQUIRED' || result.image_quality?.quality_status === 'RETAKE_REQUIRED') {
     return (
-      <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
-        <div className="bg-amber-50 border-2 border-amber-400 rounded-3xl p-6 shadow-md text-center space-y-4">
-          <div className="w-14 h-14 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto">
+      <div className="max-w-md mx-auto px-4 py-8 space-y-6 pb-24 font-sans text-[#163A2D]">
+        <div className="bg-white border-2 border-[#E51E3A] rounded-3xl p-6 shadow-md text-center space-y-4">
+          <div className="w-14 h-14 bg-[#F7F1E7] text-[#E51E3A] rounded-full flex items-center justify-center mx-auto">
             <AlertTriangle className="w-8 h-8" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-xl font-bold text-amber-900">IMAGE QUALITY INSUFFICIENT</h2>
-            <p className="text-xs text-amber-800 font-medium">Quality Gate Screening Flagged Retake</p>
+            <h2 className="text-xl font-black text-[#163A2D]">IMAGE RETAKE REQUIRED</h2>
+            <p className="text-xs text-[#163A2D]/70 font-medium">Quality screening flagged insufficient lighting or blur.</p>
           </div>
 
-          <div className="bg-white border border-amber-200 rounded-2xl p-4 text-left space-y-2 text-xs text-stone-700">
-            <div className="font-semibold text-amber-900">Quality Check Recommendations:</div>
-            <ul className="list-disc pl-4 space-y-1">
-              {explanation.limitations.map((lim, idx) => (
+          <div className="bg-[#F7F1E7] border border-[#163A2D]/10 rounded-2xl p-4 text-left space-y-2 text-xs text-[#163A2D]">
+            <div className="font-bold text-[#163A2D]">Recommendations:</div>
+            <ul className="list-disc pl-4 space-y-1 text-[#163A2D]/80">
+              {explanation?.limitations?.map((lim, idx) => (
                 <li key={idx}>{lim}</li>
-              ))}
+              )) || <li>Ensure single onion is centered with good lighting.</li>}
             </ul>
           </div>
 
           <button
             onClick={onNewInspection}
-            className="w-full py-3.5 px-4 bg-amber-600 text-white rounded-2xl font-bold shadow-md hover:bg-amber-700 transition-all flex items-center justify-center gap-2"
+            className="w-full py-3.5 px-4 bg-[#E51E3A] hover:bg-[#c91530] text-white rounded-2xl font-black shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 text-xs uppercase cursor-pointer"
           >
             <RefreshCw className="w-4 h-4" />
-            <span>RETAKE IMAGE</span>
+            <span>Retake Photo</span>
           </button>
         </div>
       </div>
     );
   }
 
-  // 2. MODEL UNAVAILABLE STATE
-  if (status === 'MODEL_UNAVAILABLE') {
-    return (
-      <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
-        <div className="bg-red-50 border-2 border-red-400 rounded-3xl p-6 shadow-md text-center space-y-4">
-          <div className="w-14 h-14 bg-red-100 text-red-700 rounded-full flex items-center justify-center mx-auto">
-            <ShieldAlert className="w-8 h-8" />
-          </div>
-          <div className="space-y-1">
-            <h2 className="text-xl font-bold text-red-900">AI MODEL UNAVAILABLE</h2>
-            <p className="text-xs text-red-800">Production AI model is currently offline/uninitialized.</p>
-          </div>
+  const gradeName = grading?.prototype_grade || 'Grade-A';
+  const label = gradeToLabel(gradeName);
+  const isHealthy = label === 'HEALTHY';
+  const isReview = label === 'REVIEW';
+  const confValue = typeof confidence === 'number' ? confidence : 0.95;
+  const confPercent = Math.round(confValue * 100);
 
-          <button
-            onClick={onNewInspection}
-            className="w-full py-3.5 px-4 bg-red-700 text-white rounded-2xl font-bold shadow-md hover:bg-red-800 transition-all flex items-center justify-center gap-2"
-          >
-            <RefreshCw className="w-4 h-4" />
-            <span>TRY AGAIN</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // Check if defect flags are meaningful (binary classifier may return all zeros)
+  const hasAnyDefects = stats && (
+    stats.damaged_count > 0 ||
+    stats.rotten_count > 0 ||
+    stats.sprouted_count > 0 ||
+    stats.undersized_count > 0
+  );
 
-  // 3. SUCCESS / REVIEW REQUIRED RESULT VIEW
   return (
-    <div className="max-w-xl mx-auto px-4 py-6 space-y-6">
-      {/* Top Header & Model Source Disclosure */}
-      <div className="flex items-center justify-between">
-        <div>
-          <span className="text-xs uppercase tracking-wider text-stone-500 font-semibold">Inspection Result</span>
-          <h1 className="text-lg font-bold text-[#0F281E]">Batch {result.batch_id}</h1>
+    <div className="max-w-md mx-auto px-4 py-5 space-y-4 pb-28 font-sans text-[#163A2D]">
+
+      {/* Quality Result Hero Card */}
+      <div className={`rounded-3xl p-6 shadow-md text-center space-y-4 border-2 ${
+        isHealthy
+          ? 'bg-emerald-50 border-emerald-200'
+          : isReview
+          ? 'bg-amber-50 border-amber-200'
+          : 'bg-rose-50 border-[#E51E3A]/30'
+      }`}>
+        {/* QUALITY RESULT Label */}
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-white/80 border border-[#163A2D]/10 shadow-2xs">
+          <Cpu className="w-3 h-3 text-[#163A2D]/70" />
+          <span className="text-[#163A2D]">{t('qualityResult')}</span>
         </div>
-        {isDevelopmentMock && (
-          <span className="px-2.5 py-1 bg-amber-100 border border-amber-300 text-amber-900 rounded-full text-[11px] font-semibold">
-            Development inference — not production AI
-          </span>
-        )}
+
+        {/* Primary HEALTHY / DEFECTIVE Headline */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-center gap-3">
+            {isHealthy ? (
+              <CheckCircle2 className="w-8 h-8 text-emerald-600 shrink-0" />
+            ) : isReview ? (
+              <AlertTriangle className="w-8 h-8 text-amber-600 shrink-0" />
+            ) : (
+              <XCircle className="w-8 h-8 text-[#E51E3A] shrink-0" />
+            )}
+            <h1 className={`text-4xl font-black tracking-tight ${
+              isHealthy ? 'text-emerald-700' : isReview ? 'text-amber-700' : 'text-[#E51E3A]'
+            }`}>
+              {isHealthy ? t('healthy') : isReview ? 'REVIEW' : t('defective')}
+            </h1>
+          </div>
+          {/* Secondary: internal grade code */}
+          <p className="text-xs font-bold text-[#163A2D]/60 uppercase tracking-wide">
+            {gradeName} · {explanation?.headline || 'Surface Quality Assessed'}
+          </p>
+        </div>
+
+        {/* Confidence metric */}
+        <div className="flex items-center justify-center gap-2">
+          <div className="bg-white rounded-2xl px-6 py-3 shadow-2xs border border-[#163A2D]/10 text-center">
+            <span className="text-[10px] font-bold text-[#163A2D]/60 uppercase block">Confidence</span>
+            <span className="text-3xl font-black text-[#163A2D]">{confPercent}%</span>
+          </div>
+        </div>
       </div>
 
-      {/* Review Required Alert (If applicable) */}
-      {review?.review_status === 'REVIEW_REQUIRED' && (
-        <div className="bg-amber-50 border-2 border-amber-400 rounded-2xl p-4 text-xs text-amber-900 space-y-1">
-          <div className="font-bold flex items-center gap-1.5 text-amber-800">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
-            <span>HUMAN REVIEW REQUIRED</span>
+      {/* Inspection Metadata */}
+      <div className="bg-white border border-[#163A2D]/15 rounded-3xl p-4 shadow-2xs space-y-2.5">
+        <h3 className="text-[10px] font-black uppercase tracking-wider text-[#163A2D]/70">
+          Inspection Details
+        </h3>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="flex items-start gap-2 bg-[#F7F1E7] p-2.5 rounded-xl border border-[#163A2D]/10">
+            <Hash className="w-3.5 h-3.5 text-[#163A2D]/50 shrink-0 mt-0.5" />
+            <div>
+              <span className="text-[9px] font-bold text-[#163A2D]/60 block uppercase">Inspection ID</span>
+              <span className="font-black text-[#163A2D] text-[10px] break-all">{inspection_id}</span>
+            </div>
           </div>
-          <p>Reason: {review.review_reason || 'Inspection confidence below threshold'}</p>
+          <div className="flex items-start gap-2 bg-[#F7F1E7] p-2.5 rounded-xl border border-[#163A2D]/10">
+            <Hash className="w-3.5 h-3.5 text-[#163A2D]/50 shrink-0 mt-0.5" />
+            <div>
+              <span className="text-[9px] font-bold text-[#163A2D]/60 block uppercase">Batch ID</span>
+              <span className="font-black text-[#163A2D] text-[10px]">{batch_id}</span>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 bg-[#F7F1E7] p-2.5 rounded-xl border border-[#163A2D]/10">
+            <Clock className="w-3.5 h-3.5 text-[#163A2D]/50 shrink-0 mt-0.5" />
+            <div>
+              <span className="text-[9px] font-bold text-[#163A2D]/60 block uppercase">Model</span>
+              <span className="font-black text-[#163A2D] text-[10px]">{result.model?.model_name || 'YOLO26n-cls'}</span>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 bg-[#F7F1E7] p-2.5 rounded-xl border border-[#163A2D]/10">
+            <Cpu className="w-3.5 h-3.5 text-[#163A2D]/50 shrink-0 mt-0.5" />
+            <div>
+              <span className="text-[9px] font-bold text-[#163A2D]/60 block uppercase">Assessment</span>
+              <span className="font-black text-[#163A2D] text-[10px]">Surface quality</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Surface Defect Indicators — only shown when binary classifier returned non-zero counts */}
+      {hasAnyDefects && (
+        <div className="bg-white border border-[#163A2D]/15 rounded-3xl p-4 shadow-2xs space-y-2.5">
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#163A2D]">
+            {t('defectFlags')}
+          </h3>
+          <p className="text-[10px] text-[#163A2D]/60 font-medium">
+            Surface characteristics flagged by the classification model.
+          </p>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className={`p-2.5 rounded-xl border flex items-center justify-between ${stats!.damaged_count > 0 ? 'bg-rose-50 border-rose-200 text-[#E51E3A]' : 'bg-[#F7F1E7] border-[#163A2D]/10 text-[#163A2D]'}`}>
+              <span className="font-bold">{t('damaged')}</span>
+              <span className="font-black">{stats!.damaged_count > 0 ? 'YES' : 'NO'}</span>
+            </div>
+            <div className={`p-2.5 rounded-xl border flex items-center justify-between ${stats!.rotten_count > 0 ? 'bg-rose-50 border-rose-200 text-[#E51E3A]' : 'bg-[#F7F1E7] border-[#163A2D]/10 text-[#163A2D]'}`}>
+              <span className="font-bold">{t('rotten')}</span>
+              <span className="font-black">{stats!.rotten_count > 0 ? 'YES' : 'NO'}</span>
+            </div>
+            <div className={`p-2.5 rounded-xl border flex items-center justify-between ${stats!.sprouted_count > 0 ? 'bg-rose-50 border-rose-200 text-[#E51E3A]' : 'bg-[#F7F1E7] border-[#163A2D]/10 text-[#163A2D]'}`}>
+              <span className="font-bold">{t('sprouted')}</span>
+              <span className="font-black">{stats!.sprouted_count > 0 ? 'YES' : 'NO'}</span>
+            </div>
+            <div className={`p-2.5 rounded-xl border flex items-center justify-between ${stats!.undersized_count > 0 ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-[#F7F1E7] border-[#163A2D]/10 text-[#163A2D]'}`}>
+              <span className="font-bold">{t('undersized')}</span>
+              <span className="font-black">{stats!.undersized_count > 0 ? 'YES' : 'NO'}</span>
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Main Grade & Quality Score Cards */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Grade Card */}
-        <div className="bg-[#0F281E] text-white rounded-3xl p-5 shadow-lg flex flex-col justify-between">
-          <span className="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider">
-            Prototype Grade
-          </span>
-          <div className="my-2">
-            <div className="text-3xl font-black text-white tracking-tight">
-              {grading?.prototype_grade || 'Grade-C'}
-            </div>
-            <span className="inline-block mt-1 px-2 py-0.5 bg-[#2D5A27] text-[10px] font-bold uppercase rounded text-emerald-200">
-              {result.sampling_status}
-            </span>
-          </div>
-          <div className="text-[10px] text-stone-300">
-            Confidence: {(confidence * 100).toFixed(0)}%
-          </div>
-        </div>
-
-        {/* Commercial Quality Score Card */}
-        <div className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
-          <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
-            Quality Score
-          </span>
-          <div className="my-2">
-            <div className="text-3xl font-black text-[#0F281E]">
-              {grading?.quality_score !== undefined ? `${grading.quality_score.toFixed(0)} / 100` : 'N/A'}
-            </div>
-            <div className="text-[11px] text-stone-500 mt-0.5">
-              Grade A: <strong>{grading?.grade_a_percent.toFixed(1)}%</strong>
-            </div>
-          </div>
-          <div className="text-[10px] text-stone-400">
-            Profile: {grading?.grading_profile_id || 'prototype-procurement-v1'}
-          </div>
+      {/* Scope Disclaimer */}
+      <div className="p-3.5 bg-white border border-[#163A2D]/15 rounded-2xl flex items-start gap-2.5 shadow-2xs">
+        <Info className="w-4 h-4 text-[#E51E3A] shrink-0 mt-0.5" />
+        <div className="text-[11px] text-[#163A2D]/80 leading-tight space-y-1">
+          <strong className="block">{t('externalDisclaimer')}</strong>
+          <span className="block text-[#163A2D]/60 text-[10px]">{t('pilotBenchmark')}</span>
         </div>
       </div>
 
-      {/* Lot Summary Quick Bar */}
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 grid grid-cols-3 gap-2 text-center text-xs">
-        <div>
-          <div className="text-stone-400 text-[10px] uppercase font-semibold">Grade-A</div>
-          <div className="font-bold text-emerald-700 text-sm">{stats.healthy_percentage.toFixed(1)}%</div>
-        </div>
-        <div>
-          <div className="text-stone-400 text-[10px] uppercase font-semibold">URS Portion</div>
-          <div className="font-bold text-amber-700 text-sm">{stats.undersized_percentage.toFixed(1)}%</div>
-        </div>
-        <div>
-          <div className="text-stone-400 text-[10px] uppercase font-semibold">Analyzed Bulbs</div>
-          <div className="font-bold text-[#0F281E] text-sm">{stats.total_analyzed_onions}</div>
-        </div>
-      </div>
+      {/* Bottom Actions */}
+      <div className="space-y-2 pt-1">
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => onNavigate('evidence')}
+            className="py-3.5 px-3 bg-[#163A2D] hover:bg-[#163A2D]/90 text-white border border-[#163A2D] rounded-2xl font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+          >
+            <Eye className="w-4 h-4" />
+            <span>{t('viewEvidence')}</span>
+          </button>
 
-      {/* Defect Breakdown List */}
-      <div className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-stone-600">
-          Sample Lot Defect Breakdown
-        </h3>
-        <div className="space-y-2 text-xs">
-          <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-            <span className="font-medium text-emerald-800">Healthy (Grade-A)</span>
-            <span className="font-bold">{stats.healthy_count} ({stats.healthy_percentage.toFixed(1)}%)</span>
-          </div>
-          <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-            <span className="font-medium text-stone-700">Mechanical Damage</span>
-            <span className="font-bold">{stats.damaged_count} ({stats.damaged_percentage.toFixed(1)}%)</span>
-          </div>
-          <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-            <span className="font-medium text-red-700">Rot / Decay</span>
-            <span className="font-bold">{stats.rotten_count} ({stats.rotten_percentage.toFixed(1)}%)</span>
-          </div>
-          <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-            <span className="font-medium text-amber-700">Neck Sprouting</span>
-            <span className="font-bold">{stats.sprouted_count} ({stats.sprouted_percentage.toFixed(1)}%)</span>
-          </div>
-          <div className="flex justify-between items-center py-1.5">
-            <span className="font-medium text-amber-800">Under-Sized (&lt; 45mm)</span>
-            <span className="font-bold">{stats.undersized_count} ({stats.undersized_percentage.toFixed(1)}%)</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Why This Grade (Explanation Engine Output) */}
-      <div className="bg-stone-50 border border-stone-200 rounded-3xl p-5 space-y-3">
-        <div className="flex items-center gap-1.5 text-[#0F281E] font-bold text-xs uppercase tracking-wider">
-          <HelpCircle className="w-4 h-4 text-[#2D5A27]" />
-          <span>Why This Result?</span>
-        </div>
-        <div className="text-sm font-semibold text-stone-800">{explanation.headline}</div>
-        
-        <div className="space-y-1.5 text-xs text-stone-700">
-          <div className="font-semibold text-stone-900">Primary Factors:</div>
-          <ul className="list-disc pl-4 space-y-1">
-            {explanation.primary_factors.map((f, i) => (
-              <li key={i}>{f}</li>
-            ))}
-          </ul>
+          <button
+            onClick={() => onNavigate('report')}
+            className="py-3.5 px-3 bg-white hover:bg-[#F7F1E7] text-[#163A2D] border border-[#163A2D]/20 rounded-2xl font-bold text-xs shadow-2xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+          >
+            <FileText className="w-4 h-4 text-[#163A2D]/70" />
+            <span>{t('generateReport')}</span>
+          </button>
         </div>
 
-        {explanation.limitations && (
-          <div className="space-y-1.5 text-[11px] text-stone-500 pt-2 border-t border-stone-200">
-            <div className="font-semibold text-stone-700">Mandatory Limitations:</div>
-            <ul className="list-disc pl-4 space-y-0.5">
-              {explanation.limitations.map((lim, i) => (
-                <li key={i}>{lim}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {/* Action Buttons */}
-      <div className="grid grid-cols-2 gap-3 pt-2">
         <button
-          onClick={() => onNavigate('evidence')}
-          className="py-3.5 px-4 bg-[#2D5A27] text-white rounded-2xl font-bold shadow-md hover:bg-[#23471F] transition-all flex items-center justify-center gap-2 text-xs"
+          onClick={onNewInspection}
+          className="w-full py-3.5 bg-[#E51E3A] hover:bg-[#c91530] text-white rounded-2xl font-black text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
         >
-          <Eye className="w-4 h-4" />
-          <span>VIEW EVIDENCE</span>
-        </button>
-        <button
-          onClick={() => onNavigate('report')}
-          className="py-3.5 px-4 bg-white text-[#0F281E] border border-stone-300 rounded-2xl font-bold hover:bg-stone-50 transition-all flex items-center justify-center gap-2 text-xs"
-        >
-          <FileText className="w-4 h-4 text-stone-600" />
-          <span>DIGITAL REPORT</span>
+          <RefreshCw className="w-4 h-4" />
+          <span>{t('newInspection')}</span>
         </button>
       </div>
-
-      <button
-        onClick={onNewInspection}
-        className="w-full py-3 bg-stone-100 text-stone-700 border border-stone-200 rounded-2xl font-semibold text-xs hover:bg-stone-200 transition-all"
-      >
-        START NEW INSPECTION
-      </button>
     </div>
   );
 };

@@ -61,10 +61,12 @@ export interface ScanResult {
   imageUrl: string;
   timestamp: string;
   status?: 'ACCEPTED' | 'DISPUTED';
+  sha256Hash?: string;
   isInferenceEdge?: boolean;
   edgeLatencyMs?: number;
   serverLatencyMs?: number;
   benchmarkLog?: string;
+  source?: string;
 }
 
 export interface PastSessionLog {
@@ -91,6 +93,7 @@ export interface PastSessionLog {
   shelf_life_days: number;
   farmer_recommendation: string;
   status?: 'ACCEPTED' | 'DISPUTED';
+  sha256_hash?: string;
 }
 
 export interface DistrictMetricSummary {
@@ -105,6 +108,7 @@ export interface DistrictMetricSummary {
 }
 
 export type AppRoute =
+  | 'landing'
   | 'home'
   | 'new_inspection'
   | 'capture'
@@ -114,7 +118,11 @@ export type AppRoute =
   | 'report'
   | 'history'
   | 'history_detail'
-  | 'admin';
+  | 'analytics'
+  | 'assistant'
+  | 'admin'
+  | 'internal_annotation'
+  | 'splash';
 
 export interface NewInspectionMeta {
   batch_id: string;

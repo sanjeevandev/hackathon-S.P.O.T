@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Check, Info } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { ArrowLeft, ArrowRight, Info } from 'lucide-react';
 import { NewInspectionMeta } from '../types';
 
 interface NewInspectionStepProps {
@@ -11,7 +12,8 @@ export const NewInspectionStep: React.FC<NewInspectionStepProps> = ({
   onBack,
   onProceed,
 }) => {
-  const [batchId, setBatchId] = useState<string>(`BATCH-MH-NASHIK-${Math.floor(1000 + Math.random() * 9000)}`);
+  const { t } = useTranslation();
+  const [batchId, setBatchId] = useState<string>('BATCH-MH-NASHIK-01');
   const [supplier, setSupplier] = useState<string>('Nashik Farmers Producer Co.');
   const [centerId, setCenterId] = useState<string>('APMC-NASHIK-CENTER-04');
   const [weightKg, setWeightKg] = useState<string>('');
@@ -30,106 +32,113 @@ export const NewInspectionStep: React.FC<NewInspectionStepProps> = ({
   };
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-md mx-auto px-4 py-5 space-y-5 pb-24 font-sans text-[#163A2D]">
       <div className="flex items-center gap-3">
         <button
           onClick={onBack}
-          className="p-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-700"
+          className="p-2 rounded-xl border border-[#163A2D]/15 bg-white text-[#163A2D] active:scale-95 transition-all shadow-2xs cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-xl font-bold text-[#0F281E]">New Batch Inspection</h1>
-          <p className="text-xs text-stone-500">Provide lot metadata before image intake</p>
+          <h1 className="text-xl font-black text-[#163A2D]">{t('lotIntake')}</h1>
+          <p className="text-xs text-[#163A2D]/70">Enter lot metadata before optical scan</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-5">
-        <div>
-          <label className="block text-xs font-semibold uppercase text-stone-600 mb-1.5">
-            Batch Identifier *
+      <form onSubmit={handleSubmit} className="bg-white border border-[#163A2D]/15 rounded-3xl p-5 shadow-2xs space-y-4">
+        {/* Lot ID */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-black text-[#163A2D] uppercase tracking-wide">
+            {t('batchIdLabel')}
           </label>
           <input
             type="text"
             required
             value={batchId}
             onChange={(e) => setBatchId(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#2D5A27] focus:outline-none"
-            placeholder="e.g. BATCH-MH-NASHIK-4921"
+            placeholder="e.g. BATCH-MH-NASHIK-01"
+            className="w-full px-3.5 py-3 rounded-2xl bg-[#F7F1E7] border border-[#163A2D]/20 focus:border-[#163A2D] outline-none text-sm font-bold text-[#163A2D]"
           />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase text-stone-600 mb-1.5">
-            Supplier / Mandi Licensee *
+        {/* Supplier */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-black text-[#163A2D] uppercase tracking-wide">
+            {t('supplierLabel')}
           </label>
           <input
             type="text"
             required
             value={supplier}
             onChange={(e) => setSupplier(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#2D5A27] focus:outline-none"
-            placeholder="Supplier name or FPO"
+            placeholder="e.g. Nashik Farmers Producer Co."
+            className="w-full px-3.5 py-3 rounded-2xl bg-[#F7F1E7] border border-[#163A2D]/20 focus:border-[#163A2D] outline-none text-sm font-bold text-[#163A2D]"
           />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase text-stone-600 mb-1.5">
-            APMC Procurement Center
+        {/* Procurement Center */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-black text-[#163A2D] uppercase tracking-wide">
+            {t('centerIdLabel')}
           </label>
           <select
             value={centerId}
             onChange={(e) => setCenterId(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:ring-2 focus:ring-[#2D5A27] focus:outline-none"
+            className="w-full px-3.5 py-3 rounded-2xl bg-[#F7F1E7] border border-[#163A2D]/20 focus:border-[#163A2D] outline-none text-sm font-bold text-[#163A2D]"
           >
-            <option value="APMC-NASHIK-CENTER-04">APMC Nashik Main Yard (Center 04)</option>
-            <option value="APMC-LASALGAON-CENTER-01">APMC Lasalgaon Procurement Center 01</option>
-            <option value="APMC-PIMPALGAON-CENTER-02">APMC Pimpalgaon Yard 02</option>
+            <option value="APMC-NASHIK-CENTER-04">Nashik Main Mandi (Center 04)</option>
+            <option value="APMC-LASALGAON-01">Lasalgaon Onion Market (Center 01)</option>
+            <option value="APMC-PIMPALGAON-02">Pimpalgaon Baswant (Center 02)</option>
+            <option value="APMC-PUNE-MARKET-03">Pune Gultekdi Mandi (Center 03)</option>
           </select>
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase text-stone-600 mb-1.5">
-            Declared Batch Weight (KG) — Optional
+        {/* Declared Lot Weight */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-black text-[#163A2D] uppercase tracking-wide">
+            Declared Weight (Optional kg)
           </label>
           <input
             type="number"
-            step="0.1"
-            min="0.1"
+            min="1"
+            step="0.5"
             value={weightKg}
             onChange={(e) => setWeightKg(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#2D5A27] focus:outline-none"
-            placeholder="e.g. 500.0"
+            placeholder="e.g. 500"
+            className="w-full px-3.5 py-3 rounded-2xl bg-[#F7F1E7] border border-[#163A2D]/20 focus:border-[#163A2D] outline-none text-sm font-bold text-[#163A2D]"
           />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase text-stone-600 mb-1.5">
-            Notes / Observations — Optional
+        {/* Notes */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-black text-[#163A2D] uppercase tracking-wide">
+            Intake Remarks (Optional)
           </label>
-          <textarea
-            rows={2}
+          <input
+            type="text"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#2D5A27] focus:outline-none"
-            placeholder="Special lot conditions or truck number..."
+            placeholder="e.g. Visual quality sampling check"
+            className="w-full px-3.5 py-3 rounded-2xl bg-[#F7F1E7] border border-[#163A2D]/20 focus:border-[#163A2D] outline-none text-sm font-bold text-[#163A2D]"
           />
         </div>
 
-        {/* Scope Indicator */}
-        <div className="flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900">
-          <Info className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-          <div>
-            <span className="font-bold">Scope Constraint:</span> Inspection operates strictly under <strong>SAMPLE_ONLY</strong> sampling mode. Unphotographed physical lot volume is not inferred.
-          </div>
+        {/* Sampling Scope Notice */}
+        <div className="p-3.5 bg-[#F7F1E7] border border-[#163A2D]/10 rounded-2xl flex items-start gap-2.5">
+          <Info className="w-4 h-4 text-[#163A2D] shrink-0 mt-0.5" />
+          <p className="text-[11px] text-[#163A2D]/80 leading-relaxed font-medium">
+            <strong>Sampling Protocol:</strong> S.P.O.T. evaluates one representative onion sample per scan for external optical classification.
+          </p>
         </div>
 
+        {/* Primary CTA */}
         <button
           type="submit"
-          className="w-full py-3.5 px-4 bg-[#2D5A27] text-white rounded-2xl font-bold shadow-md hover:bg-[#23471F] transition-all flex items-center justify-center gap-2"
+          className="w-full min-h-[50px] py-3.5 bg-[#E51E3A] hover:bg-[#c91530] text-white rounded-2xl font-black text-xs uppercase tracking-wider shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          <span>Proceed to Camera Capture</span>
-          <Check className="w-4 h-4" />
+          <span>{t('proceedToCamera')}</span>
+          <ArrowRight className="w-4 h-4" />
         </button>
       </form>
     </div>
