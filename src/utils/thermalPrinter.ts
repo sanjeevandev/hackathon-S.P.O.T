@@ -1,4 +1,5 @@
 import { ScanResult } from '../types';
+import { FRONTEND_URL } from '../config';
 
 export type PrinterStatus = 'idle' | 'searching' | 'connected' | 'printing' | 'printed' | 'error';
 
@@ -22,7 +23,7 @@ const SEPARATOR = '--------------------------------\n';
  * Formats ESC/POS binary command string for S.P.O.T. digital grading report receipt.
  */
 export function formatEscPosReceipt(result: ScanResult): Uint8Array {
-  const verifyUrl = `https://spot-pwa.onrender.com/verify?batch_id=${result.batchId}`;
+  const verifyUrl = `${FRONTEND_URL}/verify?batch_id=${result.batchId}`;
 
   let receiptText = '';
   receiptText += INITIALIZE_PRINTER;

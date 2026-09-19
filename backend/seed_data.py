@@ -24,15 +24,22 @@ SAMPLE_FILENAMES = [
 ]
 
 def seed_database():
-    """Populates SQLite database with 15 realistic seed rows of past onion grading sessions."""
+    """Populates SQLite database with up to 15 seed rows of past onion grading sessions.
+
+    Idempotent: if the table already contains rows (from a previous boot or live
+    grading activity), seeding is skipped so existing inspection history is never lost.
+    """
     init_db()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Clear existing rows to prevent duplicate seed entries
-    cursor.execute("DELETE FROM grading_sessions")
-
-    now = datetime.now()
+    # Only seed when the table is empty, preserving live inspection history across restarts.
+    cursor.execute("SELECT COUNT(*) FROM grading_sessions")
+    existing_count = cursor.fetchone()[0]
+    if existing_count > 0:
+        conn.close()
+        print(f"Seed skipped: grading_sessions already contains {existing_count} rows.")
+        return
 
     for i in range(15):
         batch_num = 890 - i * 7
@@ -93,7 +100,7 @@ def seed_database():
         conf_score = round(random.uniform(93.0, 98.5), 1)
 
         cursor.execute("""
-        INSERT INTO grading_sessions (
+        INSERT OR IGNORE INTO grading_sessions (
             batch_id, center_id, timestamp, filename, overall_grade, confidence_score,
             grade_a_percentage, grade_urs_percentage, rejected_percentage,
             damaged_count, rotten_count, sprouted_count, undersized_count,

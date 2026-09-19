@@ -7,6 +7,7 @@ import { ScanResult } from '../types';
 import { QRCodeSVG } from 'qrcode.react';
 import { BoundingBoxCanvas } from './BoundingBoxCanvas';
 import { printThermalReceiptViaBluetooth, PrinterStatus } from '../utils/thermalPrinter';
+import { API_BASE_URL } from '../config';
 
 interface ResultsStepProps {
   result: ScanResult | null;
@@ -480,7 +481,7 @@ export const ResultsStep: React.FC<ResultsStepProps> = ({
 
                 // Send dispute status update to SQLite database backend
                 try {
-                  await fetch(`http://127.0.0.1:8000/api/v1/sessions/${activeResult.batchId}/dispute`, {
+                  await fetch(`${API_BASE_URL}/sessions/${activeResult.batchId}/dispute`, {
                     method: 'POST'
                   });
                 } catch (e) {

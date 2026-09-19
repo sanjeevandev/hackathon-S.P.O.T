@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ShieldCheck, Database, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { API_BASE_URL } from '../config';
 
 interface VerifyStepProps {
   batchId?: string;
@@ -12,7 +13,7 @@ export const VerifyStep: React.FC<VerifyStepProps> = ({ batchId = 'BATCH-MH-2026
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/v1/sessions/${batchId}`)
+    fetch(`${API_BASE_URL}/sessions/${batchId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.batch_id) {

@@ -1,11 +1,13 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List
 
 class BoundingBoxItem(BaseModel):
+  model_config = ConfigDict(populate_by_name=True)
+
   box_id: str
   bbox: List[int] = Field(description="[x1, y1, x2, y2] bounding box coordinates in pixels")
   confidence: float = Field(description="Object detection confidence (0-1.0)")
-  class_label: str = Field(description="grade_a, urs_onion, damaged, rotten, sprouted, or undersized")
+  class_label: str = Field(alias="class", description="grade_a, urs_onion, damaged, rotten, sprouted, or undersized")
   diameter_mm: float = Field(description="Estimated onion diameter in millimeters")
 
 class DefectFlags(BaseModel):

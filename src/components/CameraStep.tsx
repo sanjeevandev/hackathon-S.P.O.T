@@ -6,6 +6,7 @@ import { playSuccessChime } from '../utils/soundEffects';
 import { ScaleIntakeWidget } from './ScaleIntakeWidget';
 import { edgeInferenceEngine } from '../utils/onnxInferenceEngine';
 import { JUDGE_DEMO_SAMPLES, JudgeSampleItem } from '../data/judgeSamples';
+import { API_BASE_URL } from '../config';
 
 interface CameraStepProps {
   onCapture: (result: ScanResult) => void;
@@ -268,7 +269,7 @@ export const CameraStep: React.FC<CameraStepProps> = ({
           formData.append('file', sampleBlob, 'sample_onion.jpg');
         }
 
-        const res = await fetch('http://127.0.0.1:8000/api/v1/analyze-onion', {
+        const res = await fetch(`${API_BASE_URL}/analyze-onion`, {
           method: 'POST',
           body: formData,
         });

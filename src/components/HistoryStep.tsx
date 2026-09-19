@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Database, Search, Building2, Calendar, CheckCircle2, AlertTriangle, XCircle, ChevronRight, Scale, RefreshCw } from 'lucide-react';
 import { PastSessionLog, ScanResult } from '../types';
+import { API_BASE_URL } from '../config';
 
 interface HistoryStepProps {
   onSelectReport: (result: ScanResult) => void;
@@ -20,7 +21,7 @@ export const HistoryStep: React.FC<HistoryStepProps> = ({
   const fetchSessions = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/v1/sessions');
+      const res = await fetch(`${API_BASE_URL}/sessions`);
       if (res.ok) {
         const data = await res.json();
         setSessions(data);

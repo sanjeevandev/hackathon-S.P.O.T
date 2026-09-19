@@ -1,18 +1,11 @@
-const CACHE_NAME = 'spot-pwa-cache-v2';
+const CACHE_NAME = 'spot-pwa-cache-v3';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/pwa-192x192.svg',
   '/pwa-512x512.svg',
-  '/src/main.tsx',
-  '/src/index.css',
-  '/src/App.tsx',
-  '/src/i18n/index.ts',
-  '/src/i18n/locales/en.json',
-  '/src/i18n/locales/hi.json',
-  '/src/i18n/locales/mr.json',
-  '/src/i18n/locales/ta.json'
+  '/models/onion_yolov8.onnx'
 ];
 
 // Install Event - Pre-cache S.P.O.T. UI & Assets
