@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">S.P.O.T.</string>
+    <string name="title_activity_main">S.P.O.T.</string>
+    <string name="package_name">com.spot.onionquality</string>
+    <string name="custom_url_scheme">com.spot.onionquality</string>
+</resources>

@@ -1,26 +1,38 @@
-const CACHE_NAME = 'spot-pwa-cache-v2';
+const CACHE_NAME = 'spot-pwa-cache-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/pwa-192x192.svg',
   '/pwa-512x512.svg',
-  '/src/main.tsx',
-  '/src/index.css',
-  '/src/App.tsx',
-  '/src/i18n/index.ts',
-  '/src/i18n/locales/en.json',
-  '/src/i18n/locales/hi.json',
-  '/src/i18n/locales/mr.json',
-  '/src/i18n/locales/ta.json'
+  '/models/onion_yolov8.onnx'
 ];
 
-// Install Event - Pre-cache S.P.O.T. UI & Assets
+// If accidentally loaded in Capacitor/Android WebView, self-unregister and don't cache anything
+if (
+  self.location.protocol === 'capacitor:' ||
+  self.location.protocol === 'ionic:' ||
+  self.location.hostname === 'capacitor.localhost' ||
+  (self.location.hostname === 'localhost' && !self.location.port)
+) {
+  self.registration.unregister().catch(() => {});
+}
+
+// Install Event - Pre-cache S.P.O.T. UI & Assets safely
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[S.P.O.T. ServiceWorker] Pre-caching offline agricultural assets');
-      return cache.addAll(STATIC_ASSETS);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      console.log('[S.P.O.T. ServiceWorker] Pre-caching offline web assets');
+      // Use individual caching with try/catch so missing assets NEVER reject install
+      await Promise.allSettled(
+        STATIC_ASSETS.map((asset) =>
+          cache.add(asset).catch((err) => {
+            console.warn(`[S.P.O.T. ServiceWorker] Optional pre-cache skipped for ${asset}:`, err);
+          })
+        )
+      );
+    }).catch((err) => {
+      console.warn('[S.P.O.T. ServiceWorker] Install cache handler error:', err);
     })
   );
   self.skipWaiting();
@@ -38,6 +50,8 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
+    }).catch((err) => {
+      console.warn('[S.P.O.T. ServiceWorker] Activate cache clean error:', err);
     })
   );
   self.clients.claim();
@@ -45,6 +59,15 @@ self.addEventListener('activate', (event) => {
 
 // Fetch Event - Stale-While-Revalidate & Offline API Fallback Strategy
 self.addEventListener('fetch', (event) => {
+  // Bypass Service Worker cache entirely for internal annotation workstation and API
+  if (
+    event.request.url.includes('/internal/') ||
+    event.request.url.includes('annotation') ||
+    event.request.url.includes('/api/annotation/')
+  ) {
+    return;
+  }
+
   // If request is API analyze-onion and network fails (remote field), return cached/mock offline response
   if (event.request.url.includes('/api/v1/analyze-onion')) {
     event.respondWith(
@@ -106,8 +129,8 @@ self.addEventListener('fetch', (event) => {
         ) {
           const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
+            cache.put(event.request, responseClone).catch(() => {});
+          }).catch(() => {});
         }
         return networkResponse;
       }).catch(() => {

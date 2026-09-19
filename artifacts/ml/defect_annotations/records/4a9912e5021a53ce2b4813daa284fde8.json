@@ -1,0 +1,44 @@
+{
+  "annotation_id": "TEST-ANN-100",
+  "image_id": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion00001.jpg",
+  "dataset_version": "1.0.0-audited",
+  "defect_dataset_version": "0.1.0",
+  "annotation_version": "0.1.0",
+  "annotator_id": "ANNOTATOR_TEST_SUITE",
+  "semantic_attributes": {
+    "organ": "BULB",
+    "color": "RED",
+    "arrangement": "SINGLE"
+  },
+  "multi_label_defects": {
+    "healthy": false,
+    "damage": true,
+    "rot": true,
+    "sprout": false
+  },
+  "size_assessment": {
+    "undersized_status": "UNAVAILABLE",
+    "size_reference_available": false,
+    "estimated_diameter_mm": null,
+    "measurement_method": "UNAVAILABLE"
+  },
+  "evidence_regions": [
+    {
+      "region_id": "REG-01",
+      "defect_type": "DAMAGE",
+      "region_format": "BOUNDING_BOX",
+      "coordinates": [
+        0.1,
+        0.1,
+        0.5,
+        0.5
+      ]
+    }
+  ],
+  "annotation_confidence": "HIGH",
+  "notes": "Unit test multi-label entry",
+  "created_at": "2026-09-04T23:00:00Z",
+  "updated_at": "2026-09-04T17:39:37.487227+00:00",
+  "review_status": "VERIFIED",
+  "annotation_status": "COMPLETE"
+}

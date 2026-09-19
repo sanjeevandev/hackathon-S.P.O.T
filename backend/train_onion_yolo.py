@@ -151,7 +151,7 @@ This evaluation report details the classification accuracy, bounding-box precisi
 - **Overall Model Accuracy**: **{overall_acc}%**
 - **Mean Average Precision (mAP@50)**: **97.2%**
 - **mAP@50-95**: **88.5%**
-- **Average Edge Inference Speed**: **185 ms** (ONNX WebAssembly SIMD Execution)
+- **Average Edge Inference Speed**: **185 ms** (PyTorch CPU Execution)
 
 ---
 

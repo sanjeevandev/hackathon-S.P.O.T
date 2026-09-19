@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Camera, Upload, Volume2, RotateCcw, Sparkles, Check, RefreshCw, Cpu, WifiOff, Award, ArrowRight } from 'lucide-react';
+import { Camera, Upload, Volume2, RotateCcw, Sparkles, Check, RefreshCw, Cpu, WifiOff, Award, ArrowRight, AlertTriangle } from 'lucide-react';
 import { ScanResult } from '../types';
 import { playSuccessChime } from '../utils/soundEffects';
 import { ScaleIntakeWidget } from './ScaleIntakeWidget';
 import { edgeInferenceEngine } from '../utils/onnxInferenceEngine';
 import { JUDGE_DEMO_SAMPLES, JudgeSampleItem } from '../data/judgeSamples';
+import { getApiUrl } from '../api/client';
 
 interface CameraStepProps {
   onCapture: (result: ScanResult) => void;
@@ -230,7 +231,10 @@ export const CameraStep: React.FC<CameraStepProps> = ({
     }
   };
 
+  const [validationError, setValidationError] = useState<string | null>(null);
+
   const triggerScanningAnimation = async (imageData: string | null = null, uploadFile?: File) => {
+    setValidationError(null);
     setIsScanning(true);
     setScanProgress(0);
 
@@ -245,6 +249,8 @@ export const CameraStep: React.FC<CameraStepProps> = ({
 
     let apiResponse: any = null;
     let edgeResult: ScanResult | null = null;
+    let measuredLatencyMs = 0;
+    const startPerf = performance.now();
 
     const isCurrentlyOffline = !navigator.onLine || isOfflineInference;
 
@@ -255,6 +261,7 @@ export const CameraStep: React.FC<CameraStepProps> = ({
         `BATCH-MH-2026-OFFLINE-${Math.floor(100 + Math.random() * 899)}`,
         'APMC-NASHIK-OFFLINE-01'
       );
+      measuredLatencyMs = Math.round(performance.now() - startPerf);
     } else {
       try {
         const formData = new FormData();
@@ -268,15 +275,29 @@ export const CameraStep: React.FC<CameraStepProps> = ({
           formData.append('file', sampleBlob, 'sample_onion.jpg');
         }
 
-        const res = await fetch('http://127.0.0.1:8000/api/v1/analyze-onion', {
+        const res = await fetch(`${getApiUrl()}/api/v1/analyze-onion`, {
           method: 'POST',
           body: formData,
         });
 
+        measuredLatencyMs = Math.round(performance.now() - startPerf);
+
+        if (res.status === 422) {
+          const errData = await res.json().catch(() => ({}));
+          const errorMsg = typeof errData.detail === 'object' && errData.detail?.message 
+            ? errData.detail.message 
+            : (typeof errData.detail === 'string' ? errData.detail : "This doesn't look like onions — please position onion bulbs within the camera frame and retake.");
+          clearInterval(interval);
+          setIsScanning(false);
+          setValidationError(errorMsg);
+          onPlayVoice("Quality validation notice: Please ensure onion bulbs are visible inside the frame and retake.");
+          return;
+        }
+
         if (res.ok) {
           apiResponse = await res.json();
         } else {
-          throw new Error('Server returned non-200 response');
+          throw new Error(`Server returned status ${res.status}`);
         }
       } catch (err) {
         console.log('FastAPI server call failed. Switching to ONNX WebAssembly Edge Inference fallback...', err);
@@ -285,6 +306,7 @@ export const CameraStep: React.FC<CameraStepProps> = ({
           `BATCH-MH-2026-EDGE-${Math.floor(100 + Math.random() * 899)}`,
           'APMC-NASHIK-OFFLINE-01'
         );
+        measuredLatencyMs = Math.round(performance.now() - startPerf);
       }
     }
 
@@ -336,13 +358,14 @@ export const CameraStep: React.FC<CameraStepProps> = ({
           moisture: apiResponse.moisture_level,
           firmness: apiResponse.firmness_rating,
           shelfLife: `${apiResponse.shelf_life_days} Days`,
-          defectSummary: `Damaged: ${apiResponse.defect_flags.damaged ? 'YES ('+apiResponse.defect_flags.damaged_count+')' : 'NO'} • Rotten: ${apiResponse.defect_flags.rotten ? 'YES ('+apiResponse.defect_flags.rotten_count+')' : 'NO'} • Sprouted: ${apiResponse.defect_flags.sprouted ? 'YES ('+apiResponse.defect_flags.sprouted_count+')' : 'NO'} • Undersized: ${apiResponse.defect_flags.undersized ? 'YES ('+apiResponse.defect_flags.undersized_count+')' : 'NO'}`,
+          defectSummary: `Damaged: ${apiResponse.defect_flags?.damaged ? 'YES ('+apiResponse.defect_flags.damaged_count+')' : 'NO'} • Rotten: ${apiResponse.defect_flags?.rotten ? 'YES ('+apiResponse.defect_flags.rotten_count+')' : 'NO'} • Sprouted: ${apiResponse.defect_flags?.sprouted ? 'YES ('+apiResponse.defect_flags.sprouted_count+')' : 'NO'} • Undersized: ${apiResponse.defect_flags?.undersized ? 'YES ('+apiResponse.defect_flags.undersized_count+')' : 'NO'}`,
           recommendation: apiResponse.farmer_recommendation,
           imageUrl: imageData || '',
           timestamp: apiResponse.timestamp || new Date().toLocaleTimeString(),
+          sha256Hash: apiResponse.sha256_hash,
           isInferenceEdge: false,
-          serverLatencyMs: 850,
-          benchmarkLog: `[ONLINE FASTAPI SERVER BENCHMARK LOG]\n☁️ Server API Network Latency: 850ms\nDatabase Logging: SQLite Session Active`,
+          serverLatencyMs: measuredLatencyMs,
+          benchmarkLog: `[ONLINE FASTAPI SERVER BENCHMARK LOG]\n☁️ Server API Network Latency: ${measuredLatencyMs}ms\nDatabase Logging: SQLite Session Active`,
         };
 
         onCapture(result);
@@ -375,10 +398,8 @@ export const CameraStep: React.FC<CameraStepProps> = ({
           recommendation: activeSample.recommendation,
           imageUrl: imageData || '',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          isInferenceEdge: true,
-          edgeLatencyMs: 185,
-          serverLatencyMs: 850,
-          benchmarkLog: `[EDGE ONNX BENCHMARK LOG]\n⚡ ONNX WebAssembly Execution: 185ms (Under 1.5s Benchmark Passed)`,
+          isInferenceEdge: false,
+          source: 'development_mock'
         };
 
         onCapture(result);
@@ -415,6 +436,34 @@ export const CameraStep: React.FC<CameraStepProps> = ({
           <Volume2 className="w-5 h-5" />
         </button>
       </div>
+
+      {/* Real-time Quality Validation Error Notification */}
+      {validationError && (
+        <div
+          role="alert"
+          className="bg-rose-950/95 border-2 border-rose-500 text-white p-4 rounded-3xl flex items-start gap-3.5 shadow-2xl animate-shake"
+        >
+          <AlertTriangle className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+          <div className="flex-1 space-y-2">
+            <h4 className="text-sm font-black text-rose-200 uppercase tracking-wide">
+              {t('retakeRequired') || 'Quality Screening: Retake Required'}
+            </h4>
+            <p className="text-xs text-rose-100 leading-relaxed font-medium">
+              {validationError}
+            </p>
+            <button
+              onClick={() => {
+                setValidationError(null);
+                setCapturedImageData(null);
+              }}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl transition-all shadow-md active:scale-95 border border-rose-400"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>{t('retakePhoto') || 'Retake Photo'}</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* JUDGE DEMO MODE SAMPLE SELECTOR VIEWPORT */}
       {judgeDemoMode ? (

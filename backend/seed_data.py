@@ -24,13 +24,18 @@ SAMPLE_FILENAMES = [
 ]
 
 def seed_database():
-    """Populates SQLite database with 15 realistic seed rows of past onion grading sessions."""
+    """Populates SQLite database with 15 realistic seed rows of past onion grading sessions (idempotent)."""
     init_db()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Clear existing rows to prevent duplicate seed entries
-    cursor.execute("DELETE FROM grading_sessions")
+    # Check if table already has data to maintain idempotency
+    cursor.execute("SELECT COUNT(*) FROM grading_sessions")
+    existing_count = cursor.fetchone()[0]
+    if existing_count > 0:
+        print(f"Database already contains {existing_count} grading sessions. Skipping seed.")
+        conn.close()
+        return
 
     now = datetime.now()
 
@@ -93,7 +98,7 @@ def seed_database():
         conf_score = round(random.uniform(93.0, 98.5), 1)
 
         cursor.execute("""
-        INSERT INTO grading_sessions (
+        INSERT OR IGNORE INTO grading_sessions (
             batch_id, center_id, timestamp, filename, overall_grade, confidence_score,
             grade_a_percentage, grade_urs_percentage, rejected_percentage,
             damaged_count, rotten_count, sprouted_count, undersized_count,

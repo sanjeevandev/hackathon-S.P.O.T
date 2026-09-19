@@ -1,0 +1,18 @@
+{
+  "model_name": "ResNet18 Baseline Classifier",
+  "test_samples": 1850,
+  "accuracy": 0.7854,
+  "precision": 0.6037,
+  "recall_unhealthy": 0.6451,
+  "recall_healthy": 0.8388,
+  "f1_score": 0.6237,
+  "confusion_matrix": {
+    "true_positive_unhealthy": 329,
+    "true_negative_healthy": 1124,
+    "false_positive": 216,
+    "false_negative": 181
+  },
+  "avg_inference_latency_ms": 0.001,
+  "model_size_mb": 0.08,
+  "training_time_seconds": 6.68
+}

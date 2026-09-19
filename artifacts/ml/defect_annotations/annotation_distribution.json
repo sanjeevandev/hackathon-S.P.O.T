@@ -1,0 +1,15 @@
+{
+  "defect_dataset_version": "0.1.0",
+  "annotation_status": "ANNOTATION_PENDING",
+  "target_sample_pool": 1000,
+  "double_annotated_pool": 100,
+  "distribution": {
+    "healthy_reference_pool": 500,
+    "unhealthy_defect_candidate_pool": 500,
+    "damage_count": "ANNOTATION_PENDING",
+    "rot_count": "ANNOTATION_PENDING",
+    "sprout_count": "ANNOTATION_PENDING",
+    "undersized_count": "UNAVAILABLE"
+  },
+  "note": "Human multi-label defect annotation workflow is fully operational. Real human expert labels remain ANNOTATION_PENDING."
+}

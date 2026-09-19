@@ -1,0 +1,1007 @@
+{
+  "total_test_samples": 1850,
+  "total_failures": 397,
+  "failure_rate": 0.2146,
+  "failure_cases": [
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion08294.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single",
+      "blur_score": 80.83,
+      "brightness": 118.91,
+      "contrast": 55.66,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05061.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 152.4,
+      "brightness": 131.63,
+      "contrast": 20.92,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05065.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 41.64,
+      "brightness": 150.38,
+      "contrast": 43.2,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05074.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 363.18,
+      "brightness": 133.85,
+      "contrast": 34.53,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion09466.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single",
+      "blur_score": 398.93,
+      "brightness": 155.16,
+      "contrast": 28.93,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11471.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple",
+      "blur_score": 17.68,
+      "brightness": 117.61,
+      "contrast": 55.87,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11478.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple",
+      "blur_score": 11.91,
+      "brightness": 104.52,
+      "contrast": 39.33,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11486.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple",
+      "blur_score": 10.0,
+      "brightness": 118.14,
+      "contrast": 47.55,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11487.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple",
+      "blur_score": 124.26,
+      "brightness": 170.8,
+      "contrast": 46.35,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11488.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple",
+      "blur_score": 7.51,
+      "brightness": 110.73,
+      "contrast": 54.7,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple/Onion11490.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/2. Multiple",
+      "blur_score": 135.71,
+      "brightness": 148.11,
+      "contrast": 47.31,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion10324.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single",
+      "blur_score": 86.29,
+      "brightness": 126.47,
+      "contrast": 46.53,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06621.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 256.97,
+      "brightness": 138.7,
+      "contrast": 28.8,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06623.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 101.52,
+      "brightness": 158.28,
+      "contrast": 35.43,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05383.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 53.56,
+      "brightness": 143.51,
+      "contrast": 36.2,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05391.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 25.3,
+      "brightness": 130.51,
+      "contrast": 31.29,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05397.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 265.29,
+      "brightness": 118.71,
+      "contrast": 34.93,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05398.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 165.13,
+      "brightness": 138.91,
+      "contrast": 23.8,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04077.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 340.56,
+      "brightness": 106.27,
+      "contrast": 22.62,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15835.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple",
+      "blur_score": 47.87,
+      "brightness": 117.33,
+      "contrast": 59.55,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15836.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple",
+      "blur_score": 22.44,
+      "brightness": 99.63,
+      "contrast": 56.41,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15838.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple",
+      "blur_score": 88.55,
+      "brightness": 116.39,
+      "contrast": 57.58,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15844.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple",
+      "blur_score": 8.88,
+      "brightness": 96.62,
+      "contrast": 38.32,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15847.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple",
+      "blur_score": 27.55,
+      "brightness": 117.88,
+      "contrast": 61.86,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple/Onion15848.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/2. White Onion/2. Multiple",
+      "blur_score": 59.26,
+      "brightness": 127.33,
+      "contrast": 35.18,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05245.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 38.34,
+      "brightness": 154.14,
+      "contrast": 31.66,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05252.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 351.5,
+      "brightness": 136.87,
+      "contrast": 29.64,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05254.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 32.73,
+      "brightness": 155.08,
+      "contrast": 34.93,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05256.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 396.6,
+      "brightness": 115.51,
+      "contrast": 30.36,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05260.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 37.9,
+      "brightness": 107.39,
+      "contrast": 31.31,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05985.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 70.06,
+      "brightness": 147.59,
+      "contrast": 25.31,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04870.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 59.84,
+      "brightness": 141.48,
+      "contrast": 25.02,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04878.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 11.42,
+      "brightness": 131.8,
+      "contrast": 22.06,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion04880.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 102.45,
+      "brightness": 145.12,
+      "contrast": 19.57,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion10396.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single",
+      "blur_score": 6.03,
+      "brightness": 152.58,
+      "contrast": 30.22,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion10404.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single",
+      "blur_score": 454.26,
+      "brightness": 80.05,
+      "contrast": 66.73,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single/Onion10405.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/2. White Onion/1. Single",
+      "blur_score": 15.35,
+      "brightness": 116.62,
+      "contrast": 40.32,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12982.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 569.42,
+      "brightness": 149.97,
+      "contrast": 38.11,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12983.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 34.48,
+      "brightness": 132.71,
+      "contrast": 32.4,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12985.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 67.17,
+      "brightness": 109.99,
+      "contrast": 37.55,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12986.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 43.84,
+      "brightness": 100.68,
+      "contrast": 26.58,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12987.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 1184.79,
+      "brightness": 191.28,
+      "contrast": 38.41,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12988.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 67.73,
+      "brightness": 162.5,
+      "contrast": 35.75,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12989.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 230.8,
+      "brightness": 107.04,
+      "contrast": 35.46,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12990.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 283.74,
+      "brightness": 136.98,
+      "contrast": 34.38,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12991.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 44.62,
+      "brightness": 172.6,
+      "contrast": 32.89,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12993.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 31.33,
+      "brightness": 107.32,
+      "contrast": 22.12,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12995.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 72.64,
+      "brightness": 138.27,
+      "contrast": 33.47,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13000.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 27.15,
+      "brightness": 151.28,
+      "contrast": 31.86,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13001.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 174.84,
+      "brightness": 148.61,
+      "contrast": 33.37,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13002.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 34.36,
+      "brightness": 142.76,
+      "contrast": 33.78,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13003.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 131.2,
+      "brightness": 147.36,
+      "contrast": 28.54,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13004.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 1032.9,
+      "brightness": 190.79,
+      "contrast": 38.76,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13006.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 134.85,
+      "brightness": 142.22,
+      "contrast": 29.83,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13007.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 1250.76,
+      "brightness": 138.71,
+      "contrast": 36.18,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13009.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 263.2,
+      "brightness": 143.22,
+      "contrast": 31.06,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13011.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 38.6,
+      "brightness": 144.37,
+      "contrast": 37.98,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13015.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 107.64,
+      "brightness": 117.21,
+      "contrast": 26.7,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13018.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 43.43,
+      "brightness": 135.14,
+      "contrast": 41.24,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13019.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 130.4,
+      "brightness": 114.81,
+      "contrast": 67.66,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13161.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 2055.78,
+      "brightness": 134.76,
+      "contrast": 38.9,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13167.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 153.49,
+      "brightness": 127.21,
+      "contrast": 33.25,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13169.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 593.97,
+      "brightness": 137.26,
+      "contrast": 31.85,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13170.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 19.4,
+      "brightness": 107.3,
+      "contrast": 21.99,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13171.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 57.52,
+      "brightness": 114.37,
+      "contrast": 21.07,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13173.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 585.12,
+      "brightness": 141.76,
+      "contrast": 17.13,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13174.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 92.62,
+      "brightness": 106.12,
+      "contrast": 38.51,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13175.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 382.17,
+      "brightness": 132.52,
+      "contrast": 39.24,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13176.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 124.95,
+      "brightness": 127.45,
+      "contrast": 35.99,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13177.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 18.53,
+      "brightness": 126.98,
+      "contrast": 40.98,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion13180.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 58.06,
+      "brightness": 123.14,
+      "contrast": 38.68,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion06281.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 310.79,
+      "brightness": 124.41,
+      "contrast": 44.1,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12361.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 16.99,
+      "brightness": 145.6,
+      "contrast": 25.31,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12363.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 482.77,
+      "brightness": 126.99,
+      "contrast": 24.81,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12364.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 37.61,
+      "brightness": 127.81,
+      "contrast": 35.69,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12365.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 266.76,
+      "brightness": 144.44,
+      "contrast": 45.48,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12368.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 22.9,
+      "brightness": 108.39,
+      "contrast": 18.98,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12369.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 78.08,
+      "brightness": 149.74,
+      "contrast": 20.27,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12370.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 694.39,
+      "brightness": 120.64,
+      "contrast": 41.44,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12372.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 982.03,
+      "brightness": 145.18,
+      "contrast": 18.8,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12373.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 115.38,
+      "brightness": 126.75,
+      "contrast": 22.36,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12374.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 158.66,
+      "brightness": 146.22,
+      "contrast": 28.23,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12377.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 31.86,
+      "brightness": 116.73,
+      "contrast": 22.01,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12378.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 514.47,
+      "brightness": 163.53,
+      "contrast": 40.34,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05361.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 77.81,
+      "brightness": 141.56,
+      "contrast": 23.66,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05373.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 423.3,
+      "brightness": 145.38,
+      "contrast": 46.22,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05375.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 17.45,
+      "brightness": 140.19,
+      "contrast": 35.2,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05376.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 205.7,
+      "brightness": 95.42,
+      "contrast": 21.91,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single/Onion05379.jpg",
+      "true_label": "Healthy",
+      "predicted_label": "Unhealthy",
+      "class_folder": "New Onion - Copy/2. Bulb/1. Healthy/1. Red Onion/1. Single",
+      "blur_score": 16.69,
+      "brightness": 124.73,
+      "contrast": 19.8,
+      "error_type": "False Positive"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12521.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 48.45,
+      "brightness": 117.76,
+      "contrast": 22.03,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12523.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 11.57,
+      "brightness": 117.11,
+      "contrast": 30.07,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12525.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 304.11,
+      "brightness": 147.37,
+      "contrast": 35.96,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12526.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 9.29,
+      "brightness": 96.33,
+      "contrast": 15.9,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12528.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 43.28,
+      "brightness": 154.16,
+      "contrast": 42.23,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12529.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 40.62,
+      "brightness": 114.9,
+      "contrast": 30.13,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12531.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 40.44,
+      "brightness": 131.49,
+      "contrast": 19.71,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12532.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 801.32,
+      "brightness": 128.39,
+      "contrast": 39.31,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12534.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 221.57,
+      "brightness": 109.62,
+      "contrast": 27.27,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12536.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 14.53,
+      "brightness": 170.99,
+      "contrast": 22.88,
+      "error_type": "False Negative"
+    },
+    {
+      "filename": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single/Onion12537.jpg",
+      "true_label": "Unhealthy",
+      "predicted_label": "Healthy",
+      "class_folder": "New Onion - Copy/2. Bulb/2. Unhealthy/1. Red Onion/1. Single",
+      "blur_score": 34.02,
+      "brightness": 148.21,
+      "contrast": 32.95,
+      "error_type": "False Negative"
+    }
+  ]
+}
