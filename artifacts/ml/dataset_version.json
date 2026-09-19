@@ -1,0 +1,14 @@
+{
+  "dataset_version": "1.0.0-audited",
+  "dataset_identifier": "SPOT-ONION-REAL-V1",
+  "audit_timestamp": "2026-09-04T16:33:35.371551+00:00",
+  "source_archive": "Onion Leaves and Bulb Dataset.zip",
+  "archive_size_bytes": 1608618402,
+  "archive_checksum_sha256": "cfd9e8b75205be3253cabf0ec59bcece02ddf4e641cd12dd17171b5e6cd667d4",
+  "total_images": 16300,
+  "bulb_images": 12260,
+  "leaf_images": 4040,
+  "healthy_bulbs": 8220,
+  "unhealthy_bulbs": 4040,
+  "created_at": "2026-09-04T17:26:46.409343+00:00"
+}

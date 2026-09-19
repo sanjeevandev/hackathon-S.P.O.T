@@ -24,22 +24,20 @@ SAMPLE_FILENAMES = [
 ]
 
 def seed_database():
-    """Populates SQLite database with up to 15 seed rows of past onion grading sessions.
-
-    Idempotent: if the table already contains rows (from a previous boot or live
-    grading activity), seeding is skipped so existing inspection history is never lost.
-    """
+    """Populates SQLite database with 15 realistic seed rows of past onion grading sessions (idempotent)."""
     init_db()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Only seed when the table is empty, preserving live inspection history across restarts.
+    # Check if table already has data to maintain idempotency
     cursor.execute("SELECT COUNT(*) FROM grading_sessions")
     existing_count = cursor.fetchone()[0]
     if existing_count > 0:
+        print(f"Database already contains {existing_count} grading sessions. Skipping seed.")
         conn.close()
-        print(f"Seed skipped: grading_sessions already contains {existing_count} rows.")
         return
+
+    now = datetime.now()
 
     for i in range(15):
         batch_num = 890 - i * 7

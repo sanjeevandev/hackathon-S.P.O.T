@@ -1,0 +1,12 @@
+{
+  "dataset_name": "Image Dataset of Red and White Onion Bulbs and Leaves",
+  "source_path": "/run/media/sanjeeva/New Volume1/ONION IQ/Image Dataset of Red and White Onion Bulbs and Lea",
+  "archive_name": "Onion Leaves and Bulb Dataset.zip",
+  "archive_size_bytes": 1608618402,
+  "audit_timestamp": "2026-09-04T16:33:35.371551+00:00",
+  "dataset_manifest_checksum_sha256": "cfd9e8b75205be3253cabf0ec59bcece02ddf4e641cd12dd17171b5e6cd667d4",
+  "total_files": 16300,
+  "valid_images": 16300,
+  "corrupt_images": 0,
+  "non_image_files": 0
+}
