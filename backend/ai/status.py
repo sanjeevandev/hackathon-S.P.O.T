@@ -18,7 +18,7 @@ class AIStatusResponse(BaseModel):
     model_version: str = Field(..., description="Version of registered active vision model")
     source: Literal["development_mock", "real_model"] = Field(..., description="Explicit source identifier")
     loaded: bool = Field(..., description="Whether model weights/runtime are loaded in memory")
-    runtime: str = Field(..., description="Execution device / runtime environment (e.g. PyTorch CPU, ONNX CUDA)")
+    runtime: str = Field(..., description="Execution device / runtime environment (e.g. PyTorch CPU, Ultralytics PyTorch)")
     capabilities: List[str] = Field(default_factory=list, description="Supported computer vision tasks")
     preprocessing_version: str = Field(default=PREPROCESSING_VERSION, description="Active image preprocessing contract version")
     status: Literal["READY", "NOT_CONFIGURED", "UNAVAILABLE", "ERROR"] = Field(..., description="Overall AI engine health status")

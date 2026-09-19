@@ -112,18 +112,20 @@ class InspectionPipeline:
                 vision_time_ms=0.0,
             )
 
+            res_status = "REJECTED_NOT_ONION" if ("NOT_AN_ONION" in qg_result.reasons or qg_result.status == "REJECTED_NOT_ONION") else "RETAKE_REQUIRED"
+
             logger.info(
-                f"{req_id} status=RETAKE_REQUIRED qg_status={qg_result.status} "
+                f"{req_id} status={res_status} qg_status={qg_result.status} "
                 f"reasons={qg_result.reasons} qg_time_ms={qg_time_ms} total_ms={total_time_ms}"
             )
 
             return PipelineResult(
-                status="RETAKE_REQUIRED",
+                status=res_status,
                 request_id=req_id,
                 quality_gate=qg_result,
                 vision_result=None,
                 timings=timings,
-                error_message=None
+                error_message="Scan onion only. Please place one onion inside the camera frame." if res_status == "REJECTED_NOT_ONION" else None
             )
 
         # Step 4: Resolve Vision Model

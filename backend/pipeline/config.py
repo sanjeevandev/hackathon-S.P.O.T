@@ -44,3 +44,13 @@ class QualityGateConfig(BaseModel):
         ge=0.0,
         description="Minimum pixel intensity standard deviation (0-255). Images below this are low-contrast."
     )
+
+
+class DatasetConfig(BaseModel):
+    """Configurable dataset storage location."""
+
+    dataset_dir: str = Field(
+        default_factory=lambda: __import__("os").getenv("SPOT_DATASET_DIR", "/run/media/sanjeeva/0354-C3F0/ONION IQ"),
+        description="Path to the authoritative onion dataset directory."
+    )
+

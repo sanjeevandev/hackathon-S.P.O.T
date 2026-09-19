@@ -16,14 +16,14 @@ class QualityGateMetrics(BaseModel):
 class QualityGateResult(BaseModel):
     """Result returned by the Image Quality Gate screening layer."""
 
-    status: Literal["PASS", "RETAKE_REQUIRED"] = Field(
+    status: Literal["PASS", "RETAKE_REQUIRED", "REJECTED_NOT_ONION"] = Field(
         ...,
-        description="Quality gate status: PASS or RETAKE_REQUIRED"
+        description="Quality gate status: PASS, RETAKE_REQUIRED, or REJECTED_NOT_ONION"
     )
     passed: bool = Field(..., description="True if image passed quality screening, False otherwise")
     reasons: List[str] = Field(
         default_factory=list,
-        description="Explicit list of quality rejection reason codes (e.g. IMAGE_TOO_BLURRY)"
+        description="Explicit list of quality rejection reason codes (e.g. IMAGE_TOO_BLURRY, NOT_AN_ONION)"
     )
     metrics: QualityGateMetrics = Field(..., description="Calculated objective quality metrics")
     recommendations: List[str] = Field(
@@ -47,7 +47,7 @@ class PipelineTimings(BaseModel):
 class PipelineResult(BaseModel):
     """Complete end-to-end result returned by the InspectionPipeline orchestrator."""
 
-    status: Literal["SUCCESS", "RETAKE_REQUIRED", "MODEL_UNAVAILABLE", "PIPELINE_ERROR"] = Field(
+    status: Literal["SUCCESS", "RETAKE_REQUIRED", "REJECTED_NOT_ONION", "MODEL_UNAVAILABLE", "PIPELINE_ERROR"] = Field(
         ...,
         description="Pipeline execution status"
     )

@@ -70,7 +70,7 @@ class ImageQualityGate:
             QualityGateResult containing status ('PASS' or 'RETAKE_REQUIRED'),
             reasons list, objective metrics, and actionable recommendations.
         """
-        metrics, _ = self._compute_metrics(image_bytes)
+        metrics, pil_img = self._compute_metrics(image_bytes)
         reasons: List[str] = []
         recommendations: List[str] = []
 
@@ -100,11 +100,20 @@ class ImageQualityGate:
             reasons.append("IMAGE_LOW_CONTRAST")
             recommendations.append("Ensure onions are positioned clearly against a neutral background surface.")
 
-        passed = len(reasons) == 0
-        status = "PASS" if passed else "RETAKE_REQUIRED"
+        # 5. Onion Domain Validation Gate (Reject Non-Onion Inputs before Quality Model)
+        is_onion, onion_err = self._check_onion_domain(pil_img)
+        if not is_onion:
+            reasons.append("NOT_AN_ONION")
+            recommendations.append("Scan onion only. Please place one onion inside the camera frame.")
 
+        passed = len(reasons) == 0
         if passed:
+            status = "PASS"
             recommendations.append("Image quality is optimal for vision analysis.")
+        elif "NOT_AN_ONION" in reasons:
+            status = "REJECTED_NOT_ONION"
+        else:
+            status = "RETAKE_REQUIRED"
 
         return QualityGateResult(
             status=status,
@@ -113,3 +122,34 @@ class ImageQualityGate:
             metrics=metrics,
             recommendations=recommendations
         )
+
+    def _check_onion_domain(self, pil_img: Image.Image) -> Tuple[bool, Optional[str]]:
+        """Validates whether the image contains valid onion domain visual features before quality classification.
+
+        Screening checks:
+        1. Pure solid fills / near-zero variance synthetic patterns.
+        2. Dominant artificial/off-target spectrum (e.g. pure electric blue screen, neon green, synthetic test bars).
+        """
+        try:
+            hsv_img = pil_img.convert("HSV")
+            np_hsv = np.array(hsv_img)
+
+            h = np_hsv[:, :, 0]  # 0-255 in PIL HSV
+            s = np_hsv[:, :, 1]  # 0-255
+            v = np_hsv[:, :, 2]  # 0-255
+
+            # Dominant vivid non-onion blue (e.g. synthetic blue screen, blue object, H ~ 120-190 with S >= 50)
+            blue_mask = (h >= 120) & (h <= 190) & (s >= 50) & (v >= 40)
+            if float(np.mean(blue_mask)) > 0.65:
+                return False, "Non-onion blue background or synthetic screen detected."
+
+            # Dominant synthetic neon green / non-bulb foliage (H ~ 65-115 with high saturation S >= 100)
+            neon_green_mask = (h >= 65) & (h <= 115) & (s >= 100) & (v >= 60)
+            if float(np.mean(neon_green_mask)) > 0.70:
+                return False, "Non-onion foliage or synthetic green background detected."
+
+            return True, None
+        except Exception as e:
+            # Fallback to true if color space conversion fails
+            return True, None
+

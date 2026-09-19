@@ -1,8 +1,13 @@
-"""AI Abstraction Module for S.P.O.T."""
+"""S.P.O.T. AI Pipeline Package."""
 
 from backend.ai.base import VisionModel
 from backend.ai.mock_model import DevelopmentMockVisionModel
-from backend.ai.registry import get_vision_model, register_vision_model, ProductionModelUnavailableError
+from backend.ai.yolo_cls_model import YOLO26ClassifierModel
+from backend.ai.registry import (
+    get_vision_model,
+    register_vision_model,
+    ProductionModelUnavailableError,
+)
 from backend.ai.schemas import (
     ImageInput,
     VisionResult,
@@ -15,6 +20,7 @@ from backend.ai.schemas import (
 __all__ = [
     "VisionModel",
     "DevelopmentMockVisionModel",
+    "YOLO26ClassifierModel",
     "get_vision_model",
     "register_vision_model",
     "ProductionModelUnavailableError",

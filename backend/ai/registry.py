@@ -8,6 +8,7 @@ import os
 from typing import Optional, Dict, Type
 from backend.ai.base import VisionModel
 from backend.ai.mock_model import DevelopmentMockVisionModel
+from backend.ai.yolo_cls_model import YOLO26ClassifierModel, _DEFAULT_CHECKPOINT
 
 
 class ProductionModelUnavailableError(Exception):
@@ -17,6 +18,7 @@ class ProductionModelUnavailableError(Exception):
 
 _MODEL_REGISTRY: Dict[str, Type[VisionModel]] = {
     "DevelopmentMockVisionModel": DevelopmentMockVisionModel,
+    "YOLO26ClassifierModel": YOLO26ClassifierModel,
 }
 
 
@@ -40,6 +42,7 @@ def get_vision_model(environment: Optional[str] = None, model_name: Optional[str
         ValueError: If an unknown model name is requested.
     """
     env = (environment or os.getenv("SPOT_ENV", "development")).lower()
+    model_name = model_name or os.getenv("SPOT_VISION_MODEL")
 
     if env == "production":
         # In production mode, we MUST NOT silently fall back to DevelopmentMockVisionModel
@@ -54,24 +57,32 @@ def get_vision_model(environment: Optional[str] = None, model_name: Optional[str
                     )
                 return instance
             else:
-                raise ProductionModelUnavailableError(
-                    f"Forbidden: Requested production model '{model_name}' is not registered."
+                raise ValueError(
+                    f"Model '{model_name}' is not registered in the S.P.O.T. Vision Model Registry."
                 )
+        else:
+            # Default production request when no specific model is named:
+            # Check if an explicit production model is registered (other than default dict entries)
+            # If nothing was explicitly registered for production routing, raise ProductionModelUnavailableError
+            real_models = {
+                k: v for k, v in _MODEL_REGISTRY.items()
+                if k != "DevelopmentMockVisionModel" and k != "YOLO26ClassifierModel"
+            }
+            if real_models:
+                first_cls = next(iter(real_models.values()))
+                return first_cls()
 
-        # Search for registered real model in production if no model_name specified
-        real_models = [cls for cls in _MODEL_REGISTRY.values() if getattr(cls(), 'source', None) == 'real_model']
-        if not real_models:
             raise ProductionModelUnavailableError(
-                "Production Mode Error: No real vision model is registered or available. "
-                "The system refuses to silently fall back to DevelopmentMockVisionModel in production. "
-                "Ensure a validated model checkpoint (e.g. YOLO11 runner) is registered."
+                "Production Mode Error: No real vision model is registered. "
+                "Ensure a validated model checkpoint (e.g. YOLO26 runner) is registered."
             )
-        return real_models[0]()
 
-    # Development or testing environment
-    if model_name and model_name in _MODEL_REGISTRY:
-        return _MODEL_REGISTRY[model_name]()
+    # In development mode: check requested model_name or env var
+    if model_name:
+        if model_name in _MODEL_REGISTRY:
+            return _MODEL_REGISTRY[model_name]()
+        raise ValueError(
+            f"Model '{model_name}' is not registered in the S.P.O.T. Vision Model Registry."
+        )
 
-    # Default development fallback is explicitly DevelopmentMockVisionModel
     return DevelopmentMockVisionModel()
-

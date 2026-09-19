@@ -33,16 +33,18 @@ class AnnotationValidator:
         damage = defects.get("damage", False)
         rot = defects.get("rot", False)
         sprout = defects.get("sprout", False)
+        uncertain = defects.get("uncertain", False)
 
         # 2. Contradictory Label Check (Healthy = True AND Defect = True)
         if healthy and (damage or rot or sprout):
             errors.append("Contradictory labels: 'healthy' is True while defect flags are also True.")
             review_status = "NEEDS_REVIEW"
 
-        # 3. No Label Marked Check
-        if not healthy and not damage and not rot and not sprout:
-            errors.append("Unspecified condition: neither 'healthy' nor any defect flag is marked True.")
+        # 3. No Label Marked Check (Neither healthy, defect, nor uncertain marked)
+        if not healthy and not damage and not rot and not sprout and not uncertain:
+            errors.append("Unspecified condition: neither 'healthy', defect flags, nor 'uncertain' is marked True.")
             review_status = "NEEDS_REVIEW"
+
 
         # 4. Size Reference & Diameter Rule
         size_info = record.get("size_assessment", {})

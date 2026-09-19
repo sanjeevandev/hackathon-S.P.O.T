@@ -64,6 +64,10 @@ class ReportRenderer:
                 <div class="grade-badge">{grade_display}</div>
                 <div style="font-size: 14px; margin-top: 8px;">Commercial Quality Score: <strong>{score_display}</strong></div>
                 <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Review Status: <strong>{report.batch_metadata.get('inspection_status', 'COMPLETE')}</strong></div>
+                <div style="margin-top: 12px; padding: 8px; background: #e2e8f0; border-radius: 6px; font-size: 12px;">
+                    <div><strong>External quality:</strong> ASSESSED</div>
+                    <div style="color: #64748b;"><strong>Internal quality:</strong> NOT ASSESSED</div>
+                </div>
             </div>
 
             <div class="card">
