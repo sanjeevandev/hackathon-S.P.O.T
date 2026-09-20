@@ -2,6 +2,8 @@
 
 import os
 import pytest
+from unittest.mock import patch
+from types import SimpleNamespace
 from backend.ai.yolo_cls_model import YOLO26ClassifierModel, _DEFAULT_CHECKPOINT
 from backend.ai.registry import get_vision_model, register_vision_model, ProductionModelUnavailableError
 from backend.ai.schemas import ImageInput, VisionResult
@@ -103,3 +105,127 @@ def test_pipeline_with_yolo26_model():
     assert res.vision_result.model_name == "YOLO26n-cls-pilot"
     assert res.vision_result.overall_confidence > 0.0
     assert len(res.vision_result.onions) == 1
+
+
+def test_yolo26_rejects_multiclass_checkpoint():
+    """A multi-class checkpoint cannot be mapped into the binary contract.
+
+    Feeds the OLD 4-class `backend/models/onion_classifier.pt` into the binary
+    runner and asserts it refuses to load it (explicit ValueError) rather than
+    silently mis-mapping its class probabilities.
+    """
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    legacy_path = os.path.join(project_root, "backend", "models", "onion_classifier.pt")
+    if not os.path.exists(legacy_path):
+        pytest.skip("Legacy 4-class checkpoint not present in this checkout")
+    with pytest.raises(ValueError) as exc_info:
+        YOLO26ClassifierModel(checkpoint_path=legacy_path)._load_model()
+    assert "binary" in str(exc_info.value) or "classes" in str(exc_info.value)
+
+
+def test_yolo26_unknown_label_status():
+    """An unknown class label produces NO_VALID_DETECTIONS, not a fabricated healthy/defective guess."""
+    model = YOLO26ClassifierModel()
+    model._model = SimpleNamespace()
+    model._class_names = {0: "apple", 1: "banana"}  # unknown labels (not healthy/defective)
+
+    class FakeProbs:
+        data = [0.1, 0.9]
+        top1 = 1
+        top1conf = 0.9
+
+    class FakeResult:
+        probs = FakeProbs()
+
+    image_input = ImageInput(image_id="REQ-UNK-01", width=640, height=480)
+    with patch.object(model, "_load_model"), patch.object(
+        model._model, "predict", return_value=[FakeResult()], create=True
+    ):
+        result = model.analyze(image_input, create_clean_image(640, 480))
+
+    assert result.status == "NO_VALID_DETECTIONS"
+    assert len(result.onions) == 0
+    assert "unknown class" in result.error_message
+
+
+def test_yolo26_probability_mapping_by_name():
+    """Binary probabilities are mapped by class NAME, independent of index order."""
+    model = YOLO26ClassifierModel()
+    model._model = SimpleNamespace()
+    model._class_names = {0: "healthy", 1: "defective"}  # reversed vs record order
+
+    class FakeProbs:
+        data = [0.3, 0.7]  # defective mass is 0.7 at index 1
+        top1 = 1
+        top1conf = 0.7
+
+    class FakeResult:
+        probs = FakeProbs()
+
+    image_input = ImageInput(image_id="REQ-MAP-01", width=640, height=480)
+    with patch.object(model, "_load_model"), patch.object(
+        model._model, "predict", return_value=[FakeResult()], create=True
+    ):
+        result = model.analyze(image_input, create_clean_image(640, 480))
+
+    assert result.status == "SUCCESS"
+    assert result.onions[0].defect_probabilities.damage == 0.7
+    assert result.overall_confidence == 0.7
+
+
+def test_yolo26_low_confidence_threshold():
+    """Below the accept threshold the runner must explicitly return LOW_CONFIDENCE."""
+    model = YOLO26ClassifierModel(min_accept_confidence=0.90)
+    model._model = SimpleNamespace()
+    model._class_names = {0: "defective", 1: "healthy"}
+
+    class FakeProbs:
+        data = [0.45, 0.55]  # top1 = healthy @ 0.55 < 0.90 threshold
+        top1 = 1
+        top1conf = 0.55
+
+    class FakeResult:
+        probs = FakeProbs()
+
+    image_input = ImageInput(image_id="REQ-LOW-01", width=640, height=480)
+    with patch.object(model, "_load_model"), patch.object(
+        model._model, "predict", return_value=[FakeResult()], create=True
+    ):
+        result = model.analyze(image_input, create_clean_image(640, 480))
+
+    assert result.status == "LOW_CONFIDENCE"
+    assert result.overall_confidence == 0.55
+    assert result.error_message
+    assert len(result.onions) == 1  # classification preserved for review
+
+
+def test_yolo26_pipeline_review_required_on_low_confidence():
+    """Pipeline mirrors LOW_CONFIDENCE into PipelineResult.status REVIEW_REQUIRED.
+
+    Uses an unacceptably low threshold so any synthetic image lands below it,
+    exercising the status mirroring end to end without touching the checkpoint.
+    """
+    model = YOLO26ClassifierModel(min_accept_confidence=1.01)  # always low
+    model._model = SimpleNamespace()
+    model._class_names = {0: "defective", 1: "healthy"}
+
+    class FakeProbs:
+        data = [0.2, 0.8]
+        top1 = 1
+        top1conf = 0.8
+
+    class FakeResult:
+        probs = FakeProbs()
+
+    from unittest.mock import patch
+    pipeline = InspectionPipeline(vision_model=model)
+    image_input = ImageInput(image_id="REQ-PIPE-REV-01", width=640, height=480)
+    with patch.object(model, "_load_model"), patch.object(
+        model._model, "predict", return_value=[FakeResult()], create=True
+    ):
+        res = pipeline.execute(image_input, create_clean_image(640, 480))
+
+    assert res.status == "REVIEW_REQUIRED"
+    assert res.vision_result is not None
+    assert res.vision_result.status == "LOW_CONFIDENCE"
+    assert res.error_message and "low confidence" in res.error_message.lower()

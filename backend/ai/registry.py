@@ -27,9 +27,36 @@ def register_vision_model(name: str, model_cls: Type[VisionModel]) -> None:
     _MODEL_REGISTRY[name] = model_cls
 
 
+# Cache the (expensive) load-time contract validation so repeated registry
+# lookups on `/api/v1/inspect` and `/api/v1/ai/status` don't re-load the
+# checkpoint on every single request.
+_yolo26_contract_cache: Optional[bool] = None
+
+
+def _yolo26_contract_valid() -> bool:
+    """True iff the YOLO26 checkpoint is present AND loads as a binary classifier.
+
+    Computed once per process; the checkpoint file is expected to be static at
+    runtime (re-deploying weights requires a process restart).
+    """
+    global _yolo26_contract_cache
+    if _yolo26_contract_cache is None:
+        if not _YOLO26_CHECKPOINT_EXISTS:
+            _yolo26_contract_cache = False
+        else:
+            try:
+                probe = YOLO26ClassifierModel()
+                probe._load_model()
+                _yolo26_contract_cache = True
+            except Exception:
+                _yolo26_contract_cache = False
+    return _yolo26_contract_cache
+
+
 def available_real_models() -> Dict[str, Type[VisionModel]]:
     """Return registry entries whose actual source is 'real_model' and whose
-    checkpoint is present on disk (so we never advertise a model we cannot load)."""
+    checkpoint is present on disk and passes the runtime contract check (so we
+    never advertise or select a model we cannot actually execute)."""
     real: Dict[str, Type[VisionModel]] = {}
     for name, cls in _MODEL_REGISTRY.items():
         try:
@@ -39,7 +66,7 @@ def available_real_models() -> Dict[str, Type[VisionModel]]:
             continue
         if instance.source != "real_model":
             continue
-        if name == "YOLO26ClassifierModel" and not _YOLO26_CHECKPOINT_EXISTS:
+        if name == "YOLO26ClassifierModel" and not _yolo26_contract_valid():
             continue
         real[name] = cls
     return real

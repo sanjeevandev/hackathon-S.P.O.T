@@ -73,8 +73,14 @@ class VisionResult(BaseModel):
     processing_time_ms: float = Field(..., ge=0.0, description="Measured model inference duration in milliseconds")
     onions: List[OnionDetection] = Field(default_factory=list, description="List of detected onion bulbs")
     overall_confidence: float = Field(..., ge=0.0, le=1.0, description="Average confidence score across detections")
-    status: Literal["SUCCESS", "NO_VALID_DETECTIONS", "MODEL_UNAVAILABLE", "ERROR"] = Field(
+    status: Literal["SUCCESS", "NO_VALID_DETECTIONS", "LOW_CONFIDENCE", "MODEL_UNAVAILABLE", "ERROR"] = Field(
         ...,
-        description="Status of vision inference step"
+        description=(
+            "Status of vision inference step. SUCCESS = classified above the confidence "
+            "threshold; LOW_CONFIDENCE = classified but below the model's confidence "
+            "threshold (explicit uncertain outcome); NO_VALID_DETECTIONS = no usable "
+            "detection/classification produced; MODEL_UNAVAILABLE = weights or runtime "
+            "could not be loaded/executed; ERROR = generic failure."
+        )
     )
     error_message: Optional[str] = Field(default=None, description="Detailed error message if status is ERROR")

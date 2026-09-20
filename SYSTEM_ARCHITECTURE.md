@@ -2,6 +2,16 @@
 
 This document details the software architecture, hardware integration layers, dual machine learning execution pipelines, and network-resilient offline fallback routes of the **S.P.O.T. (Smart Produce Optimization & Tracking)** agricultural quality grading platform for SIH 2026.
 
+> **Arena update (2026-09-20):** the "online route" YOLO stage has evolved from the
+> 4-class prototype to a **binary (*healthy/defective*) YOLO26n-cls classifier**
+> (`best.pt` → `backend/ai/yolo_cls_model.py`) serving `/api/v1/inspect` and
+> `/api/v1/ai/status` with `source: real_model`. The `/api/v1/analyze-onion` flow
+> still uses the 4-class `backend/models/onion_classifier.pt`. Classification below
+> the model's confidence threshold is surfaced explicitly (`VisionResult.status =
+> LOW_CONFIDENCE` → `PipelineResult.status = REVIEW_REQUIRED`) instead of being
+> silently treated as a confident label. See `MODEL_NOTES.md` and
+> `docs/AI_STATUS_CONTRACT.md` for the measured model card and status semantics.
+
 ---
 
 ## 📐 Visual System Architecture Diagram
