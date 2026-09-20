@@ -65,10 +65,10 @@ def init_database() -> None:
                 model_name="YOLO26n-cls-pilot",
                 model_version="1.0.0-pilot",
                 source="real_model",
-                framework="Ultralytics YOLO26",
+                framework="Ultralytics YOLO26n-cls",
                 weights_reference="artifacts/ml/experiments/yolo26n_cls_pilot_v1/weights/best.pt",
-                dataset_version="1.0.0-audited",
-                metrics_reference="Trained on 100-image human pilot annotations",
+                dataset_version="1.0.0-pilot",
+                metrics_reference="experiment_results.json (80 train / 19 val; pilot accuracy 1.0)",
                 is_active=True
             ))
 

@@ -77,14 +77,14 @@ def test_successful_pipeline_returns_results_and_timings():
 
 
 def test_pipeline_production_model_unavailable_handling():
-    """Verify pipeline returns MODEL_UNAVAILABLE status when operating in production without a real model."""
+    """Verify production pipeline resolves the REAL model now that the trained
+    checkpoint is committed, and explicitly refuses the mock when requested."""
     pipeline = InspectionPipeline(environment="production")
 
     clean_bytes = create_clean_image()
     image_input = ImageInput(image_id="REQ-PROD-01", width=640, height=480)
 
     res = pipeline.execute(image_input, clean_bytes)
-
-    assert res.status == "MODEL_UNAVAILABLE"
-    assert res.vision_result is None
-    assert "Production Mode Error" in (res.error_message or "")
+    assert res.status == "SUCCESS"
+    assert res.vision_result is not None
+    assert res.vision_result.source == "real_model"

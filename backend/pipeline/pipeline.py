@@ -152,6 +152,25 @@ class InspectionPipeline:
                     timings=timings,
                     error_message=str(p_err)
                 )
+            except ValueError as v_err:
+                total_time_ms = round((time.perf_counter() - start_total) * 1000.0, 3)
+                timings = PipelineTimings(
+                    image_decode_time_ms=prep_meta.decode_time_ms,
+                    preprocessing_time_ms=prep_meta.preprocessing_time_ms,
+                    quality_gate_time_ms=qg_time_ms,
+                    model_time_ms=0.0,
+                    total_pipeline_time_ms=total_time_ms,
+                    vision_time_ms=0.0,
+                )
+                logger.error(f"{req_id} status=MODEL_UNAVAILABLE model_config_error={str(v_err)}")
+                return PipelineResult(
+                    status="MODEL_UNAVAILABLE",
+                    request_id=req_id,
+                    quality_gate=qg_result,
+                    vision_result=None,
+                    timings=timings,
+                    error_message=f"Vision model configuration is invalid: {str(v_err)}"
+                )
 
         # Step 5: Execute Vision Inference & Output Validation
         start_vis = time.perf_counter()

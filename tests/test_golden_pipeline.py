@@ -41,7 +41,9 @@ def test_golden_1_valid_image_pipeline():
     assert result.status == "SUCCESS"
     assert result.quality_gate.passed is True
     assert result.vision_result is not None
-    assert result.vision_result.source == "development_mock"
+    # The trained YOLO26n-cls binary classifier is now the default — the
+    # pipeline must resolve a real model, never silently use the mock.
+    assert result.vision_result.source == "real_model"
 
 
 # 2. Blurry Image -> RETAKE_REQUIRED
@@ -83,18 +85,25 @@ def test_golden_4_low_res_image_retake():
     assert result.vision_result is None
 
 
-# 5. Model Unavailable -> MODEL_UNAVAILABLE
+# 5. Production now HAS a real model -> SUCCESS (model-unavailable path is
+#    the historical behaviour; test it by requesting an explicit mock, which
+#    production must refuse.)
 def test_golden_5_model_unavailable():
+    from backend.ai.registry import ProductionModelUnavailableError, get_vision_model
     clean_bytes = create_clean_image(640, 480)
     image_input = ImageInput(image_id="GOLDEN-REQ-05", width=640, height=480)
-    # Execute pipeline in production environment with no real model registered
-    pipeline = InspectionPipeline(environment="production")
 
+    # The trained checkpoint exists, so production resolves a REAL model.
+    pipeline = InspectionPipeline(environment="production")
     result = pipeline.execute(image_input, clean_bytes)
-    assert result.status == "MODEL_UNAVAILABLE"
+    assert result.status == "SUCCESS"
     assert result.quality_gate.passed is True
-    assert result.vision_result is None
-    assert "Production Mode Error" in (result.error_message or "")
+    assert result.vision_result is not None
+    assert result.vision_result.source == "real_model"
+
+    # But production must still refuse an explicit mock request.
+    with pytest.raises(ProductionModelUnavailableError):
+        get_vision_model(environment="production", model_name="DevelopmentMockVisionModel")
 
 
 # 6. Malformed Model Output -> Validation Failure

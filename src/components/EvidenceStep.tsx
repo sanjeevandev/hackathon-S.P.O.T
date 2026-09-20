@@ -23,8 +23,8 @@ export const EvidenceStep: React.FC<EvidenceStepProps> = ({
   const label = gradeToLabel(gradeName);
   const isHealthy = label === 'HEALTHY';
   const isReview = label === 'REVIEW';
-  const confValue = typeof result.confidence === 'number' ? result.confidence : 0.95;
-  const confPercent = (confValue * 100).toFixed(1);
+  const hasConfidence = typeof result.confidence === 'number' && Number.isFinite(result.confidence);
+  const confText = hasConfidence ? `${(result.confidence * 100).toFixed(1)}%` : '—';
 
   // Try to resolve captured image URL
   // Backend may return a relative path like /api/v1/... or a full URL
@@ -116,7 +116,7 @@ export const EvidenceStep: React.FC<EvidenceStepProps> = ({
           {/* Confidence */}
           <div className="bg-[#F7F1E7] p-3 rounded-2xl border border-[#163A2D]/10">
             <div className="text-[#163A2D]/60 text-[10px] uppercase font-bold mb-1">Confidence</div>
-            <div className="font-black text-sm text-[#163A2D]">{confPercent}%</div>
+            <div className="font-black text-sm text-[#163A2D]">{confText}</div>
             <div className="text-[9px] text-[#163A2D]/50 mt-0.5">Model score</div>
           </div>
 
@@ -131,10 +131,10 @@ export const EvidenceStep: React.FC<EvidenceStepProps> = ({
           <div className="bg-[#F7F1E7] p-3 rounded-2xl border border-[#163A2D]/10">
             <div className="text-[#163A2D]/60 text-[10px] uppercase font-bold mb-1">Model</div>
             <div className="font-bold text-[#163A2D] text-xs">
-              {result.model?.model_name || 'YOLO26n-cls'}
+              {result.model?.model_name || '—'}
             </div>
             <div className="text-[9px] text-[#163A2D]/50 mt-0.5">
-              {result.model?.source === 'real_model' ? 'Trained model' : result.model?.model_version || 'v1.0.0-pilot'}
+              {result.model?.source === 'real_model' ? 'Trained model' : (result.model?.model_version || '—')}
             </div>
           </div>
         </div>

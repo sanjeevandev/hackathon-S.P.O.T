@@ -41,7 +41,7 @@ def test_canonical_result_and_report_api_flow():
     assert canon_data["inspection_id"] == insp_id
     assert canon_data["batch_id"] == "TEST-BATCH-RPT-99"
     assert canon_data["sampling_status"] == "SAMPLE_ONLY"
-    assert canon_data["model"]["source"] == "development_mock"
+    assert canon_data["model"]["source"] == "real_model"
 
     # 3. Query GET /api/v1/inspections/{inspection_id}/report (JSON)
     rpt_resp = client.get(f"/api/v1/inspections/{insp_id}/report")

@@ -200,6 +200,46 @@ def run_yolov8_opencv_inference(image_bytes: bytes) -> Dict[str, Any]:
     detections = detect_onions_opencv(image_bytes)
     total_detected = len(detections)
 
+    # When OpenCV finds no discrete bulbs, do not collapse to 0 boxes / 0.0
+    # confidence. Run the classifier over the WHOLE image instead — this is the
+    # honest result the endpoint should return (the HSV validation layer in
+    # POST /api/v1/analyze-onion is the real "is this even an onion?" gate).
+    if total_detected == 0 and _classifier is not None:
+        try:
+            from PIL import Image
+            pil = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+            # 4-class holdout model (healthy/disease/rotten/sprouted)
+            probe = _classifier.predict(pil, imgsz=224, device="cpu", verbose=False)
+            if probe and len(probe) > 0 and getattr(probe[0], "probs", None) is not None:
+                probs = probe[0].probs
+                top1_idx = int(probs.top1)
+                top1_conf = float(probs.top1conf)
+                wcls = str(_classifier_class_names.get(top1_idx, "unknown"))
+
+                h, w_full = pil.height, pil.width
+                diameter_px = round(float((w_full + h) / 2.0), 1)
+                diameter_mm = calibrate_pixel_to_mm_ratio(diameter_px)
+                assigned = {
+                    "rotten": "rotten",
+                    "sprouted": "sprouted",
+                    "disease": "damaged",
+                    "damaged": "damaged",
+                    "healthy": "grade_a",
+                }.get(wcls, "grade_a")
+
+                bounding_boxes.append({
+                    "box_id": "WHOLE-IMAGE-CLS",
+                    "bbox": [0, 0, w_full, h],
+                    "confidence": round(top1_conf, 4),
+                    "class_label": assigned,
+                    "class": assigned,
+                    "diameter_mm": diameter_mm,
+                    "note": "No discrete bulb contours detected; whole-image classification fallback.",
+                })
+                total_detected = 1
+        except Exception as cls_err:
+            logger.warning("Whole-image classification fallback failed: %s", str(cls_err))
+
     # Decode image for bounding-box cropping
     img = None
     if image_bytes:
