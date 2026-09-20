@@ -204,7 +204,7 @@ def label_to_binary(name: Optional[str]) -> Optional[str]:
 
 
 def score_model(model_key: str, role: str, ckpt: str, is_binary: bool,
-                images: List[str], truths: List[str]) -> Dict:
+                images: List[str], truths: List[str], scenes: Optional[List[str]] = None) -> Dict:
     if not os.path.exists(ckpt):
         return {"key": model_key, "role": role, "checkpoint": ckpt, "status": "ABSENT"}
 
@@ -288,8 +288,9 @@ def score_model(model_key: str, role: str, ckpt: str, is_binary: bool,
         "latency_ms_p95": round(p95_lat, 2),
         "per_image": [
             {"file": os.path.basename(img), "truth": t, "pred": p,
-             "conf": round(c, 4)}
-            for img, t, p, c in zip(images, truths, preds, confs)
+             "conf": round(c, 4),
+             "scene": (scenes[i] if scenes else "")}
+            for i, (img, t, p, c) in enumerate(zip(images, truths, preds, confs))
         ],
     }
 
@@ -311,6 +312,7 @@ def main() -> None:
     images: List[str] = []
     truths: List[str] = []
     provenance: List[str] = []
+    scenes: List[str] = []
     for row in rows:
         fname = row["filename"]
         cls = row["class"].strip().lower()
@@ -331,25 +333,60 @@ def main() -> None:
         images.append(path)
         truths.append(cls)
         provenance.append(row["source_note"])
+        # Optional descriptive metadata column (e.g. scene) — recorded for
+        # analysis only and NEVER used for scoring or image selection.
+        scenes.append(row.get("scene", "").strip())
 
     print(f"[benchmark] held-out images: {len(images)} "
           f"(healthy={truths.count('healthy')}, defective={truths.count('defective')})")
 
     leakage_check(rows, build_known_indices())
 
+    def group_accuracy(scene: str) -> dict:
+        """Per-scene accuracy (metadata-only analysis; images are never filtered)."""
+        idx = [i for i, s in enumerate(scenes) if s == scene]
+        if not idx:
+            return None
+        from collections import Counter
+        return {"n": len(idx),
+                "labels": dict(Counter(truths[i] for i in idx))}
+
+    scene_groups = {}
+    for scene in sorted({s for s in scenes if s}):
+        info = group_accuracy(scene)
+        if info:
+            scene_groups[scene] = info
+
+    models_out = []
+    for m in MODELS:
+        out = score_model(
+            m["key"], m["role"],
+            os.path.join(PROJECT_ROOT, m["rel_path"]),
+            m["binary"], images, truths, scenes,
+        )
+        # Per-scene accuracy (metadata-only analysis; images are never filtered
+        # or re-scored). Computed from the model's own per-image results so the
+        # subgroup numbers are measured, not hand-written.
+        out["scene_accuracy"] = {}
+        if scenes and out.get("status") == "OK":
+            for scene in sorted({s for s in scenes if s}):
+                pid = [r for r in out["per_image"] if r.get("scene") == scene]
+                if pid:
+                    ok = sum(1 for r in pid if r["truth"] == r["pred"])
+                    out["scene_accuracy"][scene] = {
+                        "n": len(pid),
+                        "correct": ok,
+                        "accuracy": round(ok / len(pid), 4),
+                    }
+        models_out.append(out)
+
     results = {
         "generated_by": "scripts/evaluate_models.py",
         "images_dir": os.path.abspath(args.images),
         "manifest": os.path.abspath(args.manifest),
         "imgsz": args.imgsz,
-        "models": [
-            score_model(
-                m["key"], m["role"],
-                os.path.join(PROJECT_ROOT, m["rel_path"]),
-                m["binary"], images, truths,
-            )
-            for m in MODELS
-        ],
+        "scene_groups": scene_groups,
+        "models": models_out,
     }
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
@@ -377,6 +414,8 @@ def main() -> None:
               f"FN={m['false_negatives_defective_class']}")
         print(f"  latency   : mean={m['latency_ms_mean']} ms  p95={m['latency_ms_p95']} ms")
         print(f"  confusion (rows=truth): {m['confusion_matrix_rows_truth']}")
+        if m.get("scene_accuracy"):
+            print(f"  per-scene accuracy: {m['scene_accuracy']}")
     print("=" * 78)
 
 

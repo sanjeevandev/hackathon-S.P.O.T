@@ -47,14 +47,9 @@ class PipelineTimings(BaseModel):
 class PipelineResult(BaseModel):
     """Complete end-to-end result returned by the InspectionPipeline orchestrator."""
 
-    status: Literal["SUCCESS", "RETAKE_REQUIRED", "REJECTED_NOT_ONION", "REVIEW_REQUIRED", "MODEL_UNAVAILABLE", "PIPELINE_ERROR"] = Field(
+    status: Literal["SUCCESS", "RETAKE_REQUIRED", "REJECTED_NOT_ONION", "MODEL_UNAVAILABLE", "PIPELINE_ERROR"] = Field(
         ...,
-        description=(
-            "Pipeline execution status. REVIEW_REQUIRED indicates the image passed "
-            "quality screening and the model ran, but classified below its accepted "
-            "confidence threshold; unlike the other terminal states, vision_result is "
-            "present and carries the model's explicit per-result status and confidence."
-        )
+        description="Pipeline execution status"
     )
     request_id: str = Field(..., description="Unique request tracing ID")
     quality_gate: QualityGateResult = Field(..., description="Quality Gate screening result")

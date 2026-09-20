@@ -30,26 +30,13 @@ class VisionOutputValidator:
             ModelValidationError: If any constraint is violated.
         """
         # 1. Status validation
-        valid_statuses = {"SUCCESS", "NO_VALID_DETECTIONS", "LOW_CONFIDENCE", "MODEL_UNAVAILABLE", "ERROR"}
+        valid_statuses = {"SUCCESS", "NO_VALID_DETECTIONS", "MODEL_UNAVAILABLE", "ERROR"}
         if result.status not in valid_statuses:
             raise ModelValidationError(f"Invalid vision status: '{result.status}'. Must be one of {valid_statuses}")
 
         # 2. Source validation
         if result.source not in ("development_mock", "real_model"):
             raise ModelValidationError(f"Invalid model source: '{result.source}'. Must be 'development_mock' or 'real_model'")
-
-        # 2b. Status payload integrity: empty/success statuses must not carry
-        # inflated confidence, and error statuses must actually explain themselves.
-        if result.status in ("NO_VALID_DETECTIONS", "LOW_CONFIDENCE", "MODEL_UNAVAILABLE", "ERROR"):
-            if result.overall_confidence > 0.0 and not result.onions:
-                raise ModelValidationError(
-                    f"Vision status '{result.status}' has no detections but claims "
-                    f"confidence {result.overall_confidence}"
-                )
-            if result.status in ("MODEL_UNAVAILABLE", "ERROR") and not result.error_message:
-                raise ModelValidationError(
-                    f"Vision status '{result.status}' must include an error_message"
-                )
 
         # 3. Overall confidence bounds
         if not (0.0 <= result.overall_confidence <= 1.0):

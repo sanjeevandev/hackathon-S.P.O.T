@@ -13,10 +13,12 @@ The `GET /api/v1/ai/status` endpoint provides real-time health, diagnostic telem
 > **Arena update (2026-09-20):** the active real model is `YOLO26n-cls-pilot`
 > (binary healthy/defective classifier), checkpoint
 > `artifacts/ml/experiments/yolo26n_cls_pilot_v1/weights/best.pt`, `source: real_model`.
-> `VisionResult.status` gained a **`LOW_CONFIDENCE`** value, and
-> `PipelineResult.status` gained **`REVIEW_REQUIRED`** (the pipeline-level mirror of a
-> low-confidence classification). See `docs/EVALUATION_AND_BENCHMARK.md` for the
-> held-out evaluation methodology and results.
+> Low-confidence handling uses the **pre-existing grading path**: the classifier
+> reports the model's top-1 confidence in `VisionResult.overall_confidence`, the
+> grading engine compares it against `GradingProfile.confidence_min_threshold`
+> (default 0.70) and flags `REVIEW_REQUIRED`. No additional status was added on
+> top of this flow. See `docs/AI_ARCHITECTURE_AND_EVALUATION.md` for the full
+> architecture and evaluation methodology.
 
 ---
 
@@ -79,13 +81,15 @@ The `GET /api/v1/ai/status` endpoint provides real-time health, diagnostic telem
 
 | Surface | Status | Meaning |
 | :--- | :--- | :--- |
-| `VisionResult.status` | `SUCCESS` | Classified above the model's accepted confidence threshold |
-| `VisionResult.status` | `LOW_CONFIDENCE` | Classified but below the threshold; detections and confidence are preserved for review |
+| `VisionResult.status` | `SUCCESS` | A valid binary classification was produced; confidence is carried in `overall_confidence` |
 | `VisionResult.status` | `NO_VALID_DETECTIONS` | No usable classification probabilities / unknown class label |
 | `VisionResult.status` | `MODEL_UNAVAILABLE` / `ERROR` | Weights/runtime failure or generic error, with `error_message` |
-| `PipelineResult.status` | `REVIEW_REQUIRED` | Pipeline mirror of `LOW_CONFIDENCE`; `vision_result` is **present** so callers see the explicit per-model status, confidence, and detections |
-| `PipelineResult.status` | `REJECTED_NOT_ONION` | Pipeline mirror of `NO_VALID_DETECTIONS` (image passed the gate but produced no valid class) |
+| `PipelineResult.status` | `SUCCESS` | Image passed the gate and the model produced a valid classification (even a low-confidence one) |
 
-The binary classifier's default accept threshold is `0.60`
-(`YOLO26ClassifierModel.DEFAULT_MIN_ACCEPT_CONFIDENCE`). This threshold is runtime
-policy — not an accuracy statistic — and can be tuned per deployment.
+**Confidence → review is a grading-engine responsibility, not a new status:** the
+classifier returns the model's own top-1 confidence; `GradingPolicyEngine` compares
+it against `GradingProfile.confidence_min_threshold` (default `0.70`) and flags
+`review_status = REVIEW_REQUIRED` with an explanation. This is persisted on the
+inspection record and surfaced via the canonical inspection result. There is no
+separate `VisionResult`/`PipelineResult` low-confidence status by design — one
+threshold, one source of truth.

@@ -1,0 +1,363 @@
+{
+  "generated_by": "scripts/evaluate_models.py",
+  "images_dir": "/home/user/eval-arena/evaluation/v1_eval/images",
+  "manifest": "/home/user/eval-arena/evaluation/v1_eval/manifest.csv",
+  "imgsz": 224,
+  "scene_groups": {
+    "multi_bulb_scene": {
+      "n": 6,
+      "labels": {
+        "healthy": 6
+      }
+    },
+    "single_bulb": {
+      "n": 9,
+      "labels": {
+        "defective": 5,
+        "healthy": 4
+      }
+    }
+  },
+  "models": [
+    {
+      "key": "arena_binary_best.pt",
+      "role": "Arena binary classifier (serves /api/v1/inspect)",
+      "checkpoint": "/home/user/eval-arena/artifacts/ml/experiments/yolo26n_cls_pilot_v1/weights/best.pt",
+      "status": "OK",
+      "classes": {
+        "0": "defective",
+        "1": "healthy"
+      },
+      "size_bytes": 3186754,
+      "size_mb": 3.039,
+      "n_images": 15,
+      "accuracy": 0.5333,
+      "per_class": {
+        "healthy": {
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "tp": 3,
+          "fp": 0,
+          "fn": 7,
+          "samples": 10
+        },
+        "defective": {
+          "precision": 0.4167,
+          "recall": 1.0,
+          "f1": 0.5882,
+          "tp": 5,
+          "fp": 7,
+          "fn": 0,
+          "samples": 5
+        }
+      },
+      "confusion_matrix_rows_truth": {
+        "healthy": {
+          "healthy": 3,
+          "defective": 7
+        },
+        "defective": {
+          "healthy": 0,
+          "defective": 5
+        }
+      },
+      "false_positives_defective_class": 7,
+      "false_negatives_defective_class": 0,
+      "healthy_recall": 0.3,
+      "defective_recall": 1.0,
+      "latency_ms_mean": 21.1,
+      "latency_ms_p95": 50.85,
+      "per_image": [
+        {
+          "file": "rotten-spoiled-onion-black-mold-soft-rot-1.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 0.9998,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-black-mold-soft-rot-2.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 0.7213,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-black-mold-soft-rot-3.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 0.9029,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-bulb-black-mold-sof-3.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 1.0,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-bulb-black-mold-sof-4.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 0.5953,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-healthy-whole-yellow-onion-bulbs-c-1.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.5208,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-healthy-whole-yellow-onion-bulbs-c-2.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9406,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-healthy-whole-yellow-onion-bulbs-c-3.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9372,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-whole-yellow-onion-on-table-1.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 0.7832,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-1.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 0.9965,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-2.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 1.0,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-3.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 1.0,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-4.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 1.0,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "whole-red-onions-bulbs-bunch-fresh-produ-3.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 0.9809,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "whole-red-onions-bulbs-bunch-fresh-produ-4.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 1.0,
+          "scene": "multi_bulb_scene"
+        }
+      ],
+      "scene_accuracy": {
+        "multi_bulb_scene": {
+          "n": 6,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "single_bulb": {
+          "n": 9,
+          "correct": 8,
+          "accuracy": 0.8889
+        }
+      }
+    },
+    {
+      "key": "legacy_4class_onion_classifier.pt",
+      "role": "Legacy 4-class classifier (serves /api/v1/analyze-onion)",
+      "checkpoint": "/home/user/eval-arena/backend/models/onion_classifier.pt",
+      "status": "OK",
+      "classes": {
+        "0": "disease",
+        "1": "healthy",
+        "2": "rotten",
+        "3": "sprouted"
+      },
+      "size_bytes": 3191042,
+      "size_mb": 3.043,
+      "n_images": 15,
+      "accuracy": 0.7333,
+      "per_class": {
+        "healthy": {
+          "precision": 0.75,
+          "recall": 0.9,
+          "f1": 0.8182,
+          "tp": 9,
+          "fp": 3,
+          "fn": 1,
+          "samples": 10
+        },
+        "defective": {
+          "precision": 0.6667,
+          "recall": 0.4,
+          "f1": 0.5,
+          "tp": 2,
+          "fp": 1,
+          "fn": 3,
+          "samples": 5
+        }
+      },
+      "confusion_matrix_rows_truth": {
+        "healthy": {
+          "healthy": 9,
+          "defective": 1
+        },
+        "defective": {
+          "healthy": 3,
+          "defective": 2
+        }
+      },
+      "false_positives_defective_class": 1,
+      "false_negatives_defective_class": 3,
+      "healthy_recall": 0.9,
+      "defective_recall": 0.4,
+      "latency_ms_mean": 18.96,
+      "latency_ms_p95": 41.72,
+      "per_image": [
+        {
+          "file": "rotten-spoiled-onion-black-mold-soft-rot-1.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 0.9138,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-black-mold-soft-rot-2.jpg",
+          "truth": "defective",
+          "pred": "healthy",
+          "conf": 0.6065,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-black-mold-soft-rot-3.jpg",
+          "truth": "defective",
+          "pred": "healthy",
+          "conf": 0.8526,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-bulb-black-mold-sof-3.jpg",
+          "truth": "defective",
+          "pred": "defective",
+          "conf": 0.8348,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "rotten-spoiled-onion-bulb-black-mold-sof-4.jpg",
+          "truth": "defective",
+          "pred": "healthy",
+          "conf": 0.8643,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-healthy-whole-yellow-onion-bulbs-c-1.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.8194,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-healthy-whole-yellow-onion-bulbs-c-2.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9861,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-healthy-whole-yellow-onion-bulbs-c-3.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.944,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "fresh-whole-yellow-onion-on-table-1.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9688,
+          "scene": "single_bulb"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-1.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9889,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-2.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.3015,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-3.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.4961,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "pile-of-whole-yellow-onions-at-market-re-4.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9232,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "whole-red-onions-bulbs-bunch-fresh-produ-3.jpg",
+          "truth": "healthy",
+          "pred": "healthy",
+          "conf": 0.9666,
+          "scene": "multi_bulb_scene"
+        },
+        {
+          "file": "whole-red-onions-bulbs-bunch-fresh-produ-4.jpg",
+          "truth": "healthy",
+          "pred": "defective",
+          "conf": 0.5424,
+          "scene": "multi_bulb_scene"
+        }
+      ],
+      "scene_accuracy": {
+        "multi_bulb_scene": {
+          "n": 6,
+          "correct": 5,
+          "accuracy": 0.8333
+        },
+        "single_bulb": {
+          "n": 9,
+          "correct": 6,
+          "accuracy": 0.6667
+        }
+      }
+    }
+  ]
+}

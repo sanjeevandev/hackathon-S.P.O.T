@@ -40,19 +40,9 @@ _DEFAULT_CHECKPOINT = os.path.join(
 _MODEL_IMGSZ = 224
 _MODEL_DEVICE = "cpu"
 
-# Default classification contract (overridden from checkpoint metadata when the
-# checkpoint is actually loadable). The index order mirrors the recorded export
-# `{0: defective, 1: healthy}`; `analyze` maps probabilities by name, so any
-# consistent healthy/defective name rewrite is safe.
-_DEFAULT_CLASS_NAMES = {0: "defective", 1: "healthy"}
-
 # Health-axis side from which the binary "defective" probability is read.
 _DEFECTIVE_CLASS_LABELS = {"defective", "damage", "disease", "rot", "rotten"}
 
-# Default decision thresholds. These are explicit runtime policy, not accuracy
-# claims: a score below MIN_ACCEPT_CONFIDENCE is surfaced as LOW_CONFIDENCE so
-# callers review instead of silently trusting a coin-flip prediction.
-DEFAULT_MIN_ACCEPT_CONFIDENCE = 0.60
 # A multi-class checkpoint mapped into this binary contract is unsupported and
 # is refused at load time (rather than silently mis-mapping its probabilities).
 MAX_SUPPORTED_CLASSES = 2
@@ -68,30 +58,28 @@ class YOLO26ClassifierModel(VisionModel):
     Classifies whole onion images as healthy or defective.
     Does NOT fabricate bounding boxes, size estimates, or physical properties.
 
+    Confidence policy:
+    The classifier reports the model's own top-1 confidence verbatim in
+    ``VisionResult.overall_confidence`` and always returns ``SUCCESS`` for a
+    valid binary prediction. LOW-CONFIDENCE handling is the responsibility of the
+    grading engine, which compares ``overall_confidence`` against the active
+    ``GradingProfile.confidence_min_threshold`` (default 0.70) and flags
+    ``REVIEW_REQUIRED`` — see ``backend/grading/grading_engine.py``. This keeps a
+    single source of truth for the accept threshold.
+
     Note: `source` returns 'real_model' only when the checkpoint is actually
     present on disk; otherwise this class is not usable and reports itself as
     unavailable, so callers never treat a missing checkpoint as a real model.
     """
 
-    def __init__(
-        self,
-        checkpoint_path: Optional[str] = None,
-        min_accept_confidence: float = DEFAULT_MIN_ACCEPT_CONFIDENCE,
-    ):
+    def __init__(self, checkpoint_path: Optional[str] = None):
         self._checkpoint_path = checkpoint_path or _DEFAULT_CHECKPOINT
-        self._min_accept_confidence = float(min_accept_confidence)
         self._model = None
         self._class_names = None
-        self._last_load_error: Optional[str] = None
 
     @property
     def checkpoint_path(self) -> str:
         return self._checkpoint_path
-
-    @property
-    def min_accept_confidence(self) -> float:
-        """Classification confidence below which a result is reported LOW_CONFIDENCE."""
-        return self._min_accept_confidence
 
     @classmethod
     def default_checkpoint_path(cls) -> str:
@@ -109,9 +97,9 @@ class YOLO26ClassifierModel(VisionModel):
         """Lazy-load the YOLO26 model on first inference.
 
         Raises:
-            RuntimeError: if the checkpoint is missing, cannot be loaded, or does
-                not satisfy the binary-classification contract (healthy/defective).
-            ValueError: if the checkpoint exposes > MAX_SUPPORTED_CLASSES classes.
+            RuntimeError: if the checkpoint is missing or cannot be loaded.
+            ValueError: if the checkpoint does not expose class names, or exposes
+                more than MAX_SUPPORTED_CLASSES classes (i.e. is not binary).
         """
         if self._model is not None:
             return
@@ -159,11 +147,11 @@ class YOLO26ClassifierModel(VisionModel):
             self._checkpoint_path, self._class_names, _MODEL_IMGSZ, _MODEL_DEVICE,
         )
 
-    def _resolve_probabilities(self, probs) -> tuple[float, float]:
+    def _resolve_probabilities(self, probs) -> tuple[float, str]:
         """Return (defective_prob, predicted_label) from a classification result.
 
         Maps by class NAME (not index) so a checkpoint whose index order differs
-        from `_DEFAULT_CLASS_NAMES` is still handled correctly, as long as one
+        from the recorded export order is still handled correctly, as long as one
         class is a healthy axis and the other is a defective axis.
         """
         try:
@@ -174,22 +162,23 @@ class YOLO26ClassifierModel(VisionModel):
         defective_prob = 0.0
         healthy_prob = 0.0
         for idx, name in self._class_names.items():
-            val = None
-            if 0 <= idx < len(all_probs):
-                val = float(all_probs[idx])
-            normalized = (name if isinstance(name, str) else str(name)).strip().lower()
-            if val is None:
+            if not (0 <= idx < len(all_probs)):
                 continue
+            val = float(all_probs[idx])
+            normalized = (name if isinstance(name, str) else str(name)).strip().lower()
             if normalized in _DEFECTIVE_CLASS_LABELS:
                 defective_prob = val
             elif normalized == "healthy":
                 healthy_prob = val
 
-        # Prefer the explicit defective mass; if the checkpoint uses another
-        # defect synonym not in _DEFECTIVE_CLASS_LABELS, infer it as the
-        # complement of the healthy class.
+        # Prefer the explicit defective mass; if the checkpoint uses a defect
+        # synonym not in _DEFECTIVE_CLASS_LABELS, infer it as the complement of
+        # the healthy class.
         if defective_prob == 0.0 and healthy_prob > 0.0:
-            non_healthy = [p for (i, p) in enumerate(all_probs) if self._class_names.get(i, "").lower() != "healthy"]
+            non_healthy = [
+                p for (i, p) in enumerate(all_probs)
+                if self._class_names.get(i, "").lower() != "healthy"
+            ]
             defective_prob = max(non_healthy) if non_healthy else 0.0
 
         # Predicted label is derived from the model's top1 index.
@@ -219,18 +208,21 @@ class YOLO26ClassifierModel(VisionModel):
         schema with DefectProbabilities. Since this is a classifier (not a
         detector), a single whole-image detection is created.
 
-        Explicit uncertainty handling:
-        - load/model errors       -> status ERROR with error_message,
-                                     onions=[], overall_confidence=0.0
-        - unreadable image bytes  -> status ERROR (message points at the payload)
-        - no classification probs -> status NO_VALID_DETECTIONS
-        - confident prediction    -> status SUCCESS (confidence == top1 score)
-        - below threshold         -> status LOW_CONFIDENCE with the detection and
-                                     its confidence preserved for review
+        Failure semantics:
+        - load errors (raised by `_load_model`) propagate to the pipeline, which
+          maps them to MODEL_UNAVAILABLE without invoking the mock;
+        - unreadable image bytes          -> status ERROR (message points at the payload);
+        - inference exception             -> status ERROR;
+        - empty/invalid classification    -> status NO_VALID_DETECTIONS with an explicit message;
+        - valid binary prediction         -> status SUCCESS with the model's own
+          top-1 confidence in overall_confidence (grading engine decides review).
+
+        No fabrication of bounding boxes / size estimates / physical properties.
         """
         request_id = image_input.image_id
         self._load_model()
         start_time = time.perf_counter()
+
         try:
             img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
         except Exception as exc:
@@ -247,6 +239,7 @@ class YOLO26ClassifierModel(VisionModel):
                 status="ERROR",
                 error_message=f"Could not decode input image for classification: {exc}",
             )
+
         try:
             results = self._model.predict(
                 source=img,
@@ -303,7 +296,8 @@ class YOLO26ClassifierModel(VisionModel):
         try:
             top1_conf = float(probs.top1conf)
         except Exception:
-            top1_conf = max(probs.data.tolist()) if hasattr(probs.data, "tolist") else 0.0
+            data = probs.data
+            top1_conf = max(data.tolist()) if hasattr(data, "tolist") else 0.0
 
         if predicted_label not in _DEFECTIVE_CLASS_LABELS and predicted_label != "healthy":
             return VisionResult(
@@ -337,26 +331,6 @@ class YOLO26ClassifierModel(VisionModel):
             ),
             evidence_regions=[],
         )
-
-        if top1_conf < self._min_accept_confidence:
-            logger.info(
-                "%s LOW_CONFIDENCE label=%s conf=%.4f (threshold=%.2f)",
-                request_id, predicted_label, top1_conf, self._min_accept_confidence,
-            )
-            return VisionResult(
-                request_id=request_id,
-                model_name=self.model_name,
-                model_version=self.model_version,
-                source=self.source,
-                processing_time_ms=processing_time_ms,
-                onions=[detection],
-                overall_confidence=round(top1_conf, 4),
-                status="LOW_CONFIDENCE",
-                error_message=(
-                    f"Classification confidence {top1_conf:.4f} is below the "
-                    f"accepted threshold {self._min_accept_confidence:.2f}"
-                ),
-            )
 
         return VisionResult(
             request_id=request_id,

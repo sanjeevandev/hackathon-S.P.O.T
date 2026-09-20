@@ -198,43 +198,19 @@ class InspectionPipeline:
                 vision_time_ms=vis_time_ms,
             )
 
-            # VisionResult.status lives behind the fixed, contract-locked
-            # PipelineResult.status set, so mirror nuanced model outcomes
-            # (low confidence / empty detections / model-side errors) into the
-            # nearest pipeline status WITHOUT dropping the vision_result itself:
-            # callers can still see the explicit per-model status, confidence,
-            # and detections to route review flows.
-            mapped_status = {
-                "SUCCESS": "SUCCESS",
-                "LOW_CONFIDENCE": "REVIEW_REQUIRED",
-                "NO_VALID_DETECTIONS": "REJECTED_NOT_ONION",
-                "MODEL_UNAVAILABLE": "MODEL_UNAVAILABLE",
-                "ERROR": "PIPELINE_ERROR",
-            }.get(vision_result.status, "SUCCESS")
-
-            # If the model signalled low confidence, annotate the pipeline-level
-            # message so the UI can render a review reason without guessing.
-            mapped_error = None
-            if vision_result.status == "LOW_CONFIDENCE":
-                mapped_error = (
-                    f"Model classified image with low confidence "
-                    f"({vision_result.overall_confidence:.2f}); please review before grading."
-                )
-
             logger.info(
-                f"{req_id} status={mapped_status} vision_status={vision_result.status} qg_status={qg_result.status} "
+                f"{req_id} status=SUCCESS qg_status={qg_result.status} "
                 f"model_name={model.model_name} model_version={model.model_version} "
-                f"source={model.source} confidence={vision_result.overall_confidence} "
-                f"vis_time_ms={vis_time_ms} total_ms={total_time_ms}"
+                f"source={model.source} vis_time_ms={vis_time_ms} total_ms={total_time_ms}"
             )
 
             return PipelineResult(
-                status=mapped_status,
+                status="SUCCESS",
                 request_id=req_id,
                 quality_gate=qg_result,
                 vision_result=vision_result,
                 timings=timings,
-                error_message=mapped_error
+                error_message=None
             )
 
         except ModelValidationError as val_err:

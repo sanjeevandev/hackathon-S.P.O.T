@@ -24,7 +24,6 @@ export const AnalyzingStep: React.FC<AnalyzingStepProps> = ({
   const [pipelineError, setPipelineError] = useState<string | null>(null);
   const [isNotOnion, setIsNotOnion] = useState<boolean>(false);
   const [retakeReason, setRetakeReason] = useState<string | null>(null);
-  const [reviewRequired, setReviewRequired] = useState<string | null>(null);
   const [imageUrl] = useState<string>(() => URL.createObjectURL(file));
 
   const stages = [
@@ -39,7 +38,6 @@ export const AnalyzingStep: React.FC<AnalyzingStepProps> = ({
     setPipelineError(null);
     setIsNotOnion(false);
     setRetakeReason(null);
-    setReviewRequired(null);
     setCurrentStage(1);
 
     try {
@@ -51,20 +49,7 @@ export const AnalyzingStep: React.FC<AnalyzingStepProps> = ({
         centerId: meta.procurement_center_id,
       });
 
-      // 1. Low-confidence classification → route to explicit review, with the
-      // classification preserved in the response for the inspector to weigh.
-      if (uploadRes.status === 'REVIEW_REQUIRED' || uploadRes.vision_result?.status === 'LOW_CONFIDENCE') {
-        const conf = uploadRes.vision_result?.overall_confidence;
-        const confText = typeof conf === 'number' ? ` (confidence ${(conf * 100).toFixed(0)}%)` : '';
-        setReviewRequired(
-          uploadRes.error_message
-            ? `${uploadRes.error_message}${confText}`
-            : `Model classified this image with low confidence${confText}. Please review before finalizing grading.`
-        );
-        return;
-      }
-
-      // 2. Check Onion Validation Gate Result
+      // 1. Check Onion Validation Gate Result
       if (
         uploadRes.status === 'REJECTED_NOT_ONION' ||
         uploadRes.quality_gate?.status === 'REJECTED_NOT_ONION' ||
@@ -74,7 +59,7 @@ export const AnalyzingStep: React.FC<AnalyzingStepProps> = ({
         return;
       }
 
-      // 3. Check Quality Gate Retake Result (Blur/Dark/Resolution)
+      // 2. Check Quality Gate Retake Result (Blur/Dark/Resolution)
       if (
         uploadRes.status === 'RETAKE_REQUIRED' ||
         uploadRes.quality_gate?.status === 'RETAKE_REQUIRED' ||
@@ -215,58 +200,6 @@ export const AnalyzingStep: React.FC<AnalyzingStepProps> = ({
             onClick={() => {
               if (onRetryScan) onRetryScan();
               else onError('Retake requested');
-            }}
-            className="w-full min-h-[48px] py-3 px-4 bg-[#E51E3A] hover:bg-[#c91530] text-white rounded-2xl font-black shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer"
-          >
-            <RefreshCw className="w-4 h-4" />
-            <span>Retake Photo</span>
-          </button>
-
-          <button
-            onClick={() => onError('Cancelled')}
-            className="w-full py-2.5 px-4 bg-white text-[#163A2D] border border-[#163A2D]/15 hover:bg-[#F7F1E7] rounded-xl text-xs font-bold active:scale-95 transition-all cursor-pointer"
-          >
-            <span>{t('home')}</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // SCREEN: LOW-CONFIDENCE REVIEW STATE (model ran, but below accept threshold)
-  if (reviewRequired) {
-    return (
-      <div className="max-w-md mx-auto px-4 py-6 space-y-5 text-center pb-24 font-sans text-[#163A2D] animate-in fade-in">
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-full text-[10px] font-black uppercase tracking-wider shadow-2xs">
-            <AlertTriangle className="w-3.5 h-3.5 text-amber-700" />
-            <span>Human Review</span>
-          </div>
-          <h1 className="text-2xl font-black text-[#163A2D]">Review Required</h1>
-          <p className="text-xs text-[#163A2D]/80 font-medium">
-            The model was not confident enough to auto-grade this onion.
-          </p>
-        </div>
-
-        <div className="relative w-44 h-44 mx-auto rounded-3xl overflow-hidden shadow-md border-3 border-amber-500 bg-[#163A2D]">
-          <img
-            src={imageUrl}
-            alt="Sample preview"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="p-4 bg-white border border-amber-500/40 rounded-3xl text-left shadow-2xs">
-          <p className="text-[11px] text-[#163A2D]/80 font-medium leading-relaxed">
-            {reviewRequired}
-          </p>
-        </div>
-
-        <div className="space-y-2 pt-1">
-          <button
-            onClick={() => {
-              if (onRetryScan) onRetryScan();
-              else onError('Return to camera');
             }}
             className="w-full min-h-[48px] py-3 px-4 bg-[#E51E3A] hover:bg-[#c91530] text-white rounded-2xl font-black shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer"
           >

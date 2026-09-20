@@ -6,11 +6,11 @@ This document details the software architecture, hardware integration layers, du
 > 4-class prototype to a **binary (*healthy/defective*) YOLO26n-cls classifier**
 > (`best.pt` → `backend/ai/yolo_cls_model.py`) serving `/api/v1/inspect` and
 > `/api/v1/ai/status` with `source: real_model`. The `/api/v1/analyze-onion` flow
-> still uses the 4-class `backend/models/onion_classifier.pt`. Classification below
-> the model's confidence threshold is surfaced explicitly (`VisionResult.status =
-> LOW_CONFIDENCE` → `PipelineResult.status = REVIEW_REQUIRED`) instead of being
-> silently treated as a confident label. See `MODEL_NOTES.md` and
-> `docs/AI_STATUS_CONTRACT.md` for the measured model card and status semantics.
+> still uses the 4-class `backend/models/onion_classifier.pt`. Classification
+> confidence is reported verbatim from the model and routed through the grading
+> engine, which flags `REVIEW_REQUIRED` when it is below the profile threshold.
+> See `MODEL_NOTES.md`, `docs/AI_STATUS_CONTRACT.md`, and
+> `docs/AI_ARCHITECTURE_AND_EVALUATION.md` for details.
 
 ---
 

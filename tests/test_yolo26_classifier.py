@@ -173,14 +173,20 @@ def test_yolo26_probability_mapping_by_name():
     assert result.overall_confidence == 0.7
 
 
-def test_yolo26_low_confidence_threshold():
-    """Below the accept threshold the runner must explicitly return LOW_CONFIDENCE."""
-    model = YOLO26ClassifierModel(min_accept_confidence=0.90)
+def test_yolo26_low_confidence_prediction_preserved():
+    """A low top-1 score is still a valid classification (SUCCESS).
+
+    The classifier reports the model's own confidence verbatim and lets the
+    grading engine decide review (single source of truth for the threshold):
+    below GradingProfile.confidence_min_threshold the engine flags
+    REVIEW_REQUIRED. The runner itself must NOT invent another status.
+    """
+    model = YOLO26ClassifierModel()
     model._model = SimpleNamespace()
     model._class_names = {0: "defective", 1: "healthy"}
 
     class FakeProbs:
-        data = [0.45, 0.55]  # top1 = healthy @ 0.55 < 0.90 threshold
+        data = [0.45, 0.55]  # top1 = healthy @ 0.55
         top1 = 1
         top1conf = 0.55
 
@@ -193,39 +199,54 @@ def test_yolo26_low_confidence_threshold():
     ):
         result = model.analyze(image_input, create_clean_image(640, 480))
 
-    assert result.status == "LOW_CONFIDENCE"
+    assert result.status == "SUCCESS"
     assert result.overall_confidence == 0.55
-    assert result.error_message
-    assert len(result.onions) == 1  # classification preserved for review
+    assert len(result.onions) == 1  # classification preserved
 
 
-def test_yolo26_pipeline_review_required_on_low_confidence():
-    """Pipeline mirrors LOW_CONFIDENCE into PipelineResult.status REVIEW_REQUIRED.
+def test_low_confidence_flows_to_grading_review_required():
+    """End-to-end: model confidence → grading engine → REVIEW_REQUIRED.
 
-    Uses an unacceptably low threshold so any synthetic image lands below it,
-    exercising the status mirroring end to end without touching the checkpoint.
+    Reuses the REAL pipeline+aggregation+gading chain with a stubbed classifier
+    that emits a low (0.55) confidence, and asserts the PRE-EXISTING grading
+    engine flags REVIEW_REQUIRED below its 0.70 confidence_min_threshold.
     """
-    model = YOLO26ClassifierModel(min_accept_confidence=1.01)  # always low
+    from backend.grading.batch_engine import BatchIntelligenceEngine
+    from backend.grading.grading_engine import GradingPolicyEngine
+    from backend.grading.schemas import GradingRequest
+
+    model = YOLO26ClassifierModel()
     model._model = SimpleNamespace()
     model._class_names = {0: "defective", 1: "healthy"}
 
     class FakeProbs:
-        data = [0.2, 0.8]
+        data = [0.45, 0.55]
         top1 = 1
-        top1conf = 0.8
+        top1conf = 0.55
 
     class FakeResult:
         probs = FakeProbs()
 
-    from unittest.mock import patch
     pipeline = InspectionPipeline(vision_model=model)
     image_input = ImageInput(image_id="REQ-PIPE-REV-01", width=640, height=480)
     with patch.object(model, "_load_model"), patch.object(
         model._model, "predict", return_value=[FakeResult()], create=True
     ):
-        res = pipeline.execute(image_input, create_clean_image(640, 480))
+        pipeline_res = pipeline.execute(image_input, create_clean_image(640, 480))
 
-    assert res.status == "REVIEW_REQUIRED"
-    assert res.vision_result is not None
-    assert res.vision_result.status == "LOW_CONFIDENCE"
-    assert res.error_message and "low confidence" in res.error_message.lower()
+    # The pipeline reports a successful (valid) classification…
+    assert pipeline_res.status == "SUCCESS"
+    assert pipeline_res.vision_result.status == "SUCCESS"
+    assert pipeline_res.vision_result.overall_confidence == 0.55
+
+    # …and the grading engine flags it for review via the existing path.
+    agg = BatchIntelligenceEngine.aggregate_batch("BATCH-REV", [pipeline_res.vision_result])
+    grading = GradingPolicyEngine.evaluate(GradingRequest(
+        batch_id="BATCH-REV",
+        percentages=agg.percentages,
+        weight_distribution=agg.weight_distribution,
+        inspection_confidence=pipeline_res.vision_result.overall_confidence,
+    ))
+
+    assert grading.review_status == "REVIEW_REQUIRED"
+    assert any("below profile minimum threshold" in r for r in grading.review_reason)
