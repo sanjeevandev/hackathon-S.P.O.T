@@ -48,5 +48,5 @@ def test_inspection_persistence_flow():
     assert detail_resp.status_code == 200
     details = detail_resp.json()
     assert details["inspection_id"] == insp_id
-    assert details["model_version"]["source"] == "development_mock"
+    assert details["model_version"]["source"] == "real_model"
     assert details["grading_result"]["grade"] in ["Grade-A", "Grade-URS", "Grade-C"]

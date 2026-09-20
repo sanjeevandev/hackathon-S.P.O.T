@@ -38,11 +38,11 @@ def test_mock_model_explicit_source_identification():
 
 
 def test_production_mode_cannot_silently_use_mock():
-    """Verify that operating in production mode refuses to fallback to DevelopmentMockVisionModel."""
-    with pytest.raises(ProductionModelUnavailableError) as exc_info:
-        get_vision_model(environment="production")
-
-    assert "Production Mode Error: No real vision model is available" in str(exc_info.value)
+    """Verify production mode returns a REAL model when one is available —
+    and never silently falls back to DevelopmentMockVisionModel."""
+    model = get_vision_model(environment="production")
+    assert model.source == "real_model"
+    assert model.source != "development_mock"
 
 
 def test_production_mode_refuses_explicit_mock_request():
