@@ -210,19 +210,19 @@ export const AdminStep: React.FC<AdminStepProps> = ({
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Model</span>
-            <span className="font-bold text-[#163A2D]">YOLO11n-cls</span>
+            <span className="font-bold text-[#163A2D]">YOLO26n-cls</span>
           </div>
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Mode</span>
-            <span className="font-bold text-[#163A2D]">4-Class Classification</span>
+            <span className="font-bold text-[#163A2D]">Binary Classification</span>
           </div>
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Target Classes</span>
-            <span className="font-bold text-[#163A2D]">healthy / disease / rotten / sprouted</span>
+            <span className="font-bold text-[#163A2D]">healthy / defective</span>
           </div>
           <div className="p-2.5 bg-[#F7F1E7] rounded-xl border border-[#163A2D]/10">
             <span className="text-[9px] text-[#163A2D]/60 uppercase font-semibold block">Model Size</span>
-            <span className="font-bold text-[#163A2D]">6.0 MB</span>
+            <span className="font-bold text-[#163A2D]">3.04 MB</span>
           </div>
         </div>
 
@@ -231,7 +231,7 @@ export const AdminStep: React.FC<AdminStepProps> = ({
           <div className="p-3 bg-white border border-[#163A2D]/15 rounded-xl text-[10px] text-[#163A2D] flex items-start gap-1.5 shadow-2xs">
             <Info className="w-3.5 h-3.5 text-[#E51E3A] shrink-0 mt-0.5" />
             <p className="leading-tight font-medium">
-              <strong>Checkpoint is a pilot model.</strong> The deployed <code>onion_classifier.pt</code> is a 4-class prototype. Validation metrics are not yet available in the repository; re-train the target classifier and commit its metrics before treating this as a production model.
+              <strong>Checkpoint is a pilot model.</strong> The deployed <code>best.pt</code> is the YOLO26n-cls binary classifier (healthy / defective), trained on 80 pilot images. Pilot validation (19 images) is 100% on the pilot split — this is a small-dataset metric, not a production accuracy guarantee.
             </p>
           </div>
         </div>
